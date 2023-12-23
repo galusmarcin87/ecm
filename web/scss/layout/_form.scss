@@ -1,0 +1,121 @@
+.Form {
+  &__input {
+    + label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+    &:focus,
+    &:not(:placeholder-shown) {
+      + label {
+        font-size: 0.6rem;
+        top: -10px;
+      }
+    }
+  }
+  &__label {
+    color: $PRIMARY;
+    font-size: 1.1rem;
+    margin: 0;
+    transition: all 0.3s ease;
+  }
+  &__group {
+    position: relative;
+    &--with-padding {
+      padding-left: 25px;
+      font-weight: 300;
+      color: $COLOR-8;
+      b {
+        font-weight: 600;
+      }
+    }
+  }
+  &__select {
+    position: relative;
+    &:before {
+      content: '\f078';
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: normal;
+      text-decoration: inherit;
+      color: $PRIMARY;
+      font-size: 1rem;
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+      right: 0;
+      line-height: 1;
+      pointer-events: none;
+    }
+  }
+  &__checkbox {
+    display: none;
+    + label {
+      font-weight: 300;
+      padding-left: 25px;
+      position: relative;
+      cursor: pointer;
+      font-size: 12px;
+      &::before {
+        content: '';
+        width: 18px;
+        height: 18px;
+        background: $COLOR-3;
+        border: 1px solid $COLOR-16;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+    &:checked {
+      + label {
+        &::after {
+          content: '\2713';
+          width: 18px;
+          height: 18px;
+          color: $SECONDARY;
+          position: absolute;
+          font-size: 12px;
+          left: 0;
+          font-weight: bold;
+          top: 0;
+          text-align: center;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+}
+
+.form-control {
+  font-size: 13px;
+  padding-left: 0;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  border-radius: $RADIUS;
+
+  &[type='number'] {
+    padding-right: 0 !important;
+  }
+}
+input.form-control {
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 40px;
+  line-height: 40px;
+}
+
+select.form-control {
+  border: none;
+  appearance: none;
+  cursor: pointer;
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+input[type='submit'] {
+  margin-top: 0 !important;
+}

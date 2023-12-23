@@ -1,0 +1,51 @@
+.Pagination {
+  margin-top: 65px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  nav {
+    display: inline-block;
+  }
+  .pagination {
+    margin-bottom: 0;
+  }
+  .page-item {
+    margin: 0 10px;
+    @media (max-width: $MD) {
+      margin: 0 1px;
+    }
+    .page-link {
+      border-radius: 0;
+      color: $PRIMARY;
+      background: #dbe3e9;
+      font-weight: bold;
+      border: none;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      padding: 0;
+      border-radius: $RADIUS;
+      &:hover,
+      &--active {
+        background: $PRIMARY;
+        color: #fff;
+      }
+      @media (max-width: $TABLET) {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+      }
+      @media (max-width: $XS) {
+        width: 24px;
+      }
+    }
+  }
+  &__arrow {
+    .page-link {
+      font-size: 1.2em;
+      background: $SECONDARY !important;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+}

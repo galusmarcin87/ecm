@@ -1,0 +1,32 @@
+.Register {
+  border-bottom: 1px solid $COLOR-17;
+  .Form__group {
+    margin-bottom: 15px;
+  }
+  .User-Panel__form-group {
+    + .Form__group {
+      margin: 15px 0;
+    }
+  }
+  &__input {
+    + label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      text-align: left;
+      padding-left: 10px;
+      pointer-events: none;
+      line-height: 40px;
+      font-weight: 400;
+      color: $COLOR_5;
+      font-size: 13px;
+    }
+    &:focus,
+    &:not(:placeholder-shown) {
+      + label {
+        font-size: 0.6rem;
+        top: -14px;
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.Partners {
+  background-color: $COLOR_3 !important;
+
+  &__carousel {
+    margin: 25px 0;
+    --offset: -30px;
+
+    @media (max-width: $TABLET) {
+      --offset: 0;
+    }
+
+    @include owlArrowsTwo(
+      $background: $SECONDARY,
+      $color: #fff,
+      $offset: var(--offset)
+    );
+  }
+
+  &__item {
+    padding: 35px 50px;
+    border: 1px solid $COLOR_8;
+    &__link {
+      &__logo {
+        width: 100%;
+        height: auto;
+        fill: $COLOR_11;
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+.Contact-form-mini {
+  display: grid;
+  grid-template-columns: calc(100% - 69px) 69px;
+  max-width: 420px;
+  z-index: 1;
+  height: 50px;
+  @media (max-width: $TABLET) {
+    grid-template-columns: calc(100% - 40px) 40px;
+  }
+  @media (max-width: $XS) {
+    display: none;
+  }
+  &__icon {
+    background: $PRIMARY;
+    color: $COLOR-3;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    font-size: 1.8em;
+    cursor: pointer;
+    z-index: 1;
+    height: 69px;
+    align-self: auto;
+    transition: all 0.3s ease-out;
+    &--active {
+      height: 100%;
+    }
+  }
+  &__inner {
+    padding: 50px;
+    background: $COLOR-3;
+    opacity: 0;
+    transition: all 0.4s ease;
+    margin-right: -333px;
+    z-index: 0;
+    @media (max-width: $TABLET) {
+      padding: 25px;
+      .Form__group {
+        margin-bottom: 15px;
+      }
+      .btn {
+        margin-top: 10px;
+      }
+    }
+    &--active {
+      opacity: 1;
+      margin-right: 0;
+    }
+  }
+  &__heading {
+    margin-bottom: 25px;
+  }
+  &__submit {
+    margin-top: 25px;
+  }
+}

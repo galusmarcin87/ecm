@@ -1,0 +1,63 @@
+.Search-box {
+  display: none;
+  opacity: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 0;
+  transition: all 0.3s ease;
+  z-index: 9;
+  @media (max-width: $SM) {
+    padding: 0 5px;
+  }
+  &--open {
+    opacity: 1;
+    display: block;
+  }
+  &__form-wrpper {
+    display: grid;
+    grid-template-columns: calc(100% - 127px) 80px 30px;
+    position: relative;
+  }
+  &__input {
+    color: $PRIMARY;
+    background: transparent;
+    border: none;
+    outline: none !important;
+    border-bottom: 1px solid $PRIMARY;
+    column-gap: 15px;
+    @include placeholder {
+      color: #70879f;
+    }
+    + .Form__label {
+      top: 15px;
+      font-size: 16px;
+    }
+    &:focus,
+    &:not(:placeholder-shown) {
+      + .Form__label {
+        font-size: 0.8rem;
+        top: -5px;
+      }
+    }
+  }
+  &__submit {
+    font-size: 20px;
+    background: $PRIMARY;
+    color: $COLOR_3;
+    border: none;
+    width: 71px;
+    height: 54px;
+    border-radius: $RADIUS;
+  }
+  &__close {
+    color: $PRIMARY;
+    align-self: center;
+    justify-self: center;
+    font-size: 2.1em;
+    font-weight: 300;
+  }
+}

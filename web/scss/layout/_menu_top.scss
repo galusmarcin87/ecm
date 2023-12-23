@@ -1,0 +1,155 @@
+.Menu-top {
+  --size: 47px;
+  background: $COLOR-3;
+  padding: 25px 0;
+  position: relative;
+  top: 0;
+  z-index: 10;
+  transition: all 0.2s ease;
+
+  @media (max-width: $TABLET) {
+    --size: 42px;
+  }
+
+  .btn {
+    @media (max-width: $TABLET) {
+      font-size: 0.7rem;
+    }
+  }
+
+  &__logo {
+    transition: all 0.2s ease;
+    max-width: 140px;
+    height: auto;
+    fill: $PRIMARY;
+  }
+
+  &__elements {
+    display: flex;
+    grid-column-gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+
+    @media (max-width: $TABLET) {
+      display: grid;
+      grid-template-columns: repeat(7, auto);
+    }
+
+    @media (max-width: $MD) {
+      grid-row-gap: 10px;
+      grid-template-columns: repeat(3, auto);
+    }
+  }
+
+  &--sticky {
+    padding: 15px 0;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    .Menu-top__logo {
+      max-width: 130px;
+    }
+  }
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 160px auto;
+    align-items: center;
+    position: relative;
+
+    @media (max-width: $TABLET) {
+      align-items: start;
+    }
+
+    > div {
+      order: 0;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    margin-right: 10px;
+
+    @media (max-width: $TABLET) {
+      display: none;
+      order: 1;
+      grid-column-start: 1;
+      grid-column-end: 7;
+      margin-top: 20px;
+    }
+
+    @media (max-width: $MD) {
+      grid-column-end: 4;
+      margin-right: 0;
+    }
+
+    @media (min-width: $TABLET) {
+      display: block !important;
+    }
+
+    li {
+      display: inline-block;
+      margin-left: 25px;
+
+      @media (max-width: $LG) {
+        margin-left: 10px;
+      }
+
+      @media (max-width: $MD) {
+        display: block;
+      }
+    }
+  }
+
+  &__link {
+    color: $PRIMARY;
+    font-weight: 600;
+
+    &:hover,
+    &--active {
+      color: $SECONDARY;
+    }
+  }
+
+  &__toggle-btn {
+    display: none;
+    font-size: 1.4em;
+    background: #e7ebef;
+    border-radius: $RADIUS;
+    color: $PRIMARY;
+    width: var(--size);
+    height: var(--size);
+    line-height: var(--size);
+    text-align: center;
+
+    @media (max-width: $TABLET) {
+      display: block;
+    }
+  }
+
+  &__search-btn {
+    background: #e7ebef;
+    border-radius: $RADIUS;
+    color: $PRIMARY;
+    font-size: 1.2em;
+    text-align: center;
+    width: var(--size);
+    height: var(--size);
+    line-height: var(--size);
+  }
+
+  @media (max-width: $LG) {
+    .container {
+      max-width: 100%;
+    }
+  }
+}
+
+.Menu-top-wrapper {
+  min-height: 94px;
+}

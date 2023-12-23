@@ -1,0 +1,42 @@
+<?php
+use kartik\grid\GridView;
+use yii\data\ArrayDataProvider;
+
+    $dataProvider = new ArrayDataProvider([
+        'allModels' => $model->faqItems,
+        'key' => 'id',
+        'modelClass' => 'app\models\mgcms\db\FaqItem'
+    ]);
+    $gridColumns = [
+        ['class' => 'yii\grid\SerialColumn'],
+        ['attribute' => 'id', 'visible' => false],
+        'question:ntext',
+        'answer:ntext',
+        'order',
+//        [
+//            'class' => app\components\mgcms\yii\ActionColumn::className(),
+//            'controller' => 'faq-item'
+//        ],
+    ];
+    
+    echo GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $gridColumns,
+        'containerOptions' => ['style' => 'overflow: auto'],
+        'pjax' => true,
+        'beforeHeader' => [
+            [
+                'options' => ['class' => 'skip-export']
+            ]
+        ],
+        'export' => [
+            'fontAwesome' => true
+        ],
+        'bordered' => true,
+        'striped' => true,
+        'condensed' => true,
+        'responsive' => true,
+        'hover' => true,
+        'showPageSummary' => false,
+        'persistResize' => false,
+    ]);

@@ -1,0 +1,92 @@
+.Slider {
+  position: relative;
+  overflow: hidden;
+
+  &__item {
+    background-size: cover;
+    background-position: center;
+    min-height: calc(100vh - 220px);
+    display: grid;
+    padding: 70px 0;
+
+    @media (max-width: $TABLET) {
+      min-height: calc(100vh - 198px);
+    }
+
+    @media (max-width: $SM) {
+      display: block;
+    }
+
+    > .container {
+      display: grid;
+    }
+  }
+
+  &__description {
+    color: $COLOR_1;
+    background: $PRIMARY_OPACITY;
+    padding: 25px 50px;
+    position: relative;
+    max-width: 450px;
+    font-size: 16px;
+
+    &__header {
+      font-size: 2.1em;
+      color: $COLOR_3;
+      font-weight: 600;
+      line-height: 1.2;
+      align-self: center;
+      margin-bottom: 20px;
+
+      @media (max-width: $TABLET) {
+        font-size: 1.8em;
+      }
+      @media (max-width: $SM) {
+        font-size: 1.6em;
+      }
+    }
+
+    &__content {
+      line-height: 24px;
+    }
+
+    &__list {
+      margin-top: 50px;
+      padding: 0;
+      list-style-type: none;
+      &__item {
+        line-height: 1.5;
+        padding-bottom: 15px;
+        display: grid;
+        grid-template-columns: 0.4fr 0.6fr;
+        position: relative;
+        @include hrLineLeft($SECONDARY);
+      }
+    }
+
+    &__buttons {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: 0.55fr 0.45fr;
+      grid-column-gap: 20px;
+    }
+
+    @media (max-width: $SM) {
+      padding-left: 20px;
+      padding-right: 20px;
+      max-width: 100%;
+    }
+
+    .btn {
+      margin-top: 20px;
+      font-size: 15px;
+      padding: 12px;
+    }
+  }
+
+  @include owlArrows();
+
+  @media (max-width: $SM) {
+    @include owlArrows($offset: 0);
+  }
+}

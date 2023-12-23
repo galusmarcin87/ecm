@@ -1,0 +1,78 @@
+.Invest-counter {
+  &__header {
+    font-weight: 500;
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+  &__source {
+    font-weight: 600;
+
+    color: $SECONDARY;
+  }
+
+  &__target {
+    font-weight: 600;
+    color: $SECONDARY;
+    text-align: right;
+  }
+
+  &__value-line-wrapper {
+    background: $COLOR-4;
+    border-radius: 3px;
+    height: 20px;
+    position: relative;
+    margin: 5px 0;
+  }
+
+  &__value-line {
+    background-color: $SECONDARY;
+    background: -moz-linear-gradient(
+      left,
+      rgba(54, 166, 218, 1) 0%,
+      rgba(54, 166, 218, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+      left,
+      rgba(54, 166, 218, 1) 0%,
+      rgba(54, 166, 218, 1) 100%
+    );
+    background: linear-gradient(
+      to right,
+      rgba(54, 166, 218, 1) 0%,
+      rgba(54, 166, 218, 1) 100%
+    );
+    border-radius: 2px;
+    height: 10px;
+    position: relative;
+    top: 5px;
+    transition: all 1s ease;
+    margin: 0 5px;
+  }
+
+  &__footer {
+    color: $COLOR-13;
+    display: grid;
+    grid-template-columns: auto auto;
+    font-weight: 600;
+
+    strong {
+      color: $PRIMARY;
+    }
+  }
+  &__body {
+    padding-top: 10px;
+
+    @media (max-width: $XS) {
+      display: block;
+    }
+
+    &__heading {
+      color: $SECONDARY;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+  }
+}

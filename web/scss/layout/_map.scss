@@ -1,0 +1,89 @@
+.Map {
+  position: relative;
+
+  &__info {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    background-color: $COLOR_3;
+    padding: 10px 20px;
+    padding-left: 0;
+    top: 20px;
+    left: 5vw;
+    z-index: 2;
+    color: $PRIMARY;
+    font-weight: 600;
+
+    &__icon {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      margin-right: 7px;
+      margin-left: 30px;
+
+      &--active {
+        background-color: $ACTIVE;
+      }
+
+      &--inactive {
+        background-color: $INACTIVE;
+      }
+    }
+  }
+
+  &__info-window {
+    box-shadow: none;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+    min-width: 330px;
+
+    .btn {
+      text-transform: none;
+      font-size: 15px;
+    }
+
+    .List-custom__two__item {
+      font-size: 14px;
+
+      strong {
+        color: $SECONDARY;
+      }
+    }
+
+    .Map__info {
+      position: static;
+      align-items: start;
+      margin-bottom: 10px;
+
+      &__icon {
+        margin-left: 0;
+        margin-right: 20px;
+      }
+
+      &__description {
+        font-size: 16px;
+        max-width: 60%;
+      }
+    }
+  }
+}
+
+.gm-style-iw.gm-style-iw-c {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.gm-style {
+  .gm-style-iw-t {
+    &:after {
+      display: none !important;
+    }
+  }
+
+  .gm-style-iw-d {
+    max-height: unset !important;
+  }
+}

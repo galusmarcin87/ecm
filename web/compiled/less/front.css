@@ -1,0 +1,36 @@
+.error-summary,
+.help-block-error {
+  color: #e63331;
+}
+.alert-danger.in,
+.alert-success.in,
+.alert-warning.in {
+  opacity: 1;
+}
+.articleContent img {
+  height: auto;
+}
+.hidden {
+  display: none;
+}
+.bottom10 {
+  margin-bottom: 10px;
+}
+.top10 {
+  margin-top: 10px;
+}
+.bottom25 {
+  margin-bottom: 25px;
+}
+.top25 {
+  margin-top: 25px;
+}
+.inline-block {
+  display: inline-block;
+}
+.position-relative {
+  position: relative;
+}
+.page-item.disabled {
+  display: none;
+}

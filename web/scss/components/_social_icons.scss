@@ -1,0 +1,28 @@
+.Social-icons {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 5px;
+
+  &__icon {
+    margin-right: 10px;
+    cursor: pointer;
+    width: 20px;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+
+    .fa {
+      color: $COLOR_1;
+      font-size: 24px;
+    }
+
+    &__img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @media (max-width: $MD) {
+    grid-column-start: 1;
+  }
+}

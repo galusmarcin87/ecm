@@ -1,0 +1,42 @@
+.Owner {
+  padding: 25px 100px;
+  padding-bottom: 200px;
+
+  @media (max-width: $LG) {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 100px;
+  }
+
+  @media (max-width: $TABLET) {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 50px;
+
+    .buttons-list {
+      justify-items: center;
+    }
+  }
+
+  &__block {
+    display: grid;
+    grid-template-columns: 210px auto;
+    grid-column-gap: 30px;
+
+    @media (max-width: $SM) {
+      grid-template-columns: auto;
+      justify-items: center;
+      grid-row-gap: 20px;
+
+      .Image--rounded {
+        max-width: 200px;
+      }
+    }
+  }
+
+  &__desc {
+    font-size: 15px;
+    line-height: 30px;
+    color: #4a474d;
+  }
+}

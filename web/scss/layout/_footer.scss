@@ -1,0 +1,166 @@
+.Footer {
+  background-color: $PRIMARY;
+  background-image: url('../images/img.jpg');
+  background-size: cover;
+  background-position: center;
+  padding-top: 50px;
+  padding-bottom: 20px;
+  color: $COLOR_5;
+  font-size: 14px;
+  position: relative;
+  color: #ffffff;
+
+  * {
+    color: #ffffff;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  a {
+    color: #fff;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  &::after {
+    content: '';
+    background-color: $PRIMARY;
+    opacity: 0.9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+
+  &__header {
+    font-size: 42px;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 50px;
+  }
+
+  &__desc {
+    font-size: 14px;
+    line-height: 30px;
+    max-width: 90%;
+    color: #889baf;
+
+    @media (max-width: $MD) {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__item {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  &__link {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  &__bottom {
+    font-size: 300;
+    font-weight: 500;
+    margin-top: 30px;
+  }
+
+  &__menu {
+    list-style-type: none;
+    color: #889baf;
+    padding-left: 0;
+    font-size: 14px;
+    text-transform: none;
+
+    &__item {
+      color: #889baf;
+      position: relative;
+      &::before {
+        content: '\f105';
+        font-size: 11px;
+        font-family: FontAwesome;
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+    }
+
+    &__link {
+      color: inherit;
+      line-height: 28px;
+      font-weight: 500;
+      font-size: 14px;
+
+      &--active,
+      &:hover {
+        color: $SECONDARY;
+      }
+    }
+  }
+
+  &__logo {
+    width: 100%;
+    max-width: 165px;
+    fill: $COLOR_6;
+    height: auto;
+
+    @media (max-width: $MD) {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__text {
+    font-size: 13px;
+  }
+
+  &__top {
+    font-weight: 600;
+    font-size: 13px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #45627f;
+    margin-bottom: 50px;
+
+    &__desc {
+      display: block !important;
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: 400;
+
+      .Social-icons {
+        margin-left: 0;
+
+        &__icon {
+          margin-right: 20px;
+        }
+      }
+
+      @media (max-width: $MD) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  h3 {
+    font-size: 18px;
+    color: $COLOR_3;
+  }
+
+  .Social-icons {
+    margin-bottom: 20px;
+  }
+
+  .text-right {
+    a {
+      padding-right: 45px;
+    }
+  }
+}

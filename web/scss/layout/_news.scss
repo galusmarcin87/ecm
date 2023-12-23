@@ -1,0 +1,99 @@
+.News {
+  background: #fff;
+  padding-bottom: 0;
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 45px;
+    grid-row-gap: 45px;
+
+    @media (max-width: $TABLET) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: $MD) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--with-pagination {
+    padding: 45px 0;
+  }
+
+  .Card {
+    position: relative;
+    cursor: pointer;
+
+    &__img-wrapper {
+      position: absolute;
+      width: 55%;
+      left: 40px;
+    }
+
+    &__body {
+      width: 50%;
+      float: right;
+      z-index: 2;
+      position: relative;
+      margin-top: 25px;
+      margin-bottom: 60px;
+
+      @media (max-width: $MD) {
+        width: 70%;
+      }
+    }
+
+    &__date {
+      background: $PRIMARY;
+      color: $COLOR_3;
+      font-weight: 500;
+      display: inline-block;
+      padding: 5px 15px;
+      position: absolute;
+      left: 0;
+      transform: translate(-100%, 0%);
+      top: 0;
+    }
+  }
+
+  &--single {
+    .Card {
+      cursor: unset;
+
+      &__body {
+        width: 100% !important;
+        float: none;
+        z-index: 2;
+        position: relative;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      &__date {
+        position: static;
+        transform: none;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .Carousel {
+    position: relative;
+
+    @include owlArrows($background: $COLOR_9, $color: $PRIMARY, $offset: -45px);
+
+    .owl-nav {
+      position: absolute;
+      position: absolute;
+      right: 35%;
+      bottom: 20px;
+
+      .owl-next {
+        background: $SECONDARY !important;
+        color: $COLOR-3 !important;
+        border-bottom-color: $SECONDARY_DARKEN !important;
+      }
+    }
+  }
+}

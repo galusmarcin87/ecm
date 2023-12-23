@@ -1,0 +1,278 @@
+.Projects {
+  background: #f2f7f9;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    background-color: $PRIMARY;
+    height: 433px;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+
+  &--disabledBg {
+    &::before {
+      display: none;
+    }
+  }
+
+  &--lightBg {
+    background-color: #fff !important;
+
+    &::before {
+      background-color: #f2f7f9;
+      height: 425px;
+    }
+  }
+
+  &--list {
+    .Projects__card {
+      background-color: #f8fbfc;
+
+      &:hover {
+        background-color: #fff;
+
+        .Projects__card__heading {
+          text-decoration: underline;
+        }
+
+        img {
+          opacity: 0.6;
+        }
+      }
+    }
+    &:after {
+      display: none;
+    }
+
+    .btn--medium {
+      margin-top: 35px;
+    }
+  }
+
+  &--with-pagination {
+    padding: 45px 0;
+  }
+
+  &__header {
+    margin-top: 7px;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+
+    &__wrapper {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 50px;
+
+      > .Select,
+      > .btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin-top: 0;
+
+        @media (max-width: $MD) {
+          position: relative;
+          margin: 0 auto;
+          left: 50%;
+          transform: translate(-50%, 0);
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+
+  &__filter {
+    .btn {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+  }
+
+  &__sortable {
+    --gap: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: var(--gap);
+    grid-row-gap: 45px;
+    margin-top: 25px;
+
+    @media (max-width: $LG) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: $MD) {
+      display: block;
+    }
+  }
+
+  &__card {
+    background: $COLOR-3;
+    cursor: pointer;
+    max-width: 455px;
+    margin: 0 auto !important;
+
+    @media (max-width: $MD) {
+      margin-bottom: 35px !important;
+    }
+
+    &__date {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      padding: 10px;
+      background-color: #fff;
+      font-size: 13px;
+      z-index: 2;
+
+      &__ico {
+        width: 20px !important;
+        height: 20px !important;
+        margin-right: 5px;
+        vertical-align: bottom;
+      }
+    }
+
+    &__image-wrapper {
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: #00000022;
+        opacity: 0;
+        transition: all 0.6s ease;
+        pointer-events: none;
+      }
+    }
+
+    &:hover {
+      .Projects__card__image-wrapper {
+        &::after {
+          opacity: 1;
+        }
+
+        > img {
+          transform: scale(1.1);
+        }
+      }
+
+      .Projects__card__text {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .Invest-counter__value-line {
+        background: -moz-linear-gradient(
+          left,
+          rgba(54, 166, 218, 1) 0%,
+          rgba(26, 141, 199, 0) 100%
+        );
+        background: -webkit-linear-gradient(
+          left,
+          rgba(54, 166, 218, 1) 0%,
+          rgba(26, 141, 199, 0) 100%
+        );
+        background: linear-gradient(
+          to right,
+          rgba(54, 166, 218, 1) 0%,
+          rgba(26, 141, 199, 0) 100%
+        );
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#36a6da', endColorstr='#001a8dc7',GradientType=1 );
+      }
+    }
+
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+
+    &__header {
+      padding: 15px 20px;
+    }
+
+    &__heading {
+      color: $PRIMARY;
+      font-size: 1.7em;
+      font-family: 'Playfair Display', serif;
+    }
+
+    &__location {
+      font-size: 1.1em;
+      color: $PRIMARY;
+      margin: 0;
+    }
+
+    &__image-wrapper {
+      position: relative;
+      overflow: hidden;
+
+      img {
+        max-width: 100%;
+        width: 100%;
+        transition: all 0.3s ease;
+        height: 285px;
+        object-fit: cover;
+      }
+    }
+
+    &__country-flag {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+
+    &__body {
+      padding: 0 20px;
+      padding-bottom: 20px;
+
+      .btn {
+        margin-bottom: -35px;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 210px;
+        display: block;
+      }
+    }
+
+    &__text {
+      font-size: 1em;
+      color: $COLOR-5;
+      margin-bottom: 0;
+      position: absolute !important;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      color: #fff !important;
+      padding: 20px;
+      background-color: $PRIMARY_OPACITY;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.5s ease;
+      font-weight: 500;
+    }
+  }
+
+  @include owlArrows(
+    $background: $PRIMARY,
+    $color: $COLOR-1,
+    $borderColor: $PRIMARY_DARKEN
+  );
+
+  @media (max-width: $SM) {
+    @include owlArrows(
+      $background: $PRIMARY,
+      $color: $COLOR-1,
+      $borderColor: $PRIMARY_DARKEN,
+      $offset: 0
+    );
+  }
+}

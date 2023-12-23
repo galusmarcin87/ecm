@@ -1,0 +1,88 @@
+.Table {
+  border-collapse: separate;
+  border-spacing: 0 2px;
+  border: none;
+  font-size: 16px;
+  font-weight: normal;
+
+  @media (max-width: $TABLET) {
+    font-size: 14px;
+  }
+
+  &--reversed {
+    tbody {
+      tr {
+        &:nth-child(odd) {
+          background-color: #eeeeee;
+        }
+        &:nth-child(even) {
+          background-color: #ffffff !important;
+        }
+      }
+    }
+  }
+
+  thead {
+    background-color: #eeeeee;
+    th {
+      font-weight: normal;
+    }
+  }
+  tbody {
+    tr {
+      margin-bottom: 2px;
+      &:nth-child(even) {
+        background-color: #eeeeee;
+      }
+    }
+  }
+
+  &__header {
+    background-color: #333333;
+    font-size: 20px;
+    line-height: 30px;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 20px 30px;
+  }
+}
+
+.Doc {
+  display: grid;
+  grid-template-columns: auto 250px;
+  padding: 15px 20px;
+  border: 1px solid rgba(5, 0, 9, 0.2);
+  margin-top: 10px;
+  align-items: center;
+  font-size: 20px;
+  line-height: 30px;
+
+  @media (max-width: $TABLET) {
+    font-size: 16px;
+  }
+
+  @media (max-width: $MD) {
+    grid-template-columns: auto 200px;
+  }
+
+  @media (max-width: $SM) {
+    grid-template-columns: auto 150px;
+  }
+
+  @media (max-width: $XS) {
+    grid-template-columns: auto 130px;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 15px 10px;
+  }
+
+  &:hover {
+    background-color: $PRIMARY;
+    color: #ffffff;
+    border-color: $PRIMARY;
+  }
+
+  .btn {
+    text-transform: none;
+  }
+}

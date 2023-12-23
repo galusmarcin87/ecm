@@ -1,0 +1,47 @@
+.Breadcrumbs {
+  text-align: left;
+  background: $COLOR_12;
+  padding: 16px 0;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+
+  &__link {
+    display: inline-block;
+    padding: 0 5px;
+    color: $SECONDARY;
+    line-height: 1.5;
+    position: relative;
+    padding-right: 20px;
+
+    &::after {
+      content: '\\';
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: $PRIMARY;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 20px;
+      height: 2px;
+      background: $COLOR_13;
+      top: calc(100% - 2px);
+    }
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &--active {
+      color: $PRIMARY;
+      &:after,
+      &:before {
+        display: none;
+      }
+    }
+  }
+}

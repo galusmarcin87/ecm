@@ -1,0 +1,223 @@
+#gradient-horizontal {
+  --color-stop-1: #35a1d9;
+  --color-stop-2: #11375f;
+  --color-stop-3: #35a1d9;
+}
+
+.Section {
+  padding: 40px 0;
+
+  &:nth-child(even) {
+    background-color: $COLOR_4;
+  }
+
+  p {
+    color: $PRIMARY;
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  strong {
+    color: $SECONDARY;
+  }
+
+  .btn {
+    margin-top: 80px;
+  }
+
+  &--bg {
+    background-size: cover;
+    background-position: bottom;
+    margin-bottom: 100px;
+    padding-top: 100px;
+    max-height: 380px;
+
+    @media screen and (max-width: $MD) {
+      max-height: unset;
+      padding-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    > div {
+      background-color: #f2f7f9;
+      padding: 55px 100px;
+      display: inline-block;
+      margin-bottom: -150px;
+
+      @media screen and (max-width: $MD) {
+        padding: 25px;
+      }
+    }
+
+    b {
+      color: $SECONDARY;
+      font-size: 20px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    &__icon {
+      margin-bottom: 50px;
+      width: 78px;
+      height: 78px;
+      fill: url(#gradient-horizontal) #35a1d9;
+    }
+  }
+
+  &--light-background {
+    background-color: #f2f7f9 !important;
+  }
+
+  &--light-bg {
+    margin-bottom: 25px;
+    position: relative;
+
+    &:before {
+      content: '';
+      background: rgb(255, 255, 255);
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0) 55%
+      );
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 1;
+      pointer-events: none;
+
+      @media screen and (max-width: $LG) {
+        display: none;
+      }
+    }
+
+    * {
+      color: $PRIMARY !important;
+    }
+
+    > div {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &-heading {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+    background: $SECONDARY !important;
+    min-height: 105px;
+
+    h2 {
+      font-size: 2em;
+      margin: 0;
+    }
+  }
+
+  &__heading {
+    h2 {
+      font-size: 4em;
+    }
+  }
+
+  &__image {
+    max-width: 100%;
+
+    @media screen and (max-width: $MD) {
+      margin-top: 20px;
+      margin-left: 0 !important;
+    }
+  }
+
+  &__text {
+    padding-right: 9%;
+
+    @media screen and (max-width: $TABLET) {
+      padding-right: 0;
+    }
+
+    p {
+      margin-bottom: 2.4rem;
+    }
+  }
+
+  &--dark {
+    color: $COLOR_3;
+    * {
+      color: $COLOR_3;
+    }
+  }
+
+  &--white {
+    color: $PRIMARY;
+
+    b {
+      color: $PRIMARY;
+    }
+  }
+
+  &--fixed-bg {
+    background-attachment: fixed;
+    background-position: right center;
+    background-size: cover;
+    color: $COLOR_3;
+
+    h2 {
+      color: $COLOR_3;
+    }
+
+    p {
+      color: $COLOR_3;
+    }
+
+    h6 {
+      font-size: 17px;
+      line-height: 1.5;
+      color: $COLOR_2;
+      font-weight: normal;
+    }
+
+    .btn {
+      margin-top: 20px;
+    }
+    &-custom {
+      padding-bottom: 70px;
+      background-position: center -80px;
+      background-attachment: initial;
+    }
+  }
+
+  &--secondary {
+    background: $SECONDARY;
+    color: $COLOR-3;
+  }
+
+  &--white {
+    background: $COLOR-3 !important;
+    background-image: none !important;
+  }
+
+  &--grey {
+    background-image: url($PATTERN_1) !important;
+  }
+}
+
+.Section--fixed-bg ~ section {
+  &:nth-child(odd) {
+    background: $COLOR_3;
+  }
+}
+
+.Image--spacing {
+  display: block;
+  margin-top: 25px;
+  margin-bottom: 35px;
+}

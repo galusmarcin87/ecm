@@ -1,0 +1,150 @@
+.Select-custom {
+  cursor: pointer;
+  display: inline-grid;
+  font-size: 14px;
+  grid-template-columns: auto auto;
+  white-space: nowrap;
+  position: relative;
+  text-align: left;
+  vertical-align: middle;
+  background: $PRIMARY_DARKEN;
+
+  &--active {
+    .Select-custom__options {
+      display: block;
+      &--inline {
+        display: grid;
+      }
+    }
+  }
+
+  * {
+    line-height: 1;
+  }
+
+  &__label {
+    color: $COLOR_2;
+    padding-right: 12px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-right: 1px solid $COLOR_2;
+    position: relative;
+
+    &:empty {
+      padding: 0;
+    }
+  }
+
+  &__selected {
+    color: $COLOR_3;
+    padding-left: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 30px;
+
+    &::after {
+      @include icon($COLOR_3, '\f078');
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transition: all 0.3s ease;
+      font-size: 9px;
+      transform: translate(0, -50%);
+    }
+
+    &__image {
+      position: absolute;
+      top: 50%;
+      left: 30px;
+      max-width: 36px;
+      transform: translate(0, -50%);
+
+      + .Select-custom__selected__label {
+        padding-left: 70px;
+      }
+    }
+  }
+
+  &__options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    color: $COLOR_3;
+    padding: 5px;
+    left: 0%;
+    min-width: 56px;
+    background: $PRIMARY_DARKEN;
+    z-index: 11;
+
+    &__option {
+      padding: 5px;
+      border-top: 1px solid $COLOR_3;
+      text-decoration: none !important;
+
+      &:first-child {
+        border-top: none;
+      }
+
+      &:hover {
+        color: $COLOR_3;
+      }
+
+      &--active {
+        color: $COLOR_4;
+      }
+
+      .fa {
+        color: $PRIMARY;
+        font-size: 1.3em;
+        margin-right: 10px;
+        vertical-align: text-bottom;
+      }
+    }
+
+    &--inline {
+      grid-template-columns: auto auto;
+      left: auto;
+      right: 0;
+      column-gap: 25px;
+      padding: 20px 30px;
+
+      .Select-custom__options__option {
+        color: $COLOR_3;
+        border: none;
+        transform: all 0.3s ease;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
+.Select {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+
+  &__select {
+    outline: none !important;
+    border-radius: $RADIUS;
+    border: 1px solid #a6aeba;
+    padding: 10px;
+    padding-right: 50px;
+    background: transparent;
+    color: #a6aeba;
+    font-weight: 500;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  &:after {
+    @include icon(#a6aeba, '\f078');
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translate(0, -50%);
+    font-size: 12px;
+  }
+}

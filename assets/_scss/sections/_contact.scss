@@ -1,0 +1,37 @@
+.contact-info {
+    display: flex;
+    align-items: center;
+    
+    &-icon {
+        flex: 0 0 auto;
+        margin-right: 2rem;
+        position: relative;
+        text-align: right;
+        &:before {
+            z-index: 10;
+            position: absolute;
+            width: 88px;
+            height: 77px;
+            background: #f3f3f3;
+            top: 0;
+            left: 0;
+            clip-path: polygon(25% 0, 0 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0);
+            content: '';
+            transform:translateX(-25%);
+        }
+    }
+    &-text {
+        flex: 1 1 auto;
+
+    }
+    .icon {
+        position: relative;
+        z-index: 50;
+        color: #fff;
+           width: 60px;
+           height: 70px;
+           -webkit-filter: drop-shadow(0px 0px 10px rgba(255,0,0,1));      
+            filter: drop-shadow(0px 0px 10px rgba(255,0,0,1)); 
+
+    }
+}

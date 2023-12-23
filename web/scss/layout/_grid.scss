@@ -1,0 +1,55 @@
+.Flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  &__col {
+    padding: 0 15px;
+    margin-top: 40px;
+    &--md-6 {
+      @media screen and (max-width: $MD) {
+        //flex-basis: 50%;
+      }
+    }
+    &--sm-12 {
+      @media screen and (max-width: $SM) {
+        flex-basis: 100%;
+      }
+    }
+    &__image {
+      max-width: 100%;
+    }
+  }
+}
+.Grid {
+  display: grid;
+  &--bottom {
+    align-self: end;
+  }
+}
+img {
+  max-width: 100%;
+}
+
+@media (max-width: $TABLET) {
+  .container {
+    max-width: 90%;
+  }
+}
+
+@media (min-width: $LG) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+@media (max-width: $LG) {
+  .container {
+    max-width: 95%;
+  }
+}
+
+@media (max-width: $MD) {
+  .container {
+    max-width: 100%;
+  }
+}

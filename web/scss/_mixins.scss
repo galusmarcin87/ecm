@@ -1,0 +1,118 @@
+@mixin icon($color, $content) {
+  content: $content;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'FontAwesome';
+  color: $color;
+  pointer-events: none;
+}
+
+@mixin hrLineLeft($color) {
+  &::after {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: $color;
+    position: absolute;
+    left: 0;
+    top: 70%;
+  }
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+
+  &:-moz-placeholder {
+    @content;
+  }
+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+@mixin owlArrows(
+  $background: $COLOR_1,
+  $color: $PRIMARY,
+  $offset: 7vw,
+  $borderColor: $COLOR_10
+) {
+  .owl-nav {
+    > button {
+      width: 40px;
+      height: 40px;
+      border-radius: $RADIUS;
+      background: $background !important;
+      color: $color !important;
+      position: absolute;
+      transform: translate(0, -50%);
+      top: 50%;
+      outline: none !important;
+      border-bottom: 2px solid $borderColor !important;
+
+      > span {
+        font-size: 24px;
+      }
+
+      &.owl-prev {
+        left: $offset;
+      }
+
+      &.owl-next {
+        right: $offset;
+      }
+    }
+  }
+}
+
+@mixin owlArrowsTwo(
+  $background: $COLOR_1,
+  $color: $PRIMARY,
+  $offset: -30px,
+  $borderColor: $COLOR_10
+) {
+  .owl-nav,
+  .Custom-nav {
+    --size: 60px;
+
+    @media (max-width: $TABLET) {
+      --size: 40px;
+      font-size: 16px;
+    }
+
+    > button {
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      background: $background !important;
+      color: $color !important;
+      position: absolute;
+      transform: translate(0, -50%);
+      top: 50%;
+      outline: none !important;
+      border: none;
+      font-size: 20px;
+      padding-bottom: 4px;
+
+      > span {
+        font-size: 24px;
+      }
+
+      &.owl-prev {
+        left: $offset;
+      }
+
+      &.owl-next {
+        right: $offset;
+      }
+    }
+  }
+}

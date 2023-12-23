@@ -1,0 +1,232 @@
+.List-custom {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+
+  &__item {
+    display: inline-block;
+    padding: 0 5px;
+    margin-right: 10px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  &__icon {
+    fill: $COLOR_2;
+    max-width: 13px;
+    height: auto;
+    margin-right: 3px;
+  }
+}
+
+.List-custom__two {
+  padding: 0;
+  list-style-type: none;
+
+  &__item {
+    line-height: 1.5;
+    padding-bottom: 10px;
+    display: grid;
+    grid-template-columns: 0.4fr 0.6fr;
+    position: relative;
+    color: $COLOR_5;
+    font-size: 15px;
+
+    strong {
+      font-weight: 500;
+      color: $SECONDARY;
+    }
+  }
+
+  &_ico {
+    width: 20px;
+    margin-right: 10px;
+  }
+}
+
+.List-custm__checklist {
+  --size: 60px;
+  padding-left: 15px;
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 40px;
+  grid-row-gap: 40px;
+
+  @media (max-width: $MD) {
+    grid-template-columns: 1fr;
+  }
+
+  &__item {
+    position: relative;
+    list-style-type: none;
+    padding-left: 85px;
+    padding-top: 5px;
+    font-size: 16px;
+    line-height: 30px;
+    margin-bottom: 20px;
+    color: $PRIMARY;
+
+    strong {
+      font-weight: 500;
+      font-size: 20px;
+      display: block;
+      margin-bottom: 20px;
+      color: $PRIMARY;
+    }
+
+    &:before {
+      content: '';
+      width: var(--size);
+      height: var(--size);
+      background: #dbe3e9;
+      border-radius: $RADIUS;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    &:after {
+      content: '\2713';
+      width: var(--size);
+      height: var(--size);
+      color: $SECONDARY;
+      position: absolute;
+      font-size: 30px;
+      left: 0%;
+      font-weight: bold;
+      top: 0%;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.List-grid {
+  --size: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 30px;
+  margin-top: 30px;
+
+  @media (max-width: $TABLET) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: $SM) {
+    grid-template-columns: 1fr;
+  }
+
+  &--numbers {
+    counter-reset: section;
+
+    .List-grid__item {
+      &:before {
+        background: #e7ebef !important;
+        border-radius: $RADIUS;
+      }
+
+      &:after {
+        counter-increment: section;
+        content: counter(section);
+        font-size: 20px;
+        font-weight: 500;
+        color: $PRIMARY;
+        font-size: 42px;
+        font-family: 'Playfair Display', serif;
+        align-content: end;
+      }
+
+      &__header {
+        font-size: 20px;
+        line-height: 30px;
+        font-family: $FONT;
+        color: $SECONDARY !important;
+      }
+    }
+  }
+
+  &__item {
+    padding-left: 65px;
+    position: relative;
+
+    &:before {
+      content: '';
+      width: var(--size);
+      height: var(--size);
+      background: $SECONDARY;
+      border-radius: $RADIUS;
+      position: absolute;
+      left: 0;
+      top: 0;
+      border-radius: 50%;
+    }
+
+    &:after {
+      content: '\2713';
+      width: var(--size);
+      height: var(--size);
+      color: $COLOR_3;
+      position: absolute;
+      font-size: 24px;
+      left: 0%;
+      font-weight: bold;
+      top: 0%;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__header {
+      font-size: 20px;
+    }
+
+    &__content {
+      font-size: 12px;
+    }
+
+    &:nth-child(odd) {
+      &:before {
+        background: $PRIMARY;
+      }
+
+      .List-grid__item__header {
+        color: $SECONDARY;
+      }
+    }
+  }
+}
+
+.List-grid-nth {
+  &__item {
+    display: grid;
+    grid-template-columns: 90px auto;
+    grid-column-gap: 30px;
+    margin-bottom: 50px;
+
+    @media (max-width: $SM) {
+      grid-template-columns: 1fr !important;
+      grid-row-gap: 10px;
+    }
+
+    @media (min-width: $SM) {
+      &:nth-child(even) {
+        grid-template-columns: auto 90px;
+        text-align: right;
+
+        > div {
+          &:first-child {
+            order: 1;
+          }
+
+          &:last-child {
+            order: 0;
+          }
+        }
+      }
+    }
+  }
+}
