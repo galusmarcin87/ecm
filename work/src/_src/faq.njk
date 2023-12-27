@@ -1,0 +1,48 @@
+---
+    title: faq
+    permalink: "faq.html"
+    layout: layouts/main.njk
+    eleventyNavigation:
+    key: faq
+---
+{% set header_title = "FAQ" %}
+{% set breadcrumbs =  [{title: 'Home'}, {title: 'FAQ'}] %}
+{% set header_image = "page-header.jpg" %}
+
+{% include "./_templates/_partials/_page-header.njk" %}
+
+
+    {% include "./_templates/_partials/faq-all.njk" %}
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-6">
+                <img src="/assets/images/faq-question.png" alt="" class="img-fluid">
+            </div>
+            <div class="col-lg-6 pt-5">
+                <h2 class="section-title text-primary mb-0 pt-lg-5">Nie znalazłeś odpowiedzi?</h2>
+                <p class="text-uppercase fs-4 mb-5">Skontaktuj się z nami</p>
+                <p>Napisz do nas na adres:</p>
+                <p class="fs-5">
+                    <a href="mailto:office@ecmarket.eu" class="fw-bold link-dark">office@ecmarket.eu</a>
+                    lub
+                    <a href="mailto:cminvestors@ecmarket.eu" class="fw-bold link-dark">cminvestors@ecmarket.eu</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

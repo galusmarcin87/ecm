@@ -1,0 +1,74 @@
+---
+    title: contact
+    permalink: "contact.html"
+    layout: layouts/main.njk
+    eleventyNavigation:
+    key: contact
+---
+{% set header_title = "Kontakt" %}
+{% set breadcrumbs =  [{title: 'Home'}, {title: 'Kontakt'}] %}
+{% set header_image = "page-header.jpg" %}
+
+{% include "./_templates/_partials/_page-header.njk" %}
+
+
+
+<div class="contact-page">
+    <div class="container">
+
+        <div class="row align-items-center py-6">
+            <div class="col-lg-4">
+                <div class="contact-info">
+                    <div class="contact-info-icon">
+                        <svg class="icon">
+                            <use xlink:href="#info">
+                        </svg>
+                    </div>
+                    <div class="contact-info-text pt-3">
+                        <p>
+                            <strong>ENERGY COIN MARKET</strong><br />
+                            REGON: 234567890<br />
+                            NIP: 234567890<br />
+                            KRS: 2345213
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="contact-info">
+                    <div class="contact-info-icon">
+                        <svg class="icon">
+                            <use xlink:href="#pin">
+                        </svg>
+                    </div>
+                    <div class="contact-info-text pt-3">
+                        <p><strong>POLSKA:</strong> ul. Jana Heweliusza 11/819, <br />80-890 Warszawa</p>
+                        <p><strong>USA:</strong> Chicago at 2806 N Mozart St.<br /> Chicago, IL 60618</p>
+                    </div>
+                    </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="contact-info">
+                    <div class="contact-info-icon">
+                        <svg class="icon">
+                            <use xlink:href="#envelope">
+                        </svg>
+                    </div>
+                    <div class="contact-info-text pt-3">
+                        <p>office@ecmarket.eu</p>
+                        <p>cminvestors@ecmarket.eu</p>
+                    </div>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    {% include "./_templates/_partials/section-newsletter.njk" %}
+
+    {% include "./_templates/_partials/contact-form.njk" %}
+
+

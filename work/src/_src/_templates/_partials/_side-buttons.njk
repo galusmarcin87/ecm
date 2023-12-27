@@ -1,0 +1,22 @@
+<div class="container">
+<div class="side-buttons-wrapper">
+<div class="side-buttons">
+                        <ul class="nav nav-social">
+                                            {% set data = [
+            {title: 'reddit'},
+            {title: 'instagram'},
+            {title: 'youtube'},
+            {title: 'facebook'}
+            
+            ] 
+            %}
+{% for item in data %}
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"><svg class="icon"><use xlink:href="#{{item.title}}" /></svg></a>
+                    </li>
+{%endfor %}
+                    </ul>
+</div>
+</div>
+</div>

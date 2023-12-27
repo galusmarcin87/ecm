@@ -1,0 +1,101 @@
+<footer class="site-footer">
+    <svg class="site-footer-decoration">
+        <use xlink:href="#hexagon" />
+    </svg>
+    <div class="site-footer-content">
+    <div class="container">
+        <div class="footer-widgets">
+        <div class="row">
+            <div class="col-lg-3 mb-4 mb-lg-0">
+                <img src="/assets/images/logo.svg" width="200" alt="">
+            </div>
+            <div class="col-lg-9">
+                <ul class="nav footer-nav">
+                    {% set data = [
+            {title: 'O nas'},
+            {title: 'Jak zainwestować'},
+            {title: 'Logowanie'},
+            {title: 'FAQ'},
+            {title: 'Projekty'},
+            {title: 'Zespół'},
+            {title: 'Rejestracja'},
+            {title: 'Kariera'},
+            {title: 'Media o nas'},
+            {title: 'Partnerzy'},
+            {title: 'Regulamin'},
+            {title: 'Multimedia'},
+            {title: 'Kontakt'},
+            {title: 'Instrukcje'},
+            {title: 'Polityka prywatności'}
+            
+            ] 
+            %}
+{% for item in data %}
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">{{item.title}}</a>
+                    </li>
+{%endfor %}
+                </ul>
+            </div>
+        </div>
+        </div>
+        <div class="footer-lines">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="d-flex flex-column flex-lg-row align-items-center">
+                    <a href="mailto:office@ecmarket.eu" class="footer-mail">
+                        <div class="footer-mail-icon">
+                            <svg class="icon">
+                                <use xlink:href="#envelope" />
+                            </svg>
+                        </div>
+                        <div class="footer-mail-text">
+                            office@ecmarket.eu
+                        </div>
+                    </a>
+                    <a href="mailto:office@ecmarket.eu" class="footer-mail">
+                        <div class="footer-mail-icon">
+                            <svg class="icon">
+                                <use xlink:href="#envelope" />
+                            </svg>
+                        </div>
+                        <div class="footer-mail-text">
+                            cminwestors@ecmarket.eu
+                        </div>
+                    </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center text-lg-end d-flex">
+                    <ul class="nav nav-social mx-auto me-lg-0 ms-lg-auto">
+                                            {% set data = [
+            {title: 'reddit'},
+            {title: 'instagram'},
+            {title: 'youtube'},
+            {title: 'facebook'}
+            
+            ] 
+            %}
+{% for item in data %}
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"><svg class="icon"><use xlink:href="#{{item.title}}" /></svg></a>
+                    </li>
+{%endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="site-info">
+            <div class="row">
+                <div class="col-lg-6">
+                    &copy; 2023 Energy Coin Market
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    Realizacja i projekt: <a href="https://vertesdesign.pl/">Vertes Design</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</footer>

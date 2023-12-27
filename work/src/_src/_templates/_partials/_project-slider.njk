@@ -1,0 +1,65 @@
+<div class="project-slider">
+
+    {% set data = [
+        {
+            image:'project-slider.jpg'
+        },
+        {
+            image:'project-slider.jpg'
+        },
+        {
+            image:'project-slider.jpg'
+        },
+        {
+            image:'project-slider.jpg'
+        },
+        {
+            image:'project-slider.jpg'
+        },
+        {
+            image:'project-slider.jpg'
+        },
+        {
+            image:'project-slider.jpg'
+        }
+    ] 
+    %}
+
+    <div class="splide project-main-slider" id="project-main-carousel">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        {% for item in data %}
+                        <li class="splide__slide">
+                            <a href="assets/images/{{item.image}}" class="slide-link mfp">
+                                <img src="assets/images/{{item.image}}" class="img-fluid" alt="">
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="slider-nav">
+                    <div class="splide__arrows"></div>
+                    <ul class="splide__pagination"></ul>
+
+                </div>
+    </div>
+
+    <div class="splide project-thumbnail-slider" id="project-thumbnail-carousel">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        {% for item in data %}
+                        <li class="splide__slide">
+                            <img src="assets/images/{{item.image}}" class="img-fluid" alt="">
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="slider-nav">
+                    <div class="splide__arrows"></div>
+                    <ul class="splide__pagination"></ul>
+
+                </div>
+    </div>
+</div>
+
+
