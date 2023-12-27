@@ -25,14 +25,15 @@ class FrontAsset extends AssetBundle
         'less/front.less',
     ];
     public $js = [
-        '/js/vendor/bootstrap.bundle.min.js',
-        '/js/vendor/jquery.appear.js',
-        '/js/vendor/TweenLite.min.js',
         'https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyD9AbR7v9VcflkE06B3qdNXiU7ErvoUYP8',
         '/js/vendor/infobox_packed.js',
+        '/js/vendor/bootstrap.bundle.min.js',
+        '/js/vendor/splide.min.js',
         '/js/vendor/countdown.js',
         '/js/vendor/swiper-bundle.min.js',
-        '/js/app.js',
+        '/js/vendor/jquery.magnific-popup.min.js',
+        '/js/app.js',   
+
 
     ];
     public $depends = [
