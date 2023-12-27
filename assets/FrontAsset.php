@@ -32,7 +32,7 @@ class FrontAsset extends AssetBundle
         '/js/vendor/countdown.js',
         '/js/vendor/swiper-bundle.min.js',
         '/js/vendor/jquery.magnific-popup.min.js',
-        '/js/app.js',   
+        '/js/app.js',
 
 
     ];

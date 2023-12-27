@@ -51,7 +51,7 @@ class Slide extends \app\models\mgcms\db\AbstractRecord
   {
     return [
         'id' => Yii::t('app', 'ID'),
-        'name' => Yii::t('app', 'Link label'),
+        'name' => Yii::t('app', 'Name'),
         'header' => Yii::t('app', 'Header'),
         'subheader' => Yii::t('app', 'Subheader'),
         'body' => Yii::t('app', 'Lead'),

@@ -35,6 +35,7 @@ FrontAsset::register($this);
 <body id="page_<?= Yii::$app->controller->id . '_' . Yii::$app->controller->action->id ?>">
 <?php $this->beginBody() ?>
 <?= $this->render('header') ?>
+<?= $this->render('_svg') ?>
 <?= Alert::widget() ?>
 <?= AdWidget::widget() ?>
 <?= $content ?>
