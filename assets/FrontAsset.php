@@ -33,8 +33,6 @@ class FrontAsset extends AssetBundle
         '/js/vendor/swiper-bundle.min.js',
         '/js/vendor/jquery.magnific-popup.min.js',
         '/js/app.js',
-
-
     ];
     public $depends = [
         'yii\web\JqueryAsset'

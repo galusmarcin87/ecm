@@ -6,6 +6,7 @@
     use yii\data\ArrayDataProvider;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
+    use app\components\mgcms\MgHelpers;
 
     $dataProvider = new ArrayDataProvider([
         'allModels' => $row,
@@ -26,6 +27,7 @@
             'from' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Nagłówek'],
             'to' => ['type' => TabularForm::INPUT_HIDDEN, 'label' => 'Do','value' => 1, 'columnOptions' => ['hidden' => true]],
             'value' => ['type' => TabularForm::INPUT_TEXT, 'label' => 'Tekst'],
+            'language' => ['type' => TabularForm::INPUT_DROPDOWN_LIST, 'items'=>MgHelpers::arrayKeyValueFromArray(MgHelpers::getConfigParam('languagesDisplay'))],
             'del' => [
                 'type' => 'raw',
                 'label' => '',

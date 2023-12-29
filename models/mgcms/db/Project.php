@@ -6,6 +6,8 @@ use Yii;
 use app\components\mgcms\MgHelpers;
 use app\models\mgcms\db\User;
 use yii\helpers\Html;
+use function _\map;
+use function _\uniq;
 
 /**
  * This is the base model class for table "project".
@@ -48,19 +50,25 @@ use yii\helpers\Html;
  * @property integer $value
  * @property string $management
  * @property string $risks
+ * @property integer $investorsCount
+ * @property integer $paymentsCount
+ * @property string $statusStr
+ * @property boolean $isFavourite
  *
  * @property \app\models\mgcms\db\Bonus[] $bonuses
  * @property \app\models\mgcms\db\Bonus[] $faqs
  * @property \app\models\mgcms\db\Payment[] $payments
  * @property \app\models\mgcms\db\File $file
  * @property \app\models\mgcms\db\File $flag
+ * @property \app\models\mgcms\db\ProjectUser[] $projectUsers
+ * @property \app\models\mgcms\db\User[] $usersWhoAddToFavourite
  */
 class Project extends \app\models\mgcms\db\AbstractRecord
 {
     use LanguageBehaviorTrait;
 
     public $modelAttributes = ['management', 'risks'];
-    public $languageAttributes = ['name', 'lead', 'text', 'text2', 'buy_token_info'];
+    public $languageAttributes = ['name', 'lead', 'text', 'text2', 'buy_token_info', 'management', 'risks'];
     public $downloadFiles;
 
     const STATUS_ACTIVE = 1;
@@ -79,7 +87,7 @@ class Project extends \app\models\mgcms\db\AbstractRecord
             [['gps_lat', 'gps_long', 'money', 'money_full', 'percentage', 'percentage_presale_bonus'], 'number'],
             [['lead', 'text', 'text2', 'buy_token_info', 'fiber_collect_id', 'iban', 'pay_description', 'pay_name'], 'string'],
             [['file_id', 'token_value', 'token_to_sale', 'token_minimal_buy', 'token_left', 'flag_id', 'created_by', 'value'], 'integer'],
-            [['date_presale_start', 'date_presale_end', 'date_crowdsale_start', 'date_crowdsale_end', 'date_realization_profit'], 'safe'],
+            [['date_presale_start', 'date_presale_end', 'date_crowdsale_start', 'date_crowdsale_end', 'date_realization_profit','management'], 'safe'],
             [['name', 'localization', 'whitepaper', 'www', 'token_blockchain'], 'string', 'max' => 245],
             [['status', 'investition_time', 'token_currency'], 'string', 'max' => 45],
             [['management', 'risks'], 'string'],
@@ -139,6 +147,9 @@ class Project extends \app\models\mgcms\db\AbstractRecord
             'value' => 'Wartość inwestycji',
             'management' => Yii::t('app', 'Management'),
             'risks' => Yii::t('app', 'Risks'),
+            'investorsCount' => Yii::t('db', 'Investors Number'),
+            'paymentsCount' => Yii::t('db', 'Investitions Number'),
+            'statusStr' => Yii::t('db', 'Status'),
         ];
     }
 
@@ -147,13 +158,14 @@ class Project extends \app\models\mgcms\db\AbstractRecord
      */
     public function getBonuses()
     {
-        return $this->hasMany(\app\models\mgcms\db\Bonus::className(), ['project_id' => 'id'])->andWhere(['to' => 1]);
+
+        return $this->hasMany(\app\models\mgcms\db\Bonus::className(), ['project_id' => 'id'])->andWhere(['to' => 1])->andWhere($this->language ? ['language' => $this->language] : []);
     }
 
 
     public function getFaqs()
     {
-        return $this->hasMany(\app\models\mgcms\db\Bonus::className(), ['project_id' => 'id'])->andWhere(['to' => 2]);
+        return $this->hasMany(\app\models\mgcms\db\Bonus::className(), ['project_id' => 'id'])->andWhere(['to' => 2])->andWhere($this->language ? ['language' => $this->language] : []);
     }
 
     /**
@@ -220,5 +232,46 @@ class Project extends \app\models\mgcms\db\AbstractRecord
     public function getLtv()
     {
         return $this->value ? (number_format($this->money_full / $this->value, 2) * 100) . '%' : '';
+    }
+
+    public function getInvestorsCount()
+    {
+        return count(uniq(map($this->payments, function (Payment $payment) {
+            return $payment->user->id;
+        })));
+    }
+
+    public function getPaymentsCount()
+    {
+        return count($this->payments);
+    }
+
+    public function getStatusStr()
+    {
+        return Yii::t('db', Project::STATUSES[$this->status]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProjectUsers()
+    {
+        return $this->hasMany(\app\models\mgcms\db\ProjectUser::className(), ['project_id' => 'id']);
+    }
+
+
+    public function getUsersWhoAddToFavourite()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])
+            ->viaTable('project_user', ['project_id' => 'id']);
+    }
+
+    public function getIsFavourite()
+    {
+        $currentUser = MgHelpers::getUserModel();
+        if(!$currentUser){
+            return false;
+        }
+        return ProjectUser::find()->where(['project_id' => $this->id, 'user_id' => $currentUser->id])->count();
     }
 }

@@ -13,6 +13,7 @@ use app\components\mgcms\MgHelpers;
  * @property integer $to
  * @property integer $value
  * @property integer $project_id
+ * @property string $language
  *
  * @property \app\models\mgcms\db\Project $project
  */
@@ -27,7 +28,7 @@ class Bonus extends \app\models\mgcms\db\AbstractRecord
         return [
             [['from', 'value', 'project_id'], 'required'],
             [['to', 'project_id'], 'integer'],
-            [['from'], 'string', 'max' => 255],
+            [['from','language'], 'string', 'max' => 255],
             [['value'], 'string'],
         ];
     }
@@ -51,6 +52,7 @@ class Bonus extends \app\models\mgcms\db\AbstractRecord
             'to' => Yii::t('app', 'Do'),
             'value' => Yii::t('app', 'Tekst'),
             'project_id' => Yii::t('app', 'Project'),
+            'language' => Yii::t('app', 'Language'),
         ];
     }
 

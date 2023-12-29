@@ -181,6 +181,9 @@ class AbstractRecord extends \yii\db\ActiveRecord
         if (!$this->id) {
             return false;
         }
+        if($this->language && $this->language != $this->LANGUAGE_DEFAULT && $this->languageAttributes && in_array($key, $this->languageAttributes)) {
+            return $this->setAttribute($key, $value);
+        }
         $modelAttribute = ModelAttribute::find()->where(['rel_id' => $this->id, 'model' => $this::className(), 'key' => $key])->one();
         if (!$modelAttribute) {
             $modelAttribute = new ModelAttribute;
@@ -219,6 +222,15 @@ class AbstractRecord extends \yii\db\ActiveRecord
             return $this->setModelAttribute($name, $value);
         }
         return parent::__set($name, $value);
+    }
+
+    public function hasAttribute($name)
+    {
+        if (in_array($name, $this->modelAttributes)) {
+            return true;
+        }
+
+        return parent::hasAttribute($name);
     }
 
     /**
