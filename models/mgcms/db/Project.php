@@ -54,6 +54,7 @@ use function _\uniq;
  * @property integer $paymentsCount
  * @property string $statusStr
  * @property boolean $isFavourite
+ * @property string $type
  *
  * @property \app\models\mgcms\db\Bonus[] $bonuses
  * @property \app\models\mgcms\db\Bonus[] $faqs
@@ -77,6 +78,12 @@ class Project extends \app\models\mgcms\db\AbstractRecord
     const STATUSES = [self::STATUS_ACTIVE => 'aktywny', self::STATUS_ENDED => 'zakończony', self::STATUS_PLANNED => 'zaplanowany'];
     const STATUSES_EN = [self::STATUS_ACTIVE => 'Current', self::STATUS_ENDED => 'Ended', self::STATUS_PLANNED => 'Planned'];
 
+    const TYPE_STANDARD = 'standard';
+    const TYPE_ECM = 'ecm';
+    const TYPE_EC = 'ec';
+    const TYPE_SDT = 'sdt';
+    const TYPES = [self::TYPE_ECM, self::TYPE_EC, self::TYPE_SDT];
+
     /**
      * @inheritdoc
      */
@@ -85,9 +92,9 @@ class Project extends \app\models\mgcms\db\AbstractRecord
         return [
             [['name', 'file_id'], 'required'],
             [['gps_lat', 'gps_long', 'money', 'money_full', 'percentage', 'percentage_presale_bonus'], 'number'],
-            [['lead', 'text', 'text2', 'buy_token_info', 'fiber_collect_id', 'iban', 'pay_description', 'pay_name'], 'string'],
+            [['lead', 'text', 'text2', 'buy_token_info', 'fiber_collect_id', 'iban', 'pay_description', 'pay_name', 'type'], 'string'],
             [['file_id', 'token_value', 'token_to_sale', 'token_minimal_buy', 'token_left', 'flag_id', 'created_by', 'value'], 'integer'],
-            [['date_presale_start', 'date_presale_end', 'date_crowdsale_start', 'date_crowdsale_end', 'date_realization_profit','management'], 'safe'],
+            [['date_presale_start', 'date_presale_end', 'date_crowdsale_start', 'date_crowdsale_end', 'date_realization_profit', 'management'], 'safe'],
             [['name', 'localization', 'whitepaper', 'www', 'token_blockchain'], 'string', 'max' => 245],
             [['status', 'investition_time', 'token_currency'], 'string', 'max' => 45],
             [['management', 'risks'], 'string'],
@@ -149,7 +156,8 @@ class Project extends \app\models\mgcms\db\AbstractRecord
             'risks' => Yii::t('app', 'Risks'),
             'investorsCount' => Yii::t('db', 'Investors Number'),
             'paymentsCount' => Yii::t('db', 'Investitions Number'),
-            'statusStr' => Yii::t('db', 'Status'),
+            'statusStr' => Yii::t('app', 'Status'),
+            'type' => Yii::t('app', 'Type'),
         ];
     }
 
@@ -269,7 +277,7 @@ class Project extends \app\models\mgcms\db\AbstractRecord
     public function getIsFavourite()
     {
         $currentUser = MgHelpers::getUserModel();
-        if(!$currentUser){
+        if (!$currentUser) {
             return false;
         }
         return ProjectUser::find()->where(['project_id' => $this->id, 'user_id' => $currentUser->id])->count();

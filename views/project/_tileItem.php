@@ -20,7 +20,7 @@ $model->language = Yii::$app->language;
     <div class="card-body">
         <h5 class="card-title card-title-has-icon">
             <div class="card-title-icon">
-                <img src="/images/tokens/ecm.png" alt="">
+                <img src="/images/tokens/<?= $model->type ?>.png" alt="">
             </div>
             <div class="card-title-text">
                 <?= $model ?>

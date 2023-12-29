@@ -118,7 +118,7 @@ class ProjectController extends MgBackendController
         $post = Yii::$app->request->post();
         $this->_assignPostFaqs($post);
 
-        if ($model->loadAll($post) && $model->saveAll(['payments','faqs'])) {
+        if ($model->loadAll($post) && $model->saveAll(['payments','faqs','projectUsers'])) {
             $this->_assignDownloadFiles($model);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

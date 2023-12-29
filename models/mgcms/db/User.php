@@ -75,6 +75,8 @@ use app\components\mgcms\MgHelpers;
  * @property User[] $users
  * @property Payment[] $payments
  * @property Payment[] $paymentsApproved
+ * @property \app\models\mgcms\db\ProjectUser[] $projectUsers
+ * @property \app\models\mgcms\db\Project[] $projectsFavorites
  */
 class User extends BaseUser implements IdentityInterface
 {
@@ -466,5 +468,21 @@ class User extends BaseUser implements IdentityInterface
             case self::ROLE_ADMIN:
                 return self::ROLES;
         }
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProjectUsers()
+    {
+        return $this->hasMany(\app\models\mgcms\db\ProjectUser::className(), ['user_id' => 'id']);
+    }
+
+
+    public function getProjectsFavorites()
+    {
+        return $this->hasMany(Project::className(), ['id' => 'project_id'])
+            ->viaTable('project_user', ['user_id' => 'id']);
     }
 }

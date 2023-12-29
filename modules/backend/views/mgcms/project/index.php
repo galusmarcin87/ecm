@@ -36,6 +36,7 @@ $this->registerJs($search);
         ['class' => 'yii\grid\SerialColumn'],
         'id',
         'name',
+        'type',
 //        'status',
 //        'localization',
         'money',

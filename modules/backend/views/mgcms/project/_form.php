@@ -38,31 +38,32 @@ yii\jui\JuiAsset::register($this);
     <?= $form->errorSummary($model); ?>
 
     <div class="row">
-		<?= $this->render('/common/languageBehaviorSwicher', ['model' => $model, 'form' => $form]) ?>
-		
-		<?= $form->field4md($model, 'name')->textInput(['maxlength' => true]) ?>
-		
-	    <?= $form->field4md($model, 'status')->dropDownList(\app\models\mgcms\db\Project::STATUSES) ?>
-		
-		<div class="row">
-        <?= $form->field4md($model, 'file_id')->widget(\kartik\widgets\Select2::classname(), [
-            'data' => \yii\helpers\ArrayHelper::map(\app\models\mgcms\db\File::find()->orderBy('id')->asArray()->all(), 'id', 'origin_name'),
-            'options' => ['placeholder' => Yii::t('app', 'Choose File')],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ]); ?>
-		</div>
-		
-		<?= $form->field3md($model, 'money')->textInput(['placeholder' => '']) ?>
-		
-		<?= $form->field3md($model, 'money_full')->textInput(['placeholder' => '']) ?>
-		
-		<?= $form->field3md($model, 'token_value')->textInput(['placeholder' => '']) ?>
-		
-		<?= $form->field3md($model, 'token_minimal_buy')->textInput(['placeholder' => '']) ?>
-		
-		<?= $form->field4md($model, 'date_presale_start')->widget(\kartik\datecontrol\DateControl::classname(), [
+        <?= $this->render('/common/languageBehaviorSwicher', ['model' => $model, 'form' => $form]) ?>
+
+        <?= $form->field3md($model, 'name')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field3md($model, 'status')->dropDownList(\app\models\mgcms\db\Project::STATUSES) ?>
+        <?= $form->field3md($model, 'type')->dropDownList( MgHelpers::arrayKeyValueFromArray(\app\models\mgcms\db\Project::TYPES)) ?>
+
+        <div class="row">
+            <?= $form->field3md($model, 'file_id')->widget(\kartik\widgets\Select2::classname(), [
+                'data' => \yii\helpers\ArrayHelper::map(\app\models\mgcms\db\File::find()->orderBy('id')->asArray()->all(), 'id', 'origin_name'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose File')],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]); ?>
+        </div>
+
+        <?= $form->field3md($model, 'money')->textInput(['placeholder' => '']) ?>
+
+        <?= $form->field3md($model, 'money_full')->textInput(['placeholder' => '']) ?>
+
+        <?= $form->field3md($model, 'token_value')->textInput(['placeholder' => '']) ?>
+
+        <?= $form->field3md($model, 'token_minimal_buy')->textInput(['placeholder' => '']) ?>
+
+        <?= $form->field4md($model, 'date_presale_start')->widget(\kartik\datecontrol\DateControl::classname(), [
             'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
             'saveFormat' => 'php:Y-m-d',
             'ajaxConversion' => true,
@@ -73,7 +74,7 @@ yii\jui\JuiAsset::register($this);
                 ]
             ],
         ]); ?>
-		
+
         <?= $form->field4md($model, 'date_presale_end')->widget(\kartik\datecontrol\DateControl::classname(), [
             'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
             'saveFormat' => 'php:Y-m-d',
@@ -85,8 +86,8 @@ yii\jui\JuiAsset::register($this);
                 ]
             ],
         ]); ?>
-		
-		<?= $form->field4md($model, 'date_crowdsale_start')->widget(\kartik\datecontrol\DateControl::classname(), [
+
+        <?= $form->field4md($model, 'date_crowdsale_start')->widget(\kartik\datecontrol\DateControl::classname(), [
             'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
             'saveFormat' => 'php:Y-m-d',
             'ajaxConversion' => true,
@@ -97,7 +98,7 @@ yii\jui\JuiAsset::register($this);
                 ]
             ],
         ]); ?>
-		
+
         <?= $form->field4md($model, 'date_crowdsale_end')->widget(\kartik\datecontrol\DateControl::classname(), [
             'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
             'saveFormat' => 'php:Y-m-d',
@@ -109,13 +110,13 @@ yii\jui\JuiAsset::register($this);
                 ]
             ],
         ]); ?>
-		
-		
-		<?= $form->field6md($model, 'percentage')->textInput(['placeholder' => '']) ?>
-		<?= $form->field6md($model, 'token_minimal_buy')->textInput(['placeholder' => '']) ?>
-		<?= $form->field6md($model, 'percentage_presale_bonus')->textInput(['placeholder' => '']) ?>
-		
-		<? if (MgHelpers::getUserModel()->role === 'admin'): ?>
+
+
+        <?= $form->field6md($model, 'percentage')->textInput(['placeholder' => '']) ?>
+        <?= $form->field6md($model, 'token_minimal_buy')->textInput(['placeholder' => '']) ?>
+        <?= $form->field6md($model, 'percentage_presale_bonus')->textInput(['placeholder' => '']) ?>
+
+        <? if (MgHelpers::getUserModel()->role === 'admin'): ?>
             <?= $form->field4md($model, 'created_by')->widget(\kartik\widgets\Select2::classname(), [
                 'data' => \yii\helpers\ArrayHelper::map(\app\models\mgcms\db\User::find()->orderBy('id')->all(), 'id', 'toString'),
                 'options' => ['placeholder' => Yii::t('app', 'Wybierz użytkownika')],
@@ -124,8 +125,8 @@ yii\jui\JuiAsset::register($this);
                 ],
             ]); ?>
         <? endif ?>
-		
-		<?= $form->field6md($model, 'localization')->textInput(['maxlength' => true, 'placeholder' => 'Localization']) ?>
+
+        <?= $form->field6md($model, 'localization')->textInput(['maxlength' => true, 'placeholder' => 'Localization']) ?>
 
         <?= $form->field6md($model, 'gps_lat')->textInput(['maxlength' => true, 'placeholder' => 'Gps Lat']) ?>
 
@@ -139,7 +140,7 @@ yii\jui\JuiAsset::register($this);
         <?= $form->field3md($model, 'iban')->textInput(['placeholder' => '']) ?>
         <?= $form->field3md($model, 'pay_name')->textInput(['placeholder' => '']) ?>
         <?= $form->field3md($model, 'pay_description')->textInput(['placeholder' => '']) ?>
-		
+
     </div>
 
     <div class="well">
