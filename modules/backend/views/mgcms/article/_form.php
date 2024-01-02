@@ -20,18 +20,27 @@ use yii\bootstrap\Modal;
     <?= $form->errorSummary($model); ?>
 
     <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-	
-	   <div class="row">
-	  <div class="col-md-3"> 
-		  <?= $form->field($model, 'language')->dropDownList(array_combine(MgHelpers::getConfigParam('languages'), MgHelpers::getConfigParam('languages'))) ?>
-		  </div>
-	   <div class="col-md-3"> 
-		  <?= $form->field($model, 'status')->dropDownList(MgHelpers::translatedSBValueFromArray(Article::STATUSES)) ?>
-		   </div>
-	   <div class="col-md-3"> 
-		  <?= $form->field($model, 'type')->dropDownList(app\components\mgcms\MgHelpers::arrayKeyValueFromArray(\app\models\mgcms\db\Article::TYPES, true), ['maxlength' => true, 'placeholder' => 'Type', 'prompt' => '']) ?>
-		   </div>
-	   <div class="col-md-3">
+
+    <div class="row">
+        <div class="col-md-3">
+            <?= $form->field($model, 'language')->dropDownList(array_combine(MgHelpers::getConfigParam('languages'), MgHelpers::getConfigParam('languages'))) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'status')->dropDownList(MgHelpers::translatedSBValueFromArray(Article::STATUSES)) ?>
+        </div>
+        <div class="col-md-3">
+            <?=
+            $form->field($model, 'category_id')->widget(\kartik\widgets\Select2::classname(), [
+                'data' => \yii\helpers\ArrayHelper::map(\app\models\mgcms\db\Category::find()->orderBy('id')->asArray()->all(), 'id', 'name'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose Category')],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]);
+
+            ?>
+        </div>
+        <div class="col-md-3">
             <?= $form->field($model, 'order')->textInput(['placeholder' => $model->getAttributeLabel('order')]) ?>
         </div>
     </div>
@@ -41,7 +50,6 @@ use yii\bootstrap\Modal;
     <?= $form->field($model, 'content')->tinyMce(['height' => 480]) ?>
 
     <?= $form->field($model, 'excerpt')->tinyMce() ?>
-
 
 
     <div class="row">
@@ -64,9 +72,9 @@ use yii\bootstrap\Modal;
         <legend><?= Yii::t('app', 'Images'); ?></legend>
         <?= $this->render('/common/_images', ['model' => $model, 'editable' => true]) ?>
     </div>
-	
-	
-	<?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('meta_title')]) ?>
+
+
+    <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('meta_title')]) ?>
 
     <?= $form->field($model, 'meta_description')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('meta_description')]) ?>
 

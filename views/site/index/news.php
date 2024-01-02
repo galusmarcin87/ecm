@@ -9,7 +9,12 @@ use yii\web\View;
 use app\models\mgcms\db\Article;
 use yii\widgets\ListView;
 
-$query = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'type' => Article::TYPE_NEWS])->orderBy(['id' => SORT_DESC]);
+$category = \app\models\mgcms\db\Category::find()->where(['name' => 'aktualności ' . Yii::$app->language])->one();
+if (!$category) {
+    return false;
+}
+
+$query = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'category_id' => $category->id])->orderBy(['id' => SORT_DESC]);
 
 $dataProvider = new ActiveDataProvider([
     'query' => $query,
@@ -48,7 +53,7 @@ $dataProvider = new ActiveDataProvider([
                 ?>
 
                 <div class="text-center my-5">
-                    <a href="<?= \yii\helpers\Url::to(['/article']) ?>"
+                    <a href="<?= $category->linkUrl ?>"
                        class="readmore btn btn-primary"><?= Yii::t('db', 'See all') ?></a>
                 </div>
             </div>

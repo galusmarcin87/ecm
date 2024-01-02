@@ -61,7 +61,19 @@ $this->registerJs($search);
           'filterInputOptions' => ['placeholder' => Yii::t('app', 'Status')]
       ],
       'order',
-      'type',
+      [
+          'attribute' => 'category_id',
+          'label' => Yii::t('app', 'Category'),
+          'value' => function($model) {
+              return $model->category ? $model->category->name : '';
+          },
+          'filterType' => GridView::FILTER_SELECT2,
+          'filter' => \yii\helpers\ArrayHelper::map(\app\models\mgcms\db\Category::find()->asArray()->all(), 'id', 'name'),
+          'filterWidgetOptions' => [
+              'pluginOptions' => ['allowClear' => true],
+          ],
+          'filterInputOptions' => ['placeholder' => Yii::t('app', 'Category'), 'id' => 'grid-article-search-category_id']
+      ],
   ];
 
   ?>
