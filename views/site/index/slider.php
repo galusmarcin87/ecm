@@ -11,10 +11,10 @@ if (!$slider) {
     return false;
 }
 
-$socialReddit = MgHelpers::getSettingTypeText('slider reddit', false, false);
-$socialInstagram = MgHelpers::getSettingTypeText('slider instagram', false, false);
-$socialYoutube = MgHelpers::getSettingTypeText('slider youtube', false, false);
-$socialFacebook = MgHelpers::getSettingTypeText('slider facebook', false, false);
+$socialReddit = MgHelpers::getSettingTypeText('reddit', false, false);
+$socialInstagram = MgHelpers::getSettingTypeText('instagram', false, false);
+$socialYoutube = MgHelpers::getSettingTypeText('youtube', false, false);
+$socialFacebook = MgHelpers::getSettingTypeText('facebook', false, false);
 ?>
 
 <div class="container">

@@ -7,170 +7,122 @@ use yii\bootstrap\ActiveForm;
 
 $menu = new NobleMenu(['name' => 'footer_' . Yii::$app->language, 'loginLink' => false]);
 
-$facebook = MgHelpers::getSettingTypeText('footer facebook');
-$linkedin = MgHelpers::getSettingTypeText('footer linkedin');
-$instagram = MgHelpers::getSettingTypeText('footer instagram');
+$socialReddit = MgHelpers::getSettingTypeText('reddit', false, false);
+$socialInstagram = MgHelpers::getSettingTypeText('instagram', false, false);
+$socialYoutube = MgHelpers::getSettingTypeText('youtube', false, false);
+$socialFacebook = MgHelpers::getSettingTypeText('facebook', false, false);
+
+$mail = MgHelpers::getSettingTypeText('footer mail', false, 'office@ecmarket.eu');
+$mail2 = MgHelpers::getSettingTypeText('footer mail 2', false, 'ecminwestors@ecmarket.eu');
 
 ?>
 
-    <footer class="site-footer">
+<footer class="site-footer">
     <svg class="site-footer-decoration">
-        <use xlink:href="#hexagon" />
+        <use xlink:href="#hexagon"/>
     </svg>
     <div class="site-footer-content">
-    <div class="container">
-        <div class="footer-widgets">
-        <div class="row">
-            <div class="col-lg-3 mb-4 mb-lg-0">
-                <img src="/images/logo.svg" width="200" alt="">
-            </div>
-            <div class="col-lg-9">
-                <ul class="nav footer-nav">
-                    
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">O nas</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Jak zainwestować</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Logowanie</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">FAQ</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Projekty</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Zespół</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Rejestracja</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Kariera</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Media o nas</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Partnerzy</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Regulamin</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Multimedia</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Kontakt</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Instrukcje</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Polityka prywatności</a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-        </div>
-        <div class="footer-lines">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <div class="d-flex flex-column flex-lg-row align-items-center">
-                    <a href="mailto:office@ecmarket.eu" class="footer-mail">
-                        <div class="footer-mail-icon">
-                            <svg class="icon">
-                                <use xlink:href="#envelope" />
-                            </svg>
-                        </div>
-                        <div class="footer-mail-text">
-                            office@ecmarket.eu
-                        </div>
-                    </a>
-                    <a href="mailto:office@ecmarket.eu" class="footer-mail">
-                        <div class="footer-mail-icon">
-                            <svg class="icon">
-                                <use xlink:href="#envelope" />
-                            </svg>
-                        </div>
-                        <div class="footer-mail-text">
-                            ecminwestors@ecmarket.eu
-                        </div>
-                    </a>
+        <div class="container">
+            <div class="footer-widgets">
+                <div class="row">
+                    <div class="col-lg-3 mb-4 mb-lg-0">
+                        <img src="/images/logo.svg" width="200" alt="">
+                    </div>
+                    <div class="col-lg-9">
+                        <ul class="nav footer-nav">
+                            <? foreach ($menu->getItems() as $item): ?>
+                                <li class="nav-item">
+                                    <a href="<?= $item['url'] ?>" class="nav-link"><?= $item['label'] ?></a>
+                                </li>
+                            <? endforeach ?>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-lg-6 text-center text-lg-end d-flex">
-                    <ul class="nav nav-social mx-auto me-lg-0 ms-lg-auto">
-                                            
+            </div>
+            <div class="footer-lines">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="d-flex flex-column flex-lg-row align-items-center">
+                            <a href="mailto:<?= $mail ?>" class="footer-mail">
+                                <div class="footer-mail-icon">
+                                    <svg class="icon">
+                                        <use xlink:href="#envelope"/>
+                                    </svg>
+                                </div>
+                                <div class="footer-mail-text">
+                                    <?= $mail ?>
+                                </div>
+                            </a>
+                            <a href="mailto:<?= $mail2 ?>" class="footer-mail">
+                                <div class="footer-mail-icon">
+                                    <svg class="icon">
+                                        <use xlink:href="#envelope"/>
+                                    </svg>
+                                </div>
+                                <div class="footer-mail-text">
+                                    <?= $mail2 ?>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center text-lg-end d-flex">
+                        <ul class="nav nav-social mx-auto me-lg-0 ms-lg-auto">
 
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link"><svg class="icon"><use xlink:href="#reddit" /></svg></a>
-                    </li>
+                            <? if ($socialReddit): ?>
+                                <li class="nav-item">
+                                    <a href="<?= $socialReddit ?>" class="nav-link">
+                                        <svg class="icon">
+                                            <use xlink:href="#reddit"/>
+                                        </svg>
+                                    </a>
+                                </li>
+                            <? endif ?>
 
+                            <? if ($socialInstagram): ?>
+                                <li class="nav-item">
+                                    <a href="<?= $socialInstagram ?>" class="nav-link">
+                                        <svg class="icon">
+                                            <use xlink:href="#instagram"/>
+                                        </svg>
+                                    </a>
+                                </li>
+                            <? endif ?>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link"><svg class="icon"><use xlink:href="#instagram" /></svg></a>
-                    </li>
+                            <? if ($socialYoutube): ?>
+                                <li class="nav-item">
+                                    <a href="<?= $socialYoutube ?>" class="nav-link">
+                                        <svg class="icon">
+                                            <use xlink:href="#youtube"/>
+                                        </svg>
+                                    </a>
+                                </li>
+                            <? endif ?>
 
+                            <? if ($socialFacebook): ?>
+                                <li class="nav-item">
+                                    <a href="<?= $socialFacebook ?>" class="nav-link">
+                                        <svg class="icon">
+                                            <use xlink:href="#facebook"/>
+                                        </svg>
+                                    </a>
+                                </li>
+                            <? endif ?>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link"><svg class="icon"><use xlink:href="#youtube" /></svg></a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link"><svg class="icon"><use xlink:href="#facebook" /></svg></a>
-                    </li>
-
-                    </ul>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="site-info">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <?= MgHelpers::getSettingTypeText('footer copyright', false,'&copy; 2023 Energy Coin Market Sp. z o.o.') ?>
+                    </div>
+                    <div class="col-lg-6 text-lg-end">
+                        <?= MgHelpers::getSettingTypeText('footer realization', false,'Realizacja i projekt: <a href="https://vertesdesign.pl/">Vertes Design</a>') ?>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="site-info">
-            <div class="row">
-                <div class="col-lg-6">
-                    &copy; 2023 Energy Coin Market Sp. z o.o.
-                </div>
-                <div class="col-lg-6 text-lg-end">
-                    Realizacja i projekt: <a href="https://vertesdesign.pl/">Vertes Design</a>
-                </div>
-            </div>
-        </div>
-    </div>
     </div>
 </footer>
