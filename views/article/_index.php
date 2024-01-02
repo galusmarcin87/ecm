@@ -7,9 +7,10 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\mgcms\db\Article */
 $model->language = Yii::$app->language;
+$cssClass = isset($cssClass) ? $cssClass : 'card-dark';
 ?>
 
-<a class="card card-dark mb-3" href="<?= $model->linkUrl ?>">
+<a class="card <?= $cssClass ?> mb-3" href="<?= $model->linkUrl ?>">
     <div class="card-main-image img-corner-left-top">
         <? if ($model->file && $model->file->isImage()): ?>
             <img src="<?= $model->file->getImageSrc(450, 271); ?>" class="card-img-top" alt="<?= $model ?>"/>
