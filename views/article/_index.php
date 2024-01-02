@@ -11,7 +11,7 @@ $cssClass = isset($cssClass) ? $cssClass : 'card-dark';
 ?>
 
 <a class="card <?= $cssClass ?> mb-3" href="<?= $model->linkUrl ?>">
-    <div class="card-main-image img-corner-left-top">
+    <div class="card-main-image img-corner-<?= $cssClass === 'card-dark' ? 'left' : 'right' ?>-top">
         <? if ($model->file && $model->file->isImage()): ?>
             <img src="<?= $model->file->getImageSrc(450, 271); ?>" class="card-img-top" alt="<?= $model ?>"/>
         <? endif; ?>
