@@ -40,7 +40,7 @@ $dataProvider = new ActiveDataProvider([
                     ],
                     'layout' => '{items}',
                     'itemView' => function ($model, $key, $index, $widget) {
-                        return $this->render('/project/_tileItem', ['model' => $model, 'key' => $key, 'index' => $index, 'view' => $this]);
+                        return $this->render('/project/_tileItemEcm', ['model' => $model, 'key' => $key, 'index' => $index, 'view' => $this]);
                     },
                 ])
                 ?>
