@@ -7,19 +7,18 @@ use yii\web\View;
 use app\models\mgcms\db\Project;
 use yii\widgets\ListView;
 
-$query = Project::find()->where(['status' => Project::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC]);
+$ecProject = Project::find()->where(['status' => Project::STATUS_ACTIVE, 'type' => Project::TYPE_EC])->one();
+$ecmProject = Project::find()->where(['status' => Project::STATUS_ACTIVE, 'type' => Project::TYPE_ECM])->one();
 
-$dataProvider = new ActiveDataProvider([
-    'query' => $query,
-    'pagination' => [
-        'pageSize' => 9,
-    ],
-    'sort' => [
-        'attributes' => [
-            'order' => SORT_DESC,
-        ]
-    ],
+$sdtProject = new Project([
+    'name' => MgHelpers::getSettingTypeText('hp sdt token name ' . Yii::$app->language,false,'hp sdt token name'),
+    'file_id' => MgHelpers::getSettingTypeText('hp sdt token file id ' . Yii::$app->language,false,1128),
+    'type' => Project::TYPE_SDT,
+    'lead' => MgHelpers::getSettingTypeText('hp sdt token lead ' . Yii::$app->language,false,'hp sdt token lead'),
+    'customLinkUrl' => \yii\helpers\Url::to(['/project/index', 'type' => Project::TYPE_SDT])
 ]);
+
+
 
 ?>
 
@@ -29,21 +28,18 @@ $dataProvider = new ActiveDataProvider([
 
         <div class="section-background">
             <div class="container">
-                <?=
-                ListView::widget([
-                    'dataProvider' => $dataProvider,
-                    'itemOptions' => [
-                        'class' => 'col-lg-4'
-                    ],
-                    'options' => [
-                        'class' => 'row',
-                    ],
-                    'layout' => '{items}',
-                    'itemView' => function ($model, $key, $index, $widget) {
-                        return $this->render('/project/_tileItemEcm', ['model' => $model, 'key' => $key, 'index' => $index, 'view' => $this]);
-                    },
-                ])
-                ?>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <?= $this->render('/project/_tileItemEcm', ['model' => $ecProject]); ?>
+                    </div>
+                    <div class="col-lg-4">
+                        <?= $this->render('/project/_tileItemEcm', ['model' => $ecmProject]); ?>
+                    </div>
+                    <div class="col-lg-4">
+                        <?= $this->render('/project/_tileItemEcm', ['model' => $sdtProject]); ?>
+                    </div>
+                </div>
+
                 <div class="swiper-pagination"></div>
             </div>
         </div>

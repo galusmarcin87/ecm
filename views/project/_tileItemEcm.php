@@ -6,6 +6,9 @@ use yii\web\View;
 
 /* @var $model Project */
 /* @var $this yii\web\View */
+if(!$model){
+    return false;
+}
 $model->language = Yii::$app->language;
 ?>
 <a class="card card-dark mb-3" href="<?= $model->getLinkUrl() ?>">

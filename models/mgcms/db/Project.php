@@ -84,6 +84,7 @@ class Project extends \app\models\mgcms\db\AbstractRecord
     const TYPE_SDT = 'sdt';
     const TYPES = [self::TYPE_ECM, self::TYPE_EC, self::TYPE_SDT];
 
+    public $customLinkUrl = false;
     /**
      * @inheritdoc
      */
@@ -219,6 +220,9 @@ class Project extends \app\models\mgcms\db\AbstractRecord
 
     public function getLinkUrl()
     {
+        if($this->customLinkUrl){
+            return $this->customLinkUrl;
+        }
         return \yii\helpers\Url::to(['/project/view', 'id' => $this->id]);
     }
 
