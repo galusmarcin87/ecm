@@ -71,16 +71,6 @@ $this->params['breadcrumbs'][] = [\yii\helpers\Url::to('/project/index'), Yii::t
                 </div>
                 </div>
 
-                <h2>
-                    O projekcie
-                </h2>
-                <p>
-                    <?= $model->lead ?>
-                </p>
-
-                <h2>
-                   Koncepcja
-                </h2>
                 <p>
                    <?= $model->text ?>
                 </p>
@@ -122,18 +112,6 @@ $this->params['breadcrumbs'][] = [\yii\helpers\Url::to('/project/index'), Yii::t
                 <div class="swiper-button-prev"></div>
     </div>
 </div>
-
-
-
-
-
-                <h2>
-                    Technologia
-                </h2>
-                <p>
-                    <?= $model->text2 ?>
-                </p>
-
 
                 
             </div>

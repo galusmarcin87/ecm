@@ -30,7 +30,7 @@ $dataProvider = new ActiveDataProvider([
 
 ?>
 
-<div class="news-section section-dark-right py-5">
+<div class="media-section section-dark-left py-5">
     <div class="section-content">
         <div class="section-title text-center"><?= Yii::t('db', 'News') ?></div>
         <div class="section-background">

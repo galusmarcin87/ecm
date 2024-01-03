@@ -69,19 +69,11 @@ $menu = new NobleMenu(['name' => 'header_' . Yii::$app->language, 'loginLink' =>
                             <a class="btn btn-light mx-1 px-3" href="<?= Url::to('/site/login') ?>"
                               ><?= Yii::t('db', 'Login') ?></a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="btn btn-light mx-1 px-3" href="<?= Url::to('/site/register') ?>"
-                               ><?= Yii::t('db', 'Register') ?></a>
-                        </li>
+					
                     <? else: ?>
                         <li class="nav-item">
                             <a href="<?= yii\helpers\Url::to(['/account/index']) ?>"
                                class="btn btn-light mx-1 px-3"> <?= Yii::t('db', 'My account'); ?> </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:submitLogoutForm()"
-                               class="btn btn-light mx-1 px-3"> <?= Yii::t('db', 'Log out'); ?> </a>
                         </li>
                     <? endif ?>
 

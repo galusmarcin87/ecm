@@ -23,7 +23,7 @@ $dataProvider = new ActiveDataProvider([
 
 ?>
 
-<div class="portfolio-section section-dark-left-overlayed py-5">
+<div class="portfolio-section py-5">
     <div class="section-content">
         <div class="section-title text-center"><?= Yii::t('db', 'SDT energy cluster portfolio') ?></div>
         <div class="section-background">
