@@ -13,7 +13,7 @@ $model->language = Yii::$app->language;
     <p class="text-uppercase">
         <strong><?= Yii::t('db', 'Time left') ?>:</strong>
     </p>
-    <div data-date="<?= $model->date_crowdsale_end ?>" data-time="0:00" class="countdown">
+    <div class="countdown" data-date="<?= Date('d-m-Y', strtotime($model->date_crowdsale_end)) ?>" data-time="<?= Date('H:i', strtotime($model->date_crowdsale_end)) ?>">
         <div class="day"><span class="num"></span><span class="word"> <?= Yii::t('db', 'days') ?></span></div>
         <div class="hour"><span class="num"></span><span class="word"> <?= Yii::t('db', 'hours') ?></span></div>
         <div class="min"><span class="num"></span><span class="word"> <?= Yii::t('db', 'minutes') ?></span></div>
