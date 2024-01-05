@@ -25,7 +25,7 @@ use  \app\models\mgcms\db\Project;
                 <?= $this->render('/common/map',['cssClass' => 'project-map','height' => '565px']) ?>
 
                 <?= $this->render('table', ['model' => $model]) ?>
-                
+
                 <?= $model->text ?>
 
                 <?= $this->render('roadmap', ['model' => $model]) ?>
