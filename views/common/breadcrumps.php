@@ -3,9 +3,9 @@
 use yii\web\View;
 
 /* @var $this yii\web\View */
-
+$displayBg = isset($displayBg) ? $displayBg : true;
 ?>
-<div class="page-header " style="background-image:url(/images/page-header.jpg);">
+<div class="page-header " <?if($displayBg):?>style="background-image:url(/images/page-header.jpg);"<?endif;?>>
     <div class="page-header-content">
         <div class="container">
             <h1 class="page-header-title">

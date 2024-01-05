@@ -8,21 +8,18 @@ use yii\web\View;
 
 
 ?>
-<div class="files">
 
-    <? foreach ($model->fileRelations as $relation): ?>
-        <? if ($relation->json != '1' || !$relation->file) continue ?>
-        <a href="<?= $relation->file->linkUrl ?>" class="media file-download">
-            <span class="file-icon">
-                <img class="icon" src="/images/files/file-generic.svg"/>
-            </span>
-            <span class="file-title">
-                <div class="file-title-main">
+<aside class="project-nav">
+    <h4><?= Yii::t('db', 'See') ?>:</h4>
+    <div class="row gy-3">
+        <? foreach ($model->fileRelations as $relation): ?>
+            <? if ($relation->json != '1' || !$relation->file) continue ?>
+            <div class="col-md-6">
+                <a href="<?= $relation->file->linkUrl ?>" class="project-btn d-block">
                     <?= $relation->file->origin_name ?>
-                </div>
-            </span>
-        </a>
-    <? endforeach ?>
+                </a>
+            </div>
 
-
-</div>
+        <? endforeach ?>
+    </div>
+</aside>

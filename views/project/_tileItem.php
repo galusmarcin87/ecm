@@ -25,32 +25,7 @@ $model->language = Yii::$app->language;
         <h5 class="card-title card-title--portfolio">
             <?= $model->name ?>
         </h5>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="portfolio-icons">
-                    <div class="portfolio-icons-icon">
-                        <svg class="icon">
-                            <use xlink:href="#calendar"/>
-                        </svg>
-                    </div>
-                    <div class="portfolio-icons-text">
-                        <?= $model->investition_time ?> <?= Yii::t('db', 'years') ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="portfolio-icons">
-                    <div class="portfolio-icons-icon">
-                        <svg class="icon">
-                            <use xlink:href="#procent"/>
-                        </svg>
-                    </div>
-                    <div class="portfolio-icons-text">
-                        <?= $model->percentage ?>% <?= Yii::t('db', 'of return') ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?= $this->render('_yearAndPercentage', ['model' => $model]) ?>
         <?= $model->lead ?>
         <?= $this->render('_counterMoney', ['model' => $model]) ?>
         <?= $this->render('_counterTimer', ['model' => $model]) ?>

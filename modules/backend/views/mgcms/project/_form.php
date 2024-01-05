@@ -188,18 +188,18 @@ yii\jui\JuiAsset::register($this);
     <?php
     $forms = [
         [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('app', 'Lista cech')),
+            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('app', 'Roadmap')),
             'content' => $this->render('_formBonus', [
                 'row' => \yii\helpers\ArrayHelper::toArray($model->bonuses),
             ])
         ],
-        [
-
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('app', 'FAQ')),
-            'content' => $this->render('_formFaq', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->faqs),
-            ]),
-        ],
+//        [
+//
+//            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode(Yii::t('app', 'FAQ')),
+//            'content' => $this->render('_formFaq', [
+//                'row' => \yii\helpers\ArrayHelper::toArray($model->faqs),
+//            ]),
+//        ],
     ];
     echo kartik\tabs\TabsX::widget([
         'items' => $forms,

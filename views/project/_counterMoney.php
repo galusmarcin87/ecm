@@ -12,9 +12,10 @@ if (!$model->money_full) {
 }
 
 $percentage = round(($model->money / $model->money_full) * 100, 3);
+$cssClass = isset($cssClass) ? $cssClass : 'card-progress';
 ?>
 
-<div class="card-progress">
+<div class="<?= $cssClass ?>">
     <div class="row">
         <div class="col-6">
             <p><?= Yii::t('db', 'Collected') ?> (<?=$percentage?>%):</p>
