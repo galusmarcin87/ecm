@@ -30,4 +30,4 @@ use app\models\mgcms\db\Project;
 </div>
 
 <?= $this->render('index/news') ?>
-<?= $this->render('index/map') ?>
+<?= $this->render('/common/map') ?>

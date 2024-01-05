@@ -11,17 +11,21 @@ $lats = explode(';', $lat);
 $longs = explode(';', $long);
 $texts = explode(';', $text);
 
-if(!isset($lats[0]) || !isset($longs[0]) || !isset($texts[0])){
+if (!isset($lats[0]) || !isset($longs[0]) || !isset($texts[0])) {
     return false;
 }
+
+$cssClass = isset($cssClass) ? $cssClass : 'section-map';
+$height = isset($height) ? $height : '90vh';
 ?>
 
-<div class="section-map">
-    <div id="googlemap" style="height:90vh" data-lat="<?= $lats[0] ?>" data-lng="<?= $longs[0] ?>"></div>
+<div class="<?= $cssClass ?>">
+    <div id="googlemap" style="height:<?=$height?>" data-lat="<?= $lats[0] ?>" data-lng="<?= $longs[0] ?>"></div>
     <div class="map-points">
-        <?foreach ($lats as $i => $lat):?>
-            <div class="map-point" data-lat="<?= $lats[$i] ?>" data-lng="<?= $longs[$i] ?>" data-description="<?= $texts[$i] ?>"></div>
-        <?endforeach;?>
+        <? foreach ($lats as $i => $lat): ?>
+            <div class="map-point" data-lat="<?= $lats[$i] ?>" data-lng="<?= $longs[$i] ?>"
+                 data-description="<?= $texts[$i] ?>"></div>
+        <? endforeach; ?>
 
     </div>
 </div>
