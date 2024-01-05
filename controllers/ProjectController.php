@@ -31,12 +31,15 @@ use app\components\mgcms\tpay\TPayTransaction;
 class ProjectController extends \app\components\mgcms\MgCmsController
 {
 
-    public function actionIndex($categoryId = false, $status = Project::STATUS_ACTIVE)
+    public function actionIndex($categoryId = false, $status = Project::STATUS_ACTIVE, $type = false)
     {
 
         $query = Project::find()->where(['status' => $status]);
         if ($categoryId) {
             $query->andWhere(['category_id' => $categoryId]);
+        }
+        if ($type) {
+            $query->andWhere(['type' => $type]);
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,6 +57,7 @@ class ProjectController extends \app\components\mgcms\MgCmsController
             'dataProvider' => $dataProvider,
             'categoryId' => $categoryId,
             'status' => $status,
+            'type' => $type,
         ]);
     }
 
