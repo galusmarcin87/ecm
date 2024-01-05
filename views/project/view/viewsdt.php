@@ -28,10 +28,11 @@ use  \app\models\mgcms\db\Project;
 
                 <? // $this->render('socialShares', ['model' => $model]) ?>
 
+                <?= $this->render('roadmap', ['model' => $model]) ?>
 
                 <?= $model->text ?>
 
-                <?= $this->render('roadmap', ['model' => $model]) ?>
+
 
             </div>
             <div class="col-lg-4">
