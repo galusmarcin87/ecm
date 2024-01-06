@@ -23,7 +23,7 @@ use app\models\mgcms\db\Project;
 <?= $this->render('index/portfolio') ?>
 <?= $this->render('index/section1') ?>
 <?= $this->render('index/section2') ?>
-<?= $this->render('index/newsletterForm') ?>
+<?= $this->render('/common/newsletterForm') ?>
 
 <div class="home-decoration-3">
     <img src="/images/home-decoration-1.png" alt="" class="">

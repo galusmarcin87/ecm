@@ -19,7 +19,7 @@ $cssClass = isset($cssClass) ? $cssClass : 'page-header';
                     <ol class="breadcrumb">
 
 
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
                         <? if (isset($this->params['breadcrumbs'])): ?>
                             <? foreach ($this->params['breadcrumbs'] as $item): ?>
                                 <? if (is_array($item)) : ?>
