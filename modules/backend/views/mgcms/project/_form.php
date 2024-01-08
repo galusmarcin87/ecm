@@ -112,7 +112,8 @@ yii\jui\JuiAsset::register($this);
         ]); ?>
 
 
-        <?= $form->field6md($model, 'percentage')->textInput(['placeholder' => '']) ?>
+        <?= $form->field4md($model, 'percentage')->textInput(['placeholder' => '']) ?>
+        <?= $form->field4md($model, 'investition_time')->textInput(['placeholder' => '']) ?>
         <?= $form->field6md($model, 'token_minimal_buy')->textInput(['placeholder' => '']) ?>
         <?= $form->field6md($model, 'percentage_presale_bonus')->textInput(['placeholder' => '']) ?>
 

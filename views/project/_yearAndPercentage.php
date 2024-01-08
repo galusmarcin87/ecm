@@ -15,7 +15,7 @@ $cssPrefixClass = isset($cssPrefixClass) ? $cssPrefixClass : 'portfolio';
                 </svg>
             </div>
             <div class="<?=$cssPrefixClass?>-icons-text">
-                <?= $model->investition_time ?> <?= Yii::t('db', 'years') ?>
+                <?= $model->investition_time ?>
             </div>
         </div>
     </div>
