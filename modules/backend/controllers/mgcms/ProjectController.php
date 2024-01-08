@@ -82,15 +82,6 @@ class ProjectController extends MgBackendController
         $model = new Project();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            $fiberPayConfig = MgHelpers::getConfigParam('fiberPay');
-            $fiberClient = new FiberPayClient($fiberPayConfig['apikey'], $fiberPayConfig['secretkey'], $fiberPayConfig['testServer']);
-            $collect = $fiberClient->createCollect($model->pay_name, $model->iban, 'USD');
-
-            $collectObj = Json::decode($collect);
-            $code = $collectObj['data']['code'];
-
-            $model->fiber_collect_id = $code;
-            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
