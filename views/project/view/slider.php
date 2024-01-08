@@ -10,7 +10,7 @@ use yii\web\View;
 
 
 
-<? if ($model->files && sizeof($model->files) > 0 && $model->files[0]->isImage()): ?>
+<? if ($model->files && sizeof($model->files) > 0): ?>
     <div class="project-slider">
 
 
