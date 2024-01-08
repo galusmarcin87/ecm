@@ -8,7 +8,6 @@ use app\models\mgcms\db\Project;
 ?>
 
 <?= $this->render('index/slider') ?>
-<?= $this->render('index/about') ?>
 
 <div class="home-decoration-1">
     <img src="/images/home-decoration-1.png" alt="" class="">
