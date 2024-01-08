@@ -37,7 +37,8 @@
     "stripe/stripe-php": "v7.125.0",
     "yiimaker/yii2-social-share": "~2.3",
     "kartik-v/yii2-widget-rating": "dev-master",
-    "tpay-com/tpay-php": "2.3.6"
+    "tpay-com/tpay-php": "2.3.6",
+    "web3p/web3.php": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

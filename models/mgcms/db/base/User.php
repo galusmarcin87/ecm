@@ -107,9 +107,9 @@ class User extends \app\models\mgcms\db\AbstractRecord
         'cor_flat_no' => Yii::t('db', 'Flat number'),
         'cor_voivodeship' => Yii::t('db', 'Voivodeship'),
         'cor_country' => Yii::t('db', 'Country'),
-
         'company_name' => Yii::t('db', 'Company name'),
         'company_regon' => Yii::t('db', 'REGON'),
+        'company_krs' => Yii::t('db', 'KRS'),
         'company_nip' => Yii::t('db', 'NIP'),
         'company_street' => Yii::t('db', 'Street'),
         'company_house_no' => Yii::t('db', 'House number'),

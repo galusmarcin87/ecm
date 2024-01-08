@@ -33,6 +33,7 @@ use app\components\GetResponse\GetResponse;
 use app\components\GetResponse\jsonRPCClient;
 use yii\web\UploadedFile;
 use app\models\mgcms\db\Article;
+use Web3\Web3;
 
 class AccountController extends \app\components\mgcms\MgCmsController
 {
@@ -65,10 +66,31 @@ class AccountController extends \app\components\mgcms\MgCmsController
      */
     public function actionIndex($tab = 'main')
     {
+        $model = $this->getUserModel();
+        $model->scenario = 'account';
 
+        if (Yii::$app->request->post('User')) {
+            if (null !== Yii::$app->request->post('passwordChanging')) {
+                $model->scenario = 'passwordChanging';
+            }
 
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $upladedFile = UploadedFile::getInstance($model, 'fileUpload');
+                if($upladedFile){
+                    $fileModel = new File;
+                    $file = $fileModel->push(new \rmrevin\yii\module\File\resources\UploadedResource($upladedFile));
+                    if ($file) {
+                        $model->file_id = $file->id;
+                        $model->save();
+                    }
+                }
+
+                MgHelpers::setFlashSuccess(Yii::t('db', 'Saved succesfully'));
+            }
+        }
         return $this->render('index', [
-            'tab' => $tab
+            'tab' => $tab,
+            'model' => $model,
         ]);
     }
 
@@ -207,6 +229,70 @@ class AccountController extends \app\components\mgcms\MgCmsController
         return $this->render('buyForm', ['model' => $model, 'buyForm' => $buyForm]);
 
 
+    }
+
+    public function actionConnectWithStripe()
+    {
+        return $this->redirect($this->generateStripeAccountLink());
+    }
+
+    public function generateStripeAccountLink()
+    {
+        $user = MgHelpers::getUserModel();
+        if(!$user){
+            return $this->redirect(['/site/logi']);
+        }
+
+        $apiKey = MgHelpers::getSetting('stripe api key', false, 'sk_test_51FOmrVInHv9lYN6G23xLhzLTDNytsH8bOStCMPJ472ZAoutfeNag8DSuQswJkDmkpGPd1yRqqKtFfrrSb2ReZhtM00J3jbGTp0');
+        $stripe = new \Stripe\StripeClient($apiKey);
+        $account = $stripe->accounts->create([
+            'type' => 'standard',
+            'country' => 'PL',
+            'business_type' => 'company',
+            'email' => $user->email ?: $user->username,
+        ]);
+        if (!$account['id']) {
+            MgHelpers::setFlashError(Yii::t('db', 'Stripe: problem with creating account'));
+            return $this->back();
+        }
+
+        $createParams = [
+            'account' => $account['id'],
+            'refresh_url' => Url::to(['/account/connect-stripe-account', 'hash' => MgHelpers::encrypt(serialize([
+                    'userId' => $user->id,
+                    'accountId' => $account['id']
+                ]
+            ))], true),
+            'return_url' => Url::to(['/account/connect-stripe-account', 'hash' => MgHelpers::encrypt(serialize([
+                    'userId' => $user->id,
+                    'accountId' => $account['id']
+                ]
+            ))], true),
+            'type' => 'account_onboarding',
+        ];
+        $accountLink = $stripe->accountLinks->create($createParams);
+
+        return $accountLink['url'];
+    }
+
+    public function actionConnectStripeAccount($hash)
+    {
+
+
+        $data = unserialize(MgHelpers::decrypt($hash));
+        if (!isset($data['userId']) || !isset($data['accountId'])) {
+            MgHelpers::setFlashError(Yii::t('db', 'Stripe: problem with assigning stripe account'));
+            return $this->redirect('/account/index');
+        }
+
+        $user = User::findOne($data['userId']);
+        if (!$user) {
+            MgHelpers::setFlashError(Yii::t('db', 'Stripe: problem with assigning stripe account - account not found'));
+            return $this->redirect('/account/index');
+        }
+        $user->setModelAttribute('stripeId', $data['accountId']);
+        MgHelpers::setFlashSuccess(Yii::t('db', 'Stripe: successfully connected to stripe account, you can purchase now'));
+        return $this->redirect('/account/index');
     }
 
 

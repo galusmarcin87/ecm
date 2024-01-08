@@ -23,9 +23,6 @@ $fieldConfig = \app\components\ProjectHelper::getFormFieldConfig(true)
     <div class="row">
         <div class="col-lg-6 mx-auto">
 
-            <div class="text-center my-5">
-                <img src="/images/logo.png" alt="Opal Crowd" class="img-fluid mx-auto">
-            </div>
 
             <?php
             $form = ActiveForm::begin([

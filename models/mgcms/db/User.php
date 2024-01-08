@@ -44,6 +44,7 @@ use app\components\mgcms\MgHelpers;
  * @property string $company_name
  * @property string $company_nip
  * @property string $company_regon
+ * @property string $company_krs
  * @property string $company_country
  * @property string $company_voivodeship
  * @property string $company_postcode
@@ -164,7 +165,7 @@ class User extends BaseUser implements IdentityInterface
             ['acceptTerms', 'required', 'requiredValue' => 1, 'message' => Yii::t('db', 'This field is required'), 'on' => 'account'],
             [['facebook', 'twitter', 'linkedin', 'instagram', 'phone', 'position', 'step', 'type', 'is_corespondence', 'house_no', 'companyForSale', 'agent_code', 'description'], 'safe'],
             [['first_name', 'last_name', 'linkedin', 'instagram', 'phone', 'position'], 'required', 'on' => 'person'],
-            [['company_name', 'company_nip', 'company_regon', 'company_country', 'company_voivodeship', 'company_street', 'company_flat_no', 'company_house_no', 'company_city', 'company_postcode', 'bank_no'], 'safe'],
+            [['company_name', 'company_nip', 'company_regon', 'company_krs', 'company_country', 'company_voivodeship', 'company_street', 'company_flat_no', 'company_house_no', 'company_city', 'company_postcode', 'bank_no'], 'safe'],
             [['file_text'], 'string'],
             [['imAgentCheckbox'], 'safe'],
             ['fileUpload', 'requiredForRepresentative', 'skipOnEmpty' => false,],

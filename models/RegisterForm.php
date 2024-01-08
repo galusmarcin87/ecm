@@ -37,6 +37,7 @@ class RegisterForm extends Model
 
     public $nip;
     public $regon;
+    public $krs;
 
     /**
      * @return array the validation rules.
@@ -56,7 +57,7 @@ class RegisterForm extends Model
             ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => Yii::t('db', "Passwords don't match")],
             [['acceptTerms'], 'required', 'requiredValue' => 1, 'message' => Yii::t('db', 'This field is required')],
             ['username', 'email'],
-            [['phone', 'acceptTerms5', 'acceptTerms6', 'agentCode', 'isCompany', 'nip', 'regon'], 'safe'],
+            [['phone', 'acceptTerms5', 'acceptTerms6', 'agentCode', 'isCompany', 'nip', 'regon', 'krs'], 'safe'],
             [['birthDate', 'street', 'flatNo', 'houseNo', 'postalCode', 'city', 'voivodeship'], 'required'],
 //        [['password'], StrengthValidator::className(), 'min' => 8, 'digit' => 1, 'special' => 1, 'upper' => 1, 'lower' => 1, 'userAttribute' => 'username'],
         ];
@@ -117,6 +118,7 @@ class RegisterForm extends Model
             $user->is_company = $this->isCompany;
             $user->company_nip = $this->nip;
             $user->company_regon = $this->regon;
+            $user->company_krs = $this->krs;
 
             $saved = $user->save();
             if (!$saved) {

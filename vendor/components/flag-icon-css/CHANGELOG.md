@@ -1,10 +1,19 @@
+# 7.1.0
+
+- SVGO all files and update `fill="#000"` to `fill="#000001"` (#1193)
+- Fix German Flag (#1189, #1190)
+
+# 7.0.3
+
+- Fix black SVG elements (#1187)
+
 # 7.0.2
 
 - Fix Jersey flag (#1180)
 
 # 7.0.1
 
-- Remove `<use>`` tags without href (#1179)
+- Remove `<use>` tags without href (#1179)
 
 # 7.0.0
 

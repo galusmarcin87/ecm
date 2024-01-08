@@ -271,8 +271,8 @@ class SiteController extends \app\components\mgcms\MgCmsController
         $code = $loginCodeForm->generateCode();
 
         $mailer = Yii::$app->mailer->compose('loginCode', ['user' => $user, 'code' => $code])
-            //->setTo($user->email ? $user->email : $user->username)
-            ->setTo('galusmarcin87@gmail.com')
+            ->setTo($user->email ? $user->email : $user->username)
+            //->setTo('galusmarcin87@gmail.com')
             ->setFrom([MgHelpers::getSetting('email') => MgHelpers::getSetting('email nazwa')])
             ->setSubject(Yii::t('db', 'Login code'));
 

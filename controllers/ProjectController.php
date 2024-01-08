@@ -359,7 +359,7 @@ class ProjectController extends \app\components\mgcms\MgCmsController
     }
 
 
-    public function actionBuyTest()
+    public function actionBuyTestTpay()
     {
         $config = [
             'amount' => 999.99,

@@ -108,6 +108,10 @@ $this->title = Yii::t('db', 'Register');
                                             <?= $form->field($model, 'regon')->textInput(['placeholder' => $model->getAttributeLabel('regon')]) ?>
                                         </div>
 
+                                        <div class="mb-4 companyFields hidden">
+                                            <?= $form->field($model, 'krs')->textInput(['placeholder' => $model->getAttributeLabel('krs')]) ?>
+                                        </div>
+
                                         <div class="form-check form-check-acceptance mb-4">
                                             <div class="Form__group form-group text-left checkbox">
                                                 <?= $form->field($model, 'acceptTerms',

@@ -21,12 +21,8 @@ $fieldConfig = \app\components\ProjectHelper::getFormFieldConfig(true);
 <?= $this->render('/common/breadcrumps') ?>
 
 
-<div class="container">
+<div class="container mb-3">
 
-
-    <div class="text-center my-5">
-        <img src="/images/logo.png" alt="Opal Crowd" class="img-fluid mx-auto">
-    </div>
 
     <h3 class="my-5 text-center">
         <?= Yii::t('db', 'Fill the data') ?>
@@ -36,7 +32,7 @@ $fieldConfig = \app\components\ProjectHelper::getFormFieldConfig(true);
     $form = ActiveForm::begin([
         'id' => 'login-form',
         'options' => ['class' => 'contact-form login__form'],
-        'fieldConfig' => \app\components\ProjectHelper::getFormFieldConfig(false)
+        'fieldConfig' => \app\components\ProjectHelper::getFormFieldConfig(true)
     ]);
 
     echo $form->errorSummary($payment);
@@ -50,7 +46,7 @@ $fieldConfig = \app\components\ProjectHelper::getFormFieldConfig(true);
             </div>
 
             <div class="mb-4">
-                <?= $form->field($payment, 'actions_amount')->textInput(['placeholder' => $payment->getAttributeLabel('actions_amount'), 'disabled' => true]) ?>
+                <?// $form->field($payment, 'actions_amount')->textInput(['placeholder' => $payment->getAttributeLabel('actions_amount'), 'disabled' => true]) ?>
             </div>
 
 
@@ -106,7 +102,7 @@ $fieldConfig = \app\components\ProjectHelper::getFormFieldConfig(true);
             </div>
             <div class="text-end">
                 <button type="submit" class="btn btn-primary">
-                    <?= Yii::t('db', 'Buy with TPay') ?>
+                    <?= Yii::t('db', 'Buy with Stripe') ?>
                 </button>
             </div>
 
