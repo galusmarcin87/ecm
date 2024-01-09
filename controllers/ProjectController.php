@@ -104,6 +104,11 @@ class ProjectController extends \app\components\mgcms\MgCmsController
         $payment->type = $project::class;
         $payment->scenario = 'invest';
 
+        if (!$user->getModelAttribute('stripeId')) {
+            MgHelpers::setFlashError(Yii::t('db', 'You are not connected with Stripe, go to my account to do so'));
+            return $this->back();
+        }
+
         $loaded = $payment->load(Yii::$app->request->post());
         if ($loaded) {
             $saved = $payment->save();
@@ -111,29 +116,30 @@ class ProjectController extends \app\components\mgcms\MgCmsController
                 MgHelpers::setFlashError(Yii::t('db', 'Problem with saving payment ' . MgHelpers::getErrorsString($payment->errors)));
                 return $this->redirect(['site/login']);
             }
-            $payment->setModelAttribute('showUserName', $payment->showUserName);
-            $payment->setModelAttribute('showUserPhoto', $payment->showUserPhoto);
-
-            $config = [
-                'amount' => $payment->amount,
-                'description' => MgHelpers::getSettingTypeText('invest description' . Yii::$app->language, false, 'Zakup'),
-                'crc' => (string)$payment->id,
-                'result_url' => Url::to(['/project/notify', 'hash' => MgHelpers::encrypt(['payment_id' => $payment->id, 'project_id' => $project->id, 'user_id' => $user->id])], true),
-                'result_email' => $user->email ?: $user->username,
-                'return_url' => Url::to(['/project/buy-thank-you', 'hash' => MgHelpers::encrypt(['payment_id' => $payment->id, 'user_id' => $user->id])], true),
-                'email' => $user->email ?: $user->username,
-                'name' => (string)$user,
-                'group' => isset($_POST['group']) ? (int)$_POST['group'] : 150,
-                'accept_tos' => 1,
-            ];
-
-
             try {
-                $transactionSdk = new TPayTransaction(MgHelpers::getConfigParam('tpay'));
-                $url = $transactionSdk->createRedirUrlForTransaction($config);
-                return $this->redirect($url);
-            } catch (Exception $e) {
+                $amount = (double)$payment->amount;
 
+                $apiKey = MgHelpers::getSetting('stripe api key', false, 'sk_test_51FOmrVInHv9lYN6G23xLhzLTDNytsH8bOStCMPJ472ZAoutfeNag8DSuQswJkDmkpGPd1yRqqKtFfrrSb2ReZhtM00J3jbGTp0');
+                $stripe = new \Stripe\StripeClient($apiKey);
+                $payment_intent = $stripe->paymentIntents->create([
+                    'amount' => (int)($amount * 100),
+                    'currency' => 'USD',
+                    'automatic_payment_methods' => ['enabled' => true],
+                ], ['stripe_account' => $user->getModelAttribute('stripeId')]);
+
+                return $this->render('buyStripe', [
+                    'clientSecret' => $payment_intent['client_secret'],
+                    'stripeAccount' => $user->getModelAttribute('stripeId'),
+                    'returnUrl' => Url::to(['/project/buy-after', 'type' => 'success', 'hash' => MgHelpers::encrypt(serialize([
+                        'payment_id' => $payment->id,
+                        'project_id' => $project->id,
+                        'amount' => $amount,
+                        'user_id' => $this->getUserModel()->id,
+                    ]))], true),
+                ]);
+            } catch (Exception $e) {
+                MgHelpers::setFlashError(Yii::t('db', $e));
+                return $this->back();
             }
         }
 
@@ -184,9 +190,6 @@ class ProjectController extends \app\components\mgcms\MgCmsController
         }
 
 
-
-
-
         $config = MgHelpers::getConfigParam('tpay');
         $notificationHandler = new TPayNotification($config);
         $res = $notificationHandler->getTpayNotification();
@@ -200,11 +203,10 @@ class ProjectController extends \app\components\mgcms\MgCmsController
         }
 
 
-
         $saved = $payment->save();
 
         $project = $payment->project;
-        $project->money +=  $payment->amount;
+        $project->money += $payment->amount;
         $project->save();
         \Yii::info($saved, 'own');
         \Yii::info($payment->errors, 'own');
@@ -413,6 +415,27 @@ class ProjectController extends \app\components\mgcms\MgCmsController
         echo file_get_contents($tempName);
 
         unlink($tempName);
+    }
+
+    function actionBuyAfter($type, $hash)
+    {
+        $data = unserialize(MgHelpers::decrypt($hash));
+        if (!isset($data['user_id']) || !isset($data['project_id']) || !isset($data['amount']) || !isset($data['payment_id'])) {
+            return $this->throw404();
+        }
+
+        if ($type == 'success') {
+            $payment = Payment::find()->where(['id' => $data['payment_id']])->one();
+            if(!$payment){
+                return $this->throw404();
+            }
+
+            $payment->status = Payment::STATUS_PAYMENT_CONFIRMED;
+            $payment->save();
+
+        }
+
+        return $this->render('buyAfter', ['type' => $type, 'payment' => $payment]);
     }
 
 
