@@ -70,6 +70,7 @@ use app\components\mgcms\MgHelpers;
  * @property integer $acceptTerms6
  * @property string $agent_code
  * @property string $testResult
+ * @property boolean $isVerified
  *
  *
  * @property User $createdBy
@@ -485,5 +486,9 @@ class User extends BaseUser implements IdentityInterface
     {
         return $this->hasMany(Project::className(), ['id' => 'project_id'])
             ->viaTable('project_user', ['user_id' => 'id']);
+    }
+
+    public function getIsVerified(){
+        return $this->getModelAttribute('isVerified');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-
+/* @var $model \app\models\mgcms\db\User*/
 
 use yii\helpers\Html;
 use app\components\mgcms\MgHelpers;

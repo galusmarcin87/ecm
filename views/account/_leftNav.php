@@ -8,6 +8,11 @@
 
         <li class="nav-item">
             <a class="nav-link " aria-current="page"
+               href="<?= \yii\helpers\Url::to(['/account', 'tab' => 'mydata']) ?>"><?= Yii::t('db', 'My data') ?></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " aria-current="page"
                href="<?= \yii\helpers\Url::to(['/account', 'tab' => 'campaigns']) ?>"><?= Yii::t('db', 'Campaigns') ?></a>
         </li>
 
@@ -16,10 +21,6 @@
                href="<?= \yii\helpers\Url::to(['/account', 'tab' => 'investitions']) ?>"><?= Yii::t('db', 'Investitions') ?></a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link " aria-current="page"
-               href="<?= \yii\helpers\Url::to(['/account', 'tab' => 'mydata']) ?>"><?= Yii::t('db', 'My data') ?></a>
-        </li>
 
         <li class="nav-item">
             <a class="nav-link " aria-current="page"

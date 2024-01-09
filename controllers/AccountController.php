@@ -300,5 +300,9 @@ class AccountController extends \app\components\mgcms\MgCmsController
         return $this->redirect('/account/index');
     }
 
+    public function actionVerifyByVeriff(){
+        return $this->render('verifyByVeriff', []);
+    }
+
 
 }

@@ -1,6 +1,8 @@
 <?php
 /* @var $this yii\web\View */
 
+/* @var $model \app\models\mgcms\db\User */
+
 use app\models\mgcms\db\Project;
 use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
@@ -44,6 +46,11 @@ $this->title = Yii::t('db', 'Main panel');
                     </h2>
                     <a href="<?= Url::to('/account/connect-with-stripe') ?>"
                        class="btn btn-primary"><?= Yii::t('db', 'Connect with Stripe') ?></a>
+
+                    <? if (!$model->isVerified): ?>
+                        <a href="<?= Url::to('/account/verify-by-veriff') ?>"
+                           class="btn btn-primary"><?= Yii::t('db', 'Verify') ?></a>
+                    <? endif; ?>
                 </div>
             </div>
 

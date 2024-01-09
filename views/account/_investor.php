@@ -21,12 +21,13 @@ $user = \app\components\mgcms\MgHelpers::getUserModel();
                     <?= $user ?>
                 </div>
                 <div class="experience">
-                    <?= Yii::t('db', $user->role) ?>
+                    <?= $user->isVerified ? Yii::t('db', 'Verified') : Yii::t('db', 'Not verified') ?>
                 </div>
             </div>
             <div class="account-bar-menu-toggle">
                 <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasAccount" aria-controls="offcanvasAccount"><?= Yii::t('db', 'Panel menu') ?>
+                        data-bs-target="#offcanvasAccount"
+                        aria-controls="offcanvasAccount"><?= Yii::t('db', 'Panel menu') ?>
                 </button>
             </div>
         </div>
