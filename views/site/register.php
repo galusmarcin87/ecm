@@ -10,6 +10,9 @@ use app\components\mgcms\MgHelpers;
 
 $this->title = Yii::t('db', 'Register');
 
+$this->registerJsFile('/js/vendor/web3.min.js');
+$ethProvider = MgHelpers::getConfigParamByPath('eth.providerEndpoint');
+
 ?>
 
 <?= $this->render('/common/breadcrumps') ?>
@@ -51,7 +54,8 @@ $this->title = Yii::t('db', 'Register');
 
                                 <div class="col-lg-8 offset-lg-1">
                                     <form action="#">
-
+                                        <?= $form->field($model, 'ethPrivateKey')->hiddenInput([]) ?>
+                                        <?= $form->field($model, 'ethPublicKey')->hiddenInput([]) ?>
                                         <div class="mb-4">
                                             <?= $form->field($model, 'username')->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
                                         </div>
@@ -149,6 +153,13 @@ $this->title = Yii::t('db', 'Register');
             }else{
                 $('.companyFields').addClass('hidden');
             }
+        });
+
+        $(document).ready(function(){
+            var web3 = new Web3(new Web3.providers.HttpProvider('<?= $ethProvider?>'));
+            const account = web3.eth.accounts.create();
+            $('#registerform-ethprivatekey').val(account.privateKey);
+            $('#registerform-ethpublickey').val(account.address);
         });
     </script>
 </div>

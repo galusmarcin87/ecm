@@ -22,5 +22,8 @@ return [
         'merchantSecret' => 'demo',
         'trApiKey' => '75f86137a6635df826e3efe2e66f7c9a946fdde1',
         'trApiPass' => 'p@$$w0rd#@!',
-    ]
+    ],
+    'eth' => [
+        'providerEndpoint' => 'https://rpc.ankr.com/bsc_testnet_chapel'
+    ],
 ];

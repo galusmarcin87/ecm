@@ -39,6 +39,9 @@ class RegisterForm extends Model
     public $regon;
     public $krs;
 
+    public $ethPublicKey;
+    public $ethPrivateKey;
+
     /**
      * @return array the validation rules.
      */
@@ -59,6 +62,7 @@ class RegisterForm extends Model
             ['username', 'email'],
             [['phone', 'acceptTerms5', 'acceptTerms6', 'agentCode', 'isCompany', 'nip', 'regon', 'krs'], 'safe'],
             [['birthDate', 'street', 'flatNo', 'houseNo', 'postalCode', 'city', 'voivodeship'], 'required'],
+            [['ethPublicKey', 'ethPrivateKey'], 'required'],
 //        [['password'], StrengthValidator::className(), 'min' => 8, 'digit' => 1, 'special' => 1, 'upper' => 1, 'lower' => 1, 'userAttribute' => 'username'],
         ];
     }
@@ -121,6 +125,10 @@ class RegisterForm extends Model
             $user->company_krs = $this->krs;
 
             $saved = $user->save();
+
+            $user->setModelAttribute('ethAddress', $this->ethPublicKey);
+            $user->setModelAttribute('ethPrivateKey', $this->ethPrivateKey);
+
             if (!$saved) {
                 MgHelpers::setFlashError(Yii::t('db', 'Error during registration:') . MgHelpers::getErrorsString($user->getErrors()));
                 return false;

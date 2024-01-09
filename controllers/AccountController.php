@@ -16,6 +16,8 @@ use FiberPay\FiberIdClient;
 use app\models\mgcms\db\File;
 use app\models\ReportRealEstateForm;
 use FiberPay\FiberPayClient;
+use Web3\Methods\Eth\Accounts;
+use Web3\Providers\HttpProvider;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Json;
@@ -34,6 +36,8 @@ use app\components\GetResponse\jsonRPCClient;
 use yii\web\UploadedFile;
 use app\models\mgcms\db\Article;
 use Web3\Web3;
+use React\Async;
+use React\Promise;
 
 class AccountController extends \app\components\mgcms\MgCmsController
 {
@@ -66,6 +70,7 @@ class AccountController extends \app\components\mgcms\MgCmsController
      */
     public function actionIndex($tab = 'main')
     {
+
         $model = $this->getUserModel();
         $model->scenario = 'account';
 

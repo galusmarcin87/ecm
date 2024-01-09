@@ -130,7 +130,7 @@ class MgHelpers extends \yii\base\Component
 
     public static function getConfigParamByPath($path)
     {
-        return self::arraySearch($path, Yii::$app->params['components']);
+        return self::arraySearch($path, Yii::$app->params);
     }
 
     public static function normalizeUnderlinedString($string, $toUpperWords = true)
