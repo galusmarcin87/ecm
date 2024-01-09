@@ -6,7 +6,6 @@
 .alert-success.in,
 .alert-warning.in {
   opacity: 1;
-  margin-top: 90px;
 }
 .articleContent img {
   height: auto;
@@ -34,4 +33,26 @@
 }
 .page-item.disabled {
   display: none;
+}
+/**----------------------------------------- new fonts -------------------------------------**/
+@font-face {
+  font-display: swap;
+  font-family: 'PERErasITC';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/PERErasITC.ttf') format('truetype');
+  
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+}
+body {
+  font-family: 'PERErasITC';
+}
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+  font-family: var(--bs-body-font-family);
 }

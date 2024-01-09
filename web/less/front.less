@@ -47,3 +47,19 @@
 .page-item.disabled {
   display: none;
 }
+
+/**----------------------------------------- new fonts -------------------------------------**/
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'PERErasITC';
+  font-style: normal;
+  font-weight: 400;
+  src:  url('/fonts/PERErasITC.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+}
+
+body {
+    font-family: 'PERErasITC';
+  h1, h2, h3, h4, h5, h6{
+    font-family: var(--bs-body-font-family);
+  }
+}
