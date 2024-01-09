@@ -39,9 +39,11 @@ use app\components\mgcms\MgHelpers;
                 <div class="col-lg-10 mx-auto">
 
 
-                    <div class="post-single-date media-single-date">
-                        <?= $model->created_on ?>
-                    </div>
+                    <? if ($model->type == \app\models\mgcms\db\Article::TYPE_NEWS): ?>
+                        <div class="post-single-date media-single-date">
+                            <?= $model->created_on ?>
+                        </div>
+                    <? endif; ?>
                     <?= $model->content ?>
                 </div>
                 </a>

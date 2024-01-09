@@ -41,8 +41,9 @@ use yii\bootstrap\Modal;
             ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'order')->textInput(['placeholder' => $model->getAttributeLabel('order')]) ?>
+            <?= $form->field($model, 'type')->dropDownList(app\components\mgcms\MgHelpers::arrayKeyValueFromArray(\app\models\mgcms\db\Article::TYPES, true), ['maxlength' => true, 'placeholder' => 'Type', 'prompt' => '']) ?>
         </div>
+
     </div>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('title')]) ?>
@@ -51,6 +52,7 @@ use yii\bootstrap\Modal;
 
     <?= $form->field($model, 'excerpt')->tinyMce() ?>
 
+    <?= $form->field($model, 'order')->textInput(['placeholder' => $model->getAttributeLabel('order')]) ?>
 
     <div class="row">
         <div class="col-md-3">
