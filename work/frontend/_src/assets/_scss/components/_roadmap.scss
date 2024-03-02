@@ -1,0 +1,66 @@
+.roadmap-slider {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    @include media-breakpoint-down(md) {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    h2 {
+        text-align: center;
+
+    }
+    .project-roadmap-carousel {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+    .swiper-slide {
+        opacity: 0.4;
+        background: #f3f3f3;
+        padding: 3rem 4rem;
+        text-align: center;
+        transition: all .3s ease;
+        h3 {
+            margin-top: 0;
+            color: $primary;
+            font-family: 'Open Sans';
+            font-weight: 700;
+        }
+        p {
+            margin-bottom: 0;
+        }
+        &-active {
+            background: #fff;
+            box-shadow:0 0 40px rgba(0,0,0,0.27);
+
+            opacity: 1
+        }
+    }
+    .swiper-button-next {
+        color: #000;
+        width: 30%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform:none;
+        top: 0;
+        &:after {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    }
+    .swiper-button-prev {
+        color: #000;
+        width: 30%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform:none;
+        top: 0;
+        &:after {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    }
+}

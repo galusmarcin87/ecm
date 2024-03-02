@@ -1,0 +1,20 @@
+.post-single-image {
+    @include gradient-y(#fff, #f3f3f3, 40%, 40%);
+    padding-bottom: 2rem;
+}
+.post-single-content {
+    background: #f3f3f3;
+    padding-bottom: 4rem;
+}
+
+.post-single {
+    .post-single-date {
+        display: inline-block;
+        background: $primary;
+        color: #fff;
+        font-weight: 600;
+        padding: 10px 30px;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+}

@@ -1,0 +1,31 @@
+<div class="page-header-text {{header_class}}">
+    <div class="page-header-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+<h1 class="page-header-title">
+            {{header_title | safe}}
+        </h1>
+
+        <div class="breadcrumbs">
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    {% for item in breadcrumbs %}
+                        {% if loop.last %}
+                            <li class="breadcrumb-item active" aria-current="page">{{item.title}}</li>
+                        {% else %}
+                            <li class="breadcrumb-item"><a href="#">{{item.title}}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            </nav>
+
+
+        </div>        
+            </div>
+        </div>
+        
+    </div>
+    </div>
+</div>

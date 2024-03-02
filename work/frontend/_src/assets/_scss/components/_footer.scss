@@ -1,0 +1,106 @@
+.site-footer {
+    background: #000;
+    color: #fff;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    position: relative;
+    overflow: hidden;
+    @include media-breakpoint-down(lg) {
+        text-align: center;
+    }
+    .site-footer-decoration{
+        @include media-breakpoint-down(lg) {
+            display: none;
+        }
+        position: absolute;
+        top: 50%;
+        
+        left: 0;
+        width: 50%;
+        height: 150%;
+        transform:translateY(-50%);
+        color: #333;
+        content: '';
+        background-repeat: no-repeat;
+        z-index: 5;
+    }
+    &-content {
+        position: relative;
+        z-index: 50;
+    }
+    a {
+        color: #fff;
+    }
+    .footer-nav {
+        .nav-item {
+            flex: 0 0 100%;
+            font-weight: bold;
+            @include media-breakpoint-up(lg) {
+                flex: 0 0 25%;
+            }
+            .nav-link {
+                padding-left: 0;
+                @include transition($transition-base);
+                &:hover {
+                    padding-left: 20px;
+                    color: $primary;
+
+                }
+            }
+        }
+    }
+
+    .footer-lines {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        border-top: 1px solid rgba(255,255,255,.2);
+        border-bottom: 1px solid rgba(255,255,255,.2);
+
+    }
+
+    .footer-mail {
+        display: flex;
+        align-items: center;
+        + .footer-mail {
+            @include media-breakpoint-up(lg) {
+                margin-left: 3rem;
+            }
+        }
+        &:hover {
+            color: $primary;
+        }
+        &-icon {
+            flex: 0 0 40px;
+        }
+        svg.icon {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .nav-social {
+
+        @include media-breakpoint-down(lg) {
+            justify-content: center;
+        }
+        svg.icon {
+            width: 22px;
+            height: 22px;
+            @include transition($transition-base);
+        }
+        .nav-item {
+            .nav-link {
+                color: #fff;
+                &:hover {
+                    color: #fff;
+                    .icon {
+                        -webkit-filter: drop-shadow(0px 0px 10px rgba(255,0,0,1));      
+                        filter: drop-shadow(0px 0px 10px rgba(255,0,0,1)); 
+                    }
+                }
+            }
+        }
+    }
+}

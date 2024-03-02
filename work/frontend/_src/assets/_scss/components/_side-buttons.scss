@@ -1,0 +1,39 @@
+.side-buttons {
+    @include media-breakpoint-down(lg) {
+        display: none;
+    }
+    &-wrapper {
+        position: relative;
+    }
+    position: absolute;
+    right: -10px;
+    top: 150px;
+    display: flex;
+    flex-direction: column;
+    width: 50px;
+    transform:translateX(100%);
+    z-index: 150;
+    
+    .nav-item {
+        margin-bottom: 0.5rem;
+    }
+    .nav-link {
+        background: #000;
+        color: #fff;
+        width: 48px;
+        height: 41px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        clip-path: polygon(25% 0, 0 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0);
+        z-index: 50;
+        padding: 0;
+        &:hover {
+            background: $primary;
+        }
+        .icon {
+            width: 18px;
+            height: 18px;
+        }
+    }
+}

@@ -1,0 +1,128 @@
+.slider-section {
+    background: #f3f3f3;
+    margin-bottom: 100px;
+    margin-top: 92px;
+    position: relative;
+    // z-index: 150;
+    @include media-breakpoint-down(lg) {
+        margin-bottom: 2rem;
+    }
+    .splide__slide {
+        
+    }
+    .slide-content {
+        position: relative;
+        @include media-breakpoint-up(lg) {
+            &:before {
+                position: absolute;
+                top: 0;
+                left: 22%;
+                height: 100%;
+                width: 50%;
+                content: '';
+                background: url(../images/slider-bg.png);
+                background-repeat: no-repeat;
+                z-index: 20;
+
+            }
+        }
+        &-inner {
+            position: relative;
+            z-index: 60;
+
+            text-align: center;
+            @include media-breakpoint-up(lg) {
+                text-align: left;
+            }
+            
+        }
+    }
+
+    h2 {
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 60px;
+        margin-bottom: 1rem;
+        @include media-breakpoint-down(sm) {
+            font-size: 40px;
+        }
+
+    }
+
+    p {
+        font-size: 21px;
+        text-align: center;
+        @include media-breakpoint-up(lg) {
+            text-align: left;
+        }
+        @media(min-width:1500px) {
+            font-size: 24px;
+        }
+        margin-bottom: 2.5rem; 
+        letter-spacing: .025ch;
+    }
+
+    .slider-img {
+        clip-path: polygon(0 0, 0 100%, 100% 100%, 100% calc(0% + 100px), calc(100% - 60px) 0);
+    }
+
+    .slider-nav {
+        @include media-breakpoint-down(lg) {
+
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+
+        }
+
+        @include media-breakpoint-up(lg) {
+            position: absolute;
+            height: 100px;
+            background: #f3f3f3;
+            width: 22%;
+            &:before {
+                width: 50vw;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                z-index: -1;
+                content: '';
+                background: #f3f3f3;
+            }
+        }
+
+
+        .splide__pagination {
+            counter-reset: pagination-num;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform:translate(-50%,-50%);
+            &__page {
+
+                width: 15px;
+                height: 30px;
+                background: transparent;
+                color: #000;
+                font-weight: 500;
+                font-size: 18px;
+                &.is-active {
+                    transform:none;
+                    color: $primary;
+                }
+            }
+          }
+          .splide__arrow {
+            background: transparent;
+          }
+          
+          .splide__pagination__page:before {
+            counter-increment: pagination-num;
+            content: counter( pagination-num );
+          }
+        
+    }
+    
+}

@@ -1,0 +1,45 @@
+{
+    "name": "vintage/yii2-i18n",
+    "description": "Internalization module for automatic adding of translations to database",
+    "keywords": ["yii2", "i18n", "translation", "translations"],
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/Vintage-web-production/yii2-i18n/issues",
+        "source": "https://github.com/Vintage-web-production/yii2-i18n"
+    },
+    "authors": [
+        {
+            "name": "Aleksandr Zelenin",
+            "email": "aleksandr@zelenin.me",
+            "role": "Developer"
+        },
+        {
+            "name": "Naumenko Pavel",
+            "email": "not.gosu@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Vladimir Kuprienko",
+            "email": "vldmr.kuprieno@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "vintage\\i18n\\": "src"
+        }
+    },
+    "extra": {
+        "bootstrap": "vintage\\i18n\\Bootstrap"
+    }
+}

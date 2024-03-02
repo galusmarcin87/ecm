@@ -1,0 +1,92 @@
+<div class="portfolio-section section-dark-left-overlayed py-5">
+    <div class="section-content">
+    <div class="section-title text-center">Portfolio klastrów energii SDT</div>
+
+    <div class="section-background">
+        <div class="container">
+            <div class="row">
+                {% for i in range(0, 3) -%}
+                    <div class="col-lg-4">
+                        <a class="card card-light mb-3" href="#">
+                            <div class="card-main-image img-corner-right-top">
+                                <img src="assets/images/tokens-img.jpg" class="card-img-top" alt="Token">
+                                <div class="card-main-image-overlay">
+                                    <span class="btn">Poznaj szczegóły</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title card-title--portfolio">
+                                            SDT Lab One
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="portfolio-icons">
+                                            <div class="portfolio-icons-icon">
+                                                <svg class="icon">
+                                                    <use xlink:href="#calendar" />
+                                                </svg>
+                                            </div>
+                                            <div class="portfolio-icons-text">
+                                                2 lata
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="portfolio-icons">
+                                            <div class="portfolio-icons-icon">
+                                                <svg class="icon">
+                                                    <use xlink:href="#procent" />
+                                                </svg>
+                                            </div>
+                                            <div class="portfolio-icons-text">
+                                                5% zwrotu
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                </p>
+
+                                <div class="card-progress">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <p>Zebrane (50%):</p>
+                                            <p class="fs-6"><strong>167 tys. PLN</strong></p>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <p>Cel:</p>
+                                            <p class="fs-6">700 tys. PLN</p>
+                                        </div>
+                                    </div>
+                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+
+                                </div>
+
+                                <div class="portfolio-countdown">
+                                    <p class="text-uppercase">
+                                        <strong>Pozostało:</strong>
+                                    </p>
+                                    <div class="countdown" data-date="24-9-2023"  data-time="23:00">
+                                        <div class="day"><span class="num"></span><span class="word"> dni</span></div>
+                                        <div class="hour"><span class="num"></span><span class="word"> godzin</span></div>
+                                        <div class="min"><span class="num"></span><span class="word"> minut</span></div>
+                                        <div class="sec"><span class="num"></span><span class="word"> sekund</span></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            </a>
+                    </div>
+                {%- endfor %}
+            </div>
+
+            <div class="text-center my-5">
+                <a href="#" class="btn btn-wide btn-primary">Zobacz wszystkie</a>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

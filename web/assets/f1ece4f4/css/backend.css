@@ -1,0 +1,7 @@
+body{
+
+}
+
+body.mce-fullscreen .navbar-fixed-top{
+    display:none;
+}

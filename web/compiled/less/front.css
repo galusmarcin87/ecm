@@ -1,0 +1,71 @@
+.error-summary,
+.help-block-error {
+  color: #e63331;
+}
+.alert-danger.in,
+.alert-success.in,
+.alert-warning.in {
+  opacity: 1;
+  margin-top: 90px;
+}
+.articleContent img {
+  height: auto;
+}
+.hidden {
+  display: none;
+}
+.bottom10 {
+  margin-bottom: 10px;
+}
+.top10 {
+  margin-top: 10px;
+}
+.bottom25 {
+  margin-bottom: 25px;
+}
+.top25 {
+  margin-top: 25px;
+}
+.inline-block {
+  display: inline-block;
+}
+.position-relative {
+  position: relative;
+}
+.page-item.disabled {
+  display: none;
+}
+/**----------------------------------------- new fonts -------------------------------------**/
+@font-face {
+  font-display: swap;
+  font-family: 'PERErasITC';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/PERErasITC.ttf') format('truetype');
+  
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+}
+body {
+  font-family: 'PERErasITC';
+}
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+  font-family: var(--bs-body-font-family);
+}
+#page_account_index .kv-table-header th {
+  font-size: 16px;
+}
+#page_account_index .kv-table-header th a {
+  color: black;
+}
+.glyphicon-expand:before {
+  content: "\25bc";
+}
+.glyphicon-collapse-down:before {
+  content: "\25b2";
+}

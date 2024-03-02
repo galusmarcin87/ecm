@@ -1,0 +1,31 @@
+---
+    title: multimedia
+    permalink: "multimedia.html"
+    layout: layouts/main.njk
+    eleventyNavigation:
+    key: multimedia
+---
+{% set header_title = "Multimedia" %}
+{% set breadcrumbs =  [{title: 'Home'}, {title: 'Multimedia'}] %}
+{% set header_image = "page-header.jpg" %}
+
+{% include "./_templates/_partials/_page-header.njk" %}
+
+
+        <div class="section-multimedia gallery py-5 my-5">
+            <div class="container">
+            <div class="row gy-5">
+            {% for i in range(0, 16) -%}
+                <div class="col-lg-3">
+                <a href="#" class="multimedia-item gallery-item img-corner-right-top">
+                    <img src="assets/images/tokens-img.jpg" alt="" class="img-fluid">
+                </a>
+                </div>
+
+            {%- endfor %}
+            </div>
+            </div>
+
+            {% include "./_templates/_partials/_pagination.njk" %}
+        </div>
+

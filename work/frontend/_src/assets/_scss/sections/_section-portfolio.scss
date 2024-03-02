@@ -1,0 +1,16 @@
+.portfolio-section {
+    .portfolio-icons {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        &-icon {
+            flex: 0 0 40px;
+            margin-right: 1rem;
+            color: $primary;
+        }
+        &-text {
+            flex: 0 1 auto;
+
+        }
+    }
+}

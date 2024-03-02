@@ -1,0 +1,97 @@
+---
+    title: login
+    permalink: "login.html"
+    layout: layouts/main.njk
+    eleventyNavigation:
+    key: login
+---
+{% set header_title = "Logowanie" %}
+{% set breadcrumbs =  [{title: 'Home'}, {title: 'Logowanie'}] %}
+{% set header_image = "page-header.jpg" %}
+
+{% include "./_templates/_partials/_page-header.njk" %}
+
+<div class="bg-lg-half-decoration py-7 ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+
+                    
+                
+                <div class="pe-lg-5">
+
+                    <form action="#">
+                    <h4 class="font-oswald fw-bold mb-6">Masz już konto? Zaloguj się.</h4>
+                    
+                    <div class="mb-4">
+                        <input type="email" class="form-control" name="email" placeholder="Email" />
+                    </div>
+                    <div class="mb-4">
+                        <input type="password" class="form-control" name="password" placeholder="Hasło" />
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" value="" name="login-remember" id="login-remember">
+                        <label class="form-check-label" for="login-remember">
+                            Zapamiętaj mnie
+                        </label>
+                    </div>
+
+
+                    <div class="text-center my-6">
+
+                        <button class="btn btn-primary btn-wide" type="submit">Zaloguj się</button>
+                        <p class="my-4">
+                            <a href="#" class="link-dark">Nie pamiętam hasła</a>
+                        </p>
+
+                    </div>
+
+                    </form>
+
+                </div>
+                </div>
+                </div>
+
+            </div>
+            <div class="col-lg-6">
+                <div class="bg-decoration-content">
+                <div class="ps-lg-5">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-1">
+
+                        
+                    <h4 class="font-oswald fw-bold mb-6">
+                        Nie masz konta? Zarejestruj się!
+                    </h4>
+                    <div class="text-center mb-6">
+                        <a href="#" class="btn btn-primary btn-wide">Zarejestruj się</a>
+                    </div>
+                    <p class="text-uppercase mb-4">
+                        Jakie są korzyści?
+                    </p>
+                    <ul class="list-check">
+                        <li>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </li>
+                        <li>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </li>
+                        <li>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </li>
+                    </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+

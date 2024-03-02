@@ -1,0 +1,41 @@
+<div class="roadmap-slider">
+
+    {% set data = [
+        {   
+            title: 'od IV 2022',
+            text: 'Etap I - Budowa Public Relations'
+        },
+        {
+            title: 'IV 2022 - III 2023',
+            text: 'Przygotowanie programu SDT1<br /> Future Solutions LAB ONE'
+        },
+        {
+            title: 'od IV 2023',
+            text: 'Tokenizacja (ITO)'
+        }
+
+        
+    ]
+    %}
+
+    <h2 class="text-uppercase fw-bold font-oswald">Roadmap</h2>
+
+    <div class="swiper project-roadmap-carousel">
+    <div class="swiper-wrapper">
+      
+                        {% for item in data %}
+                        <div class="swiper-slide col-md-5">
+                            <div class="roadmap-item">
+                                <h3>{{item.title}}</h3>
+                                <p>{{item.text | safe}}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+      
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+    </div>
+</div>
+
+

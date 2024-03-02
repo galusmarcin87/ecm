@@ -1,0 +1,44 @@
+.gallery {
+    .gallery-item {
+        position: relative;
+        display: block;
+        &:before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            content: '';
+            background: $primary;
+            opacity: 0;
+            @include transition($transition-base);
+        }
+        &:after {
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            content: '';
+            z-index: 50;
+            background-color: $primary;
+            /* background-color: #FFFFFF; */
+            background-image: url('data:image/svg+xml,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 118.8 118.8" style="enable-background:new 0 0 118.8 118.8;" xml:space="preserve"><path fill="%23fff" d="M116,101.6L88.7,74.3c4.6-7.4,7.3-16.1,7.3-25.5c0-26.5-21.5-48-48-48S0,22.3,0,48.8c0,26.5,21.5,48,48,48c10.2,0,19.6-3.2,27.4-8.6l27,27c1.9,1.9,4.3,2.8,6.8,2.8c2.5,0,4.9-0.9,6.8-2.8C119.7,111.4,119.7,105.3,116,101.6z M48,81.2c-17.9,0-32.4-14.5-32.4-32.4S30.1,16.4,48,16.4c17.9,0,32.4,14.5,32.4,32.4S65.9,81.2,48,81.2z"/></svg>');
+            background-size: 30px 30px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            left: 50%;
+            top: 50%;
+            transform:translate(-50%,-50%);
+            opacity: 0;
+            @include transition($transition-base);
+            
+        }
+        &:hover {
+            &:before {
+                opacity: 0.8;
+            }
+            &:after {
+                opacity: 1;
+            }
+        }
+    }
+}

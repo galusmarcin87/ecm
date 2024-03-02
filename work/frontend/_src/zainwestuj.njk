@@ -1,0 +1,105 @@
+---
+    title: zainwestuj
+    permalink: "zainwestuj.html"
+    layout: layouts/main.njk
+    eleventyNavigation:
+    key: zainwestuj
+---
+{% set header_title = "Zainwestuj" %}
+{% set breadcrumbs =  [{title: 'Home'}, {title: 'Tokeny'}, {title: 'SDT Seria'}] %}
+{% set header_image = "page-header.jpg" %}
+
+{% include "./_templates/_partials/_page-header.njk" %}
+
+<div class="bg-lg-half-decoration py-6 ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                
+                <div class="pe-lg-5">
+
+                    <form action="#">
+                    <h4 class="font-oswald fw-bold mb-6">Wprowadź kwotę inwestycji</h4>
+                    
+                    <div class="mb-6">
+                        <input type="text" class="form-control" name="value" placeholder="10000" />
+                    </div>
+
+                    <button class="btn btn-primary btn-wide" type="submit">Przelicz</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+            <div class="col-lg-6">
+
+                <div class="ps-lg-5">
+                    <h4 class="font-oswald fw-bold mb-6">
+                        Wartość w BNB
+                    </h4>
+                    <p class="fw-bold bnb-value" id="bnb-value">343784,98</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="container py-5 py-lg-6">
+    <h4 class="fw-bold font-oswald mb-5">
+        <span class="text-uppercase">
+        Inwestujesz w projekt:
+        </span>
+        <span class="invest-project-name">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+        </span>
+    </h4>
+
+    <div class="row">
+        <div class="col-lg-8 pb-5">
+            <div class="projects-info pt-5 pb-6">
+                <dl>
+                    <dt>Czas realizacji:</dt>
+                    <dd>2 lata</dd>
+
+                    <dt>Szacowana data zwrotu pożyczki</dt>
+                    <dd>2022-11-18</dd>
+
+                    <dt>Inwestowana kwota:</dt>
+                    <dd>10000 $</dd>
+
+                    <dt>Roczne oprocentowanie</dt>
+                    <dd>5%</dd>
+
+                    <dt>Odsetki:</dt>
+                    <dd>1000 $</dd>
+
+                    <dt>Zwrot kapitału i odsetek</dt>
+                    <dd>11000$</dd>
+            </div>
+                    
+                    <form action="#">
+                        <div class="form-check form-check-acceptance mb-4">
+                            <input class="form-check-input" type="checkbox" value="" id="acceptance1">
+                            <label class="form-check-label" for="acceptance1">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </label>
+                        </div>
+                        <div class="form-check form-check-acceptance mb-6">
+                            <input class="form-check-input" type="checkbox" value="" id="acceptance2">
+                            <label class="form-check-label" for="acceptance2">
+                                Wyrażam zgodę na przetwarzanie swoich danych posobowych....
+                            </label>
+                        </div>
+
+                        <button class="btn btn-primary btn-wide" type="submit">Zainwestuj</button>
+                    </form>
+
+                </dl>
+        </div>
+    </div>
+    
+</div>

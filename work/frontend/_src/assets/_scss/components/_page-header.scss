@@ -1,0 +1,170 @@
+$pageheader-proportions: percentage(400 / 1920);
+$pageheader-bg: $primary;
+
+.page-header {
+  margin-bottom: 0px;
+  padding-bottom: $pageheader-proportions;
+  // background: $pageheader-bg;
+  
+  color: #000;
+  position: relative;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  .page-header-content {
+    padding-top: 110px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  content: ' ';
+  opacity: 0.8;
+  background: #fff;
+
+}
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 35%;
+  }
+  @include media-breakpoint-down(md) {
+    padding-bottom: 45%;
+  }
+  @include media-breakpoint-down(sm) {
+    @media(orientation:portrait) {
+      padding-bottom: 70%;
+    }
+  }
+  .container {
+    position: relative;
+    z-index: 10;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+    .page-header-title {
+      color: #000;
+      z-index: 10;
+      font-family: 'Oswald';
+      text-transform: uppercase;
+
+
+
+
+        font-size: rem-calc(72);
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+        font-weight: bold;
+
+
+        // letter-spacing: 0.075em;
+
+        position: relative;
+
+
+        @include media-breakpoint-down(lg) {
+          font-size: 40px;
+        }
+        @include media-breakpoint-down(md) {
+          font-size: rem-calc(32);
+        }
+        @include media-breakpoint-down(sm) {
+          font-size: rem-calc(26);
+        }
+
+
+    }
+
+  }
+
+  
+  .breadcrumbs {
+    position: relative;
+    margin-bottom: 0px;
+    font-size: rem-calc(14);
+
+    .breadcrumb-item {
+
+        text-transform: uppercase;
+    }
+    a {
+      color: #000;
+      display: inline-block;
+      text-decoration: none;
+      font-size: rem-calc(14);
+    }
+  
+  }
+  
+
+
+  .page-header-text {
+    text-align: center;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    margin-top: 90px;
+
+    .page-header-title {
+      font-family: 'Open Sans';
+      text-transform: uppercase;
+      font-size: rem-calc(72);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      font-weight: bold;
+      @include media-breakpoint-down(lg) {
+        font-size: 40px;
+      }
+      @include media-breakpoint-down(md) {
+        font-size: rem-calc(32);
+      }
+      @include media-breakpoint-down(sm) {
+        font-size: rem-calc(26);
+      }
+    }
+    &.project-header {
+      .page-header-title {
+        font-family: Oswald;
+      }
+    }
+      
+  .breadcrumbs {
+    position: relative;
+    margin-bottom: 0px;
+    font-size: rem-calc(14);
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    .breadcrumb {
+      text-align: center;
+      justify-content: center;
+    }
+
+    .breadcrumb-item {
+
+        text-transform: uppercase;
+    }
+    a {
+      color: #000;
+      display: inline-block;
+      text-decoration: none;
+      font-size: rem-calc(14);
+    }
+  
+  }
+  }

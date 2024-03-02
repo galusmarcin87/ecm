@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="{{ settings.lang }}">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#212121" media="(prefers-color-scheme: dark)">
+<title>{{ settings.siteName }}</title>
+{% block stylesheets %}
+      <link rel="stylesheet" href="assets/css/main.css" />
+    {% endblock %}
+</head>
+<body>
+  <div class="page">
+    {% include "../_partials/sprite.njk" %}
+    {% include "../_partials/navbar.njk" %}
+
+	  {{ content | safe }}
+
+    {% include "../_partials/footer.njk" %}
+    
+  </div>
+
+  {% block scripts %}
+      <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyD9AbR7v9VcflkE06B3qdNXiU7ErvoUYP8"></script>
+      <script src="assets/js/vendor/jquery.min.js"></script>
+      <script src="assets/js/vendor/infobox_packed.js"></script>
+      <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+      <script src="assets/js/vendor/splide.min.js"></script>
+      <script src="assets/js/vendor/countdown.js"></script>
+      <script src="assets/js/vendor/swiper-bundle.min.js"></script>
+      <script src="assets/js/vendor/jquery.magnific-popup.min.js"></script>
+      {# <script src="assets/js/scripts.js"></script> #}
+	  <script src="assets/js/app.js" type="module" defer></script>
+
+    {% endblock %}
+
+    {% block scripts_add %}
+
+    {% endblock %}
+</body>
+</html>
