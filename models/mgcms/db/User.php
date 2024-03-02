@@ -85,7 +85,7 @@ class User extends BaseUser implements IdentityInterface
 {
 
     public $fileUpload;
-    public $modelAttributes = ['facebook', 'twitter', 'linkedin', 'instagram', 'companyForSale', 'company_id', 'testResult', 'is2faEnabled'];
+    public $modelAttributes = ['facebook', 'twitter', 'linkedin', 'instagram', 'companyForSale', 'company_id', 'testResult', 'is2faEnabled', 'missingTokens'];
     public $languageAttributes = ['description', 'position'];
 
 
@@ -170,6 +170,7 @@ class User extends BaseUser implements IdentityInterface
             [['file_text'], 'string'],
             [['imAgentCheckbox'], 'safe'],
             ['fileUpload', 'requiredForRepresentative', 'skipOnEmpty' => false,],
+            [['missingTokens'], 'number']
         ];
     }
 

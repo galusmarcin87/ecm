@@ -31,37 +31,38 @@ use yii\helpers\Url;
 
     <div class="row">
 		<?= $form->field4md($model, 'username')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('username')]) ?>
-		
+
 		<?= $form->field4md($model, 'password')->passwordInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('password')]) ?>
-		
+
 		<?= $form->field4md($model, 'first_name')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('first_name')]) ?>
-		
+
 		<?= $form->field4md($model, 'last_name')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('last_name')]) ?>
-		
+
 		<?= $form->field4md($model, 'role')->dropDownList(MgHelpers::arrayKeyValueFromArray(MgHelpers::getUserModel()->getRolesManagableForUser(), true), ['maxlength' => true]) ?>
-		
+
 		<?= $form->field4md($model, 'status')->dropDownList(MgHelpers::arrayTranslateValues(\app\models\mgcms\db\User::STATUSES), ['maxlength' => true]) ?>
-		
+
 		<?= $form->field4md($model, 'birthdate')->datePicker(); ?>
-		
+
 		<?= $form->field4md($model, 'street')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('street')]) ?>
-		
+
 		<?= $form->field4md($model, 'flat_no')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('flat_no')]) ?>
-		
+
 		<?= $form->field4md($model, 'house_no')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('house_no')]) ?>
-		
+
 		<?= $form->field4md($model, 'postcode')->textInput(['maxlength' => true, 'placeholder2' => 'City']) ?>
-		
+
 		<?= $form->field4md($model, 'city')->textInput(['maxlength' => true, 'placeholder2' => 'City']) ?>
-		
+
 		<?= $form->field4md($model, 'voivodeship')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('voivodeship')]) ?>
-		
+
 		<?= $form->field4md($model, 'pesel')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('pesel')]) ?>
-		
+
 		<?= $form->field4md($model, 'id_document_no')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('id_document_no')]) ?>
-		
+
 		<?= $form->field4md($model, 'phone')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('phone')]) ?>
 
+        <?= $form->field4md($model, 'missingTokens')->textInput(['maxlength' => true, 'placeholder' => $model->getAttributeLabel('missingTokens')]) ?>
 
         <div class="col-md-4">
             <?= $this->render('/common/_fileModalChooser', [

@@ -19,20 +19,21 @@ $searchModel->user_id = MgHelpers::getUserModel()->id;
 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 $myWallet = $model->getModelAttribute('ethAddress');
 $this->registerJsFile('/js/vendor/web3.min.js');
+$missingTokens = $model->getModelAttribute('missingTokens') ?? 0;
 ?>
 
 <?= $this->render('/common/breadcrumps', ['displayBg' => true, 'cssClass' => 'page-header-text',]) ?>
 <?= $this->render('_investor') ?>
 
 
-    <div class="container">
+<div class="container">
 
 
-        <div class="row gx-4">
+    <div class="row gx-4">
 
-            <?= $this->render('_leftNav', ['tab' => $tab]) ?>
-        </div>
+        <?= $this->render('_leftNav', ['tab' => $tab]) ?>
     </div>
+</div>
 
 
 <div class="container-with-background"><br><br>
@@ -82,12 +83,12 @@ $this->registerJsFile('/js/vendor/web3.min.js');
             <div class="mb-4"><br><br><br>
                 <h4 class="font-oswald fw-bold mb-4">Total kW</h4>
             </div>
-             <div class="mb-4">
+            <div class="mb-4">
                 ——
             </div>
             <div class="mb-4">
                 <p class="fw-bold bnb-value" id="totalKw">
-					0
+                    0
             </div>
         </div>
         <div class="col-sm-2">
@@ -173,16 +174,19 @@ $networkId = MgHelpers::getSetting('eth.chainId', false, '97');;
     };
 
     async function getBallanceOf(tokenName, walletAddress) {
+
         const web3 = new Web3(new Web3.providers.HttpProvider('<?= $networkUrl?>'));
         const tokenAddress = ethConfig[tokenName].contractAddress;
         const jsonABI = ethConfig[tokenName].abi;
         const contract = new web3.eth.Contract(jsonABI, tokenAddress);
-        return await contract.methods.balanceOf(walletAddress).call();
+        const balance = await contract.methods.balanceOf(walletAddress).call();
+        return balance / 10 ** 8 + <?= $missingTokens?>;
+
     }
 
     $(document).ready(async function () {
-        $('#ecmtokens').text((await getBallanceOf('ECM', '<?= $myWallet ?>')) / 10 ** 8);
-        const SDT1Balance = await getBallanceOf('SDT1', '<?= $myWallet ?>') / 10 ** 8;
+        $('#ecmtokens').text((await getBallanceOf('ECM', '<?= $myWallet ?>')));
+        const SDT1Balance = await getBallanceOf('SDT1', '<?= $myWallet ?>');
         $('#sdttokens').text(SDT1Balance);
         $('#totalKw').text(SDT1Balance * 0.000108);
     });
