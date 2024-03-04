@@ -13,6 +13,8 @@ use app\components\mgcms\MgHelpers;
  */
  class PaymentSearch extends Payment
 {
+
+    public $onlyWithHash = false;
     /**
      * @inheritdoc
      */
@@ -66,6 +68,10 @@ use app\components\mgcms\MgHelpers;
             'type' => $this->type,
             'project_id' => $this->project_id,
         ]);
+
+        if($this->onlyWithHash) {
+            $query->andWhere(['not', ['hash' => null]]);
+        }
 
         $query->andFilterWhere(['like', 'status', $this->status]);
 

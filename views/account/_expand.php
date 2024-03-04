@@ -10,4 +10,4 @@ use yii\helpers\Url;
 
 
 ?>
-<?= $model->hash ?>
+<?= str_replace(',','<br/>',$model->hash) ?>

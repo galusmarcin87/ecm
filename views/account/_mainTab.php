@@ -16,6 +16,7 @@ $this->title = Yii::t('db', 'My wallet');
 
 $searchModel = new \app\models\mgcms\db\PaymentSearch();
 $searchModel->user_id = MgHelpers::getUserModel()->id;
+$searchModel->onlyWithHash = true;
 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 $myWallet = $model->getModelAttribute('ethAddress');
 $this->registerJsFile('/js/vendor/web3.min.js');
