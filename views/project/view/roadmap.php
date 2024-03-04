@@ -5,6 +5,9 @@ use yii\web\View;
 /* @var $this yii\web\View */
 /* @var $model Project */
 
+if(!$model->bonuses){
+    return;
+}
 ?>
 
 <div class="roadmap-slider">
