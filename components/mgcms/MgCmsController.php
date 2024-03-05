@@ -56,6 +56,16 @@ class MgCmsController extends Controller
     public function initNewsetterGetResponse()
     {
         if (Yii::$app->request->post('newsletterEmail')) {
+
+            $email = MgHelpers::getSetting('contact_email', false, 'mzielinska@vertes.pl');
+            Yii::$app->mailer->compose('newsletter', ['email' => Yii::$app->request->post('newsletterEmail')])
+                ->setTo($email)
+                ->setFrom([$email => $email])
+                ->setSubject(Yii::t('db', 'Newsletter'))
+                ->send();
+
+            return MgHelpers::setFlashSuccess(Yii::t('db', 'Email successfully subscribed'));
+
             $api_key = MgHelpers::getConfigParam('getResponseApiKEy');
             $api = new GetResponse($api_key);
             $campaignId = MgHelpers::getSetting('getResponse_list_token_' . Yii::$app->language, false, 'aWsnx');
