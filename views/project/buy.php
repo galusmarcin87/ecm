@@ -87,7 +87,7 @@ $fieldConfig = \app\components\ProjectHelper::getFormFieldConfig(true);
             </div>
             <div class="text-end">
                 <button type="submit" class="btn btn-primary">
-                    <?= Yii::t('db', 'Buy with Stripe') ?>
+                    <?= Yii::t('db', 'Buy') ?>
                 </button>
             </div>
 

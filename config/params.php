@@ -28,5 +28,6 @@ return [
     ],
     'veriff' => [
         'apiKey' => 'ca954980-0ae2-4777-a9d6-5ba8154ba82d'
-    ]
+    ],
+
 ];

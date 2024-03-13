@@ -34,6 +34,9 @@ use Web3\Methods\Eth\Accounts;
 use Web3\Providers\HttpProvider;
 use Web3\RequestManagers\HttpRequestManager;
 use Web3p\EthereumTx\Transaction;
+use CoinbaseCommerce\ApiClient;
+use CoinbaseCommerce\Resources\Checkout;
+use CoinbaseCommerce\Resources\Charge;
 
 class ProjectController extends \app\components\mgcms\MgCmsController
 {
@@ -90,7 +93,7 @@ class ProjectController extends \app\components\mgcms\MgCmsController
         return $this->render('view', ['model' => $model, 'subscribeForm' => $subscribeForm]);
     }
 
-    public function actionBuy($id)
+    public function actionBuyStripe($id)
     {
 
         if (!MgHelpers::getUserModel()) {
@@ -161,9 +164,112 @@ class ProjectController extends \app\components\mgcms\MgCmsController
 
     }
 
+    public function actionBuy($id)
+    {
+
+        if (!MgHelpers::getUserModel()) {
+            MgHelpers::setFlashError(Yii::t('db', 'You must to be logged in'));
+            return $this->redirect(['site/login']);
+        }
+
+        $user = User::findOne(MgHelpers::getUserModel()->id);
+
+        $project = Project::find()
+            ->where(['status' => Project::STATUS_ACTIVE, 'id' => $id])
+            ->one();
+
+        $payment = new Payment();
+        $payment->project_id = $project->id;
+        $payment->user_id = $user->id;
+        $payment->status = Payment::STATUS_NEW;
+        $payment->type = $project::class;
+        $payment->scenario = 'invest';
+        $payment->rate = $project->token_value;
+
+
+        $loaded = $payment->load(Yii::$app->request->post());
+        if ($loaded) {
+            $amount = (double)$payment->amount;
+
+            if ($amount > 1000 && !$user->is_verified) {
+                MgHelpers::setFlash(MgHelpers::FLASH_TYPE_WARNING, Yii::t('db', 'You must to be verified before investing more than 1000$'));
+                return $this->redirect('/account/verify-by-veriff');
+            }
+            $saved = $payment->save();
+            if (!$saved) {
+                MgHelpers::setFlashError(Yii::t('db', 'Problem with saving payment ' . MgHelpers::getErrorsString($payment->errors)));
+                return $this->redirect(['site/login']);
+            }
+            try {
+
+                ApiClient::init(MgHelpers::getSetting('coinbase api key', false, 'c4e3e3e3-3e3e-4e3e-3e3e-3e3e3e3e3e3e'));
+                $chargeData = [
+                    'name' => Yii::t('db', 'Buying tokens'),
+                    'local_price' => [
+                        'amount' => $amount,
+                        'currency' => 'USD',
+                    ],
+                    'pricing_type' => 'fixed_price',
+                    'metadata' => [
+                        'paymentId' => $payment->id,
+                        'userId' => $user->id,
+                    ],
+                ];
+
+                try {
+                    $charge = Charge::create($chargeData);
+                    return $this->redirect($charge['hosted_url']);
+                } catch (\Exception $e) {
+                    // Obsłuż błędy
+                    echo 'Error: ' . $e->getMessage();
+                }
+            } catch (Exception $e) {
+                MgHelpers::setFlashError(Yii::t('db', $e));
+                return $this->back();
+            }
+        }
+
+        //--------------------------------STEP 2 ---------------------------------
+        return $this->render('buy', ['project' => $project, 'payment' => $payment]);
+
+    }
+
+    public function actionNotifyCoinbase()
+    {
+        \Yii::info("actionNotifyCoinbase", 'own');
+
+
+        $requestBody = file_get_contents('php://input');
+
+
+
+        $data = json_decode($requestBody, true);
+
+        \Yii::info($requestBody, 'own');
+
+        $signature = $_SERVER['HTTP_X_CC_WEBHOOK_SIGNATURE'];
+
+        \Yii::info($signature, 'own');
+
+        $secretKey = MgHelpers::getSetting('coinbase api private key', false, 'c4e3e3e3-3e3e-4e3e-3e3e-3e3e3e3e3e3e');
+
+
+        $calculatedSignature = hash_hmac('sha256', $requestBody, $secretKey);
+
+
+        if ($calculatedSignature === $signature) {
+            // Sygnatury są zgodne, dane są poprawne
+            echo 'Webhook verification successful!';
+            // Dodatkowo, tutaj możesz przetwarzać otrzymane dane z webhooka
+        } else {
+            // Sygnatury nie są zgodne, dane mogą być niepoprawne
+            echo 'Webhook verification failed!';
+        }
+    }
+
     public function beforeAction($action)
     {
-        if ($action->id == 'notify') {
+        if ($action->id == 'notify' || $action->id == 'notify-coinbase') {
             $this->enableCsrfValidation = false;
         }
         return true;

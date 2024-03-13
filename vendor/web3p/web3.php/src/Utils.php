@@ -87,13 +87,12 @@ class Utils
      */
     public static function toHex($value, $isPrefix=false)
     {
-        if (is_numeric($value)) {
+        if (is_int($value) || is_float($value)) {
             // turn to hex number
             $bn = self::toBn($value);
             $hex = $bn->toHex(true);
             $hex = preg_replace('/^0+(?!$)/', '', $hex);
         } elseif (is_string($value)) {
-            $value = self::stripZero($value);
             $hex = implode('', unpack('H*', $value));
         } elseif ($value instanceof BigNumber) {
             $hex = $value->toHex(true);
@@ -121,6 +120,10 @@ class Utils
         if (self::isZeroPrefixed($value)) {
             $count = 1;
             $value = str_replace('0x', '', $value, $count);
+            // avoid suffix 0
+            if (strlen($value) % 2 > 0) {
+                $value = '0' . $value;
+            }
         }
         return pack('H*', $value);
     }
@@ -544,5 +547,19 @@ class Utils
             throw new InvalidArgumentException('toBn number must be BigNumber, string or int.');
         }
         return $bn;
+    }
+
+    /**
+     * hexToNumber
+     * 
+     * @param string $hexNumber
+     * @return int
+     */
+    public static function hexToNumber($hexNumber)
+    {
+        if (!self::isZeroPrefixed($hexNumber)) {
+            $hexNumber = '0x' . $hexNumber;
+        }
+        return intval(self::toBn($hexNumber)->toString());
     }
 }

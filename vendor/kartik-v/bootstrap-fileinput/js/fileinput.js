@@ -1,9 +1,9 @@
 /*!
- * bootstrap-fileinput v5.5.2
+ * bootstrap-fileinput v5.5.3
  * http://plugins.krajee.com/file-input
  *
  * Author: Kartik Visweswaran
- * Copyright: 2014 - 2022, Kartik Visweswaran, Krajee.com
+ * Copyright: 2014 - 2024, Kartik Visweswaran, Krajee.com
  *
  * Licensed under the BSD-3-Clause
  * https://github.com/kartik-v/bootstrap-fileinput/blob/master/LICENSE.md
@@ -92,8 +92,11 @@
             srcPath = src.substring(0, src.lastIndexOf("/"));
             return srcPath.substring(0, srcPath.lastIndexOf("/") + 1) + 'img/loading.gif' + zoomVar;
         },
+        defaultButtonCss: function (fill) {
+            return 'btn-default btn-' + (fill ? '' : 'outline-') + 'secondary';
+        },
         isBs: function (ver) {
-            var chk = $.trim(($.fn.fileinputBsVersion || '') + '');
+            var chk = $h.trim(($.fn.fileinputBsVersion || '') + '');
             ver = parseInt(ver, 10);
             if (!chk) {
                 return ver === 4;
@@ -101,8 +104,17 @@
             return ver === parseInt(chk.charAt(0), 10);
 
         },
-        defaultButtonCss: function (fill) {
-            return 'btn-default btn-' + (fill ? '' : 'outline-') + 'secondary';
+        isNumeric: function(n) {
+            if (n === undefined) {
+                return false;
+            }
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        },
+        trim: function(val) {
+            if (val === undefined) {
+                return '';
+            }
+            return val.toString().trim();
         },
         now: function () {
             return new Date().getTime();
@@ -261,7 +273,7 @@
                 return true;
             }
             if ($h.isString(value) && trim) {
-                return $.trim(value) === '';
+                return $h.trim(value) === '';
             }
             if ($h.isArray(value)) {
                 return value.length === 0;
@@ -430,7 +442,7 @@
             if ($h.isEmpty(str)) {
                 return false;
             }
-            str = str.toString().trim().replace(/\n/g, ' ');
+            str = $h.trim(str).replace(/\n/g, ' ');
             if (str.length === 0) {
                 return false;
             }
@@ -439,7 +451,7 @@
             if ($h.isEmpty(str)) {
                 return false;
             }
-            str = str.toString().trim().replace(/\n/g, ' ');
+            str = $h.trim(str).replace(/\n/g, ' ');
             if (str.length === 0) {
                 return false;
             }
@@ -731,7 +743,7 @@
                 };
             };
             for (i = 0; i < length; i++) {
-                if ((value = resolveValues[i]) && $.isFunction(value.promise)) {
+                if ((value = resolveValues[i]) && $h.isFunction(value.promise)) {
                     value.promise()
                         .done(updateFunc(i, resolveContexts, resolveValues))
                         .fail(updateFunc(i, rejectContexts, rejectValues));
@@ -926,6 +938,7 @@
                     case 'maxTotalFileCount':
                     case 'minFileSize':
                     case 'maxFileSize':
+                    case 'maxMultipleFileSize':
                     case 'maxFilePreviewSize':
                     case 'resizeQuality':
                     case 'resizeIfSizeMoreThan':
@@ -2286,7 +2299,7 @@
             $err = $h.createElement(self.$errorContainer.html());
             $err.find('.kv-error-close').remove();
             $err.find('ul').remove();
-            return !!$.trim($err.text()).length;
+            return !!$h.trim($err.text()).length;
         },
         _errorHandler: function (evt, caption) {
             var self = this, err = evt.target.error, showError = function (msg) {
@@ -2432,7 +2445,7 @@
         },
         _parseError: function (operation, jqXHR, errorThrown, fileName) {
             /** @namespace jqXHR.responseJSON */
-            var self = this, errMsg = $.trim(errorThrown + ''), textPre, errText, text;
+            var self = this, errMsg = $h.trim(errorThrown + ''), textPre, errText, text;
             errText = jqXHR.responseJSON && jqXHR.responseJSON.error ? jqXHR.responseJSON.error.toString() : '';
             text = errText ? errText : jqXHR.responseText;
             if (self.cancelling && self.msgUploadAborted) {
@@ -2440,9 +2453,9 @@
             }
             if (self.showAjaxErrorDetails && text) {
                 if (errText) {
-                    errMsg = $.trim(errText + '');
+                    errMsg = $h.trim(errText + '');
                 } else {
-                    text = $.trim(text.replace(/\n\s*\n/g, '\n'));
+                    text = $h.trim(text.replace(/\n\s*\n/g, '\n'));
                     textPre = text.length ? '<pre>' + text + '</pre>' : '';
                     errMsg += errMsg ? textPre : text;
                 }
@@ -2698,15 +2711,14 @@
             }
             self.$dropZone.removeClass('file-highlighted');
         },
-        _zoneDrop: function (e) {
-            /** @namespace e.originalEvent.dataTransfer */
-            var self = this, i, $el = self.$element, dt = e.originalEvent.dataTransfer,
-                files = dt.files, items = dt.items, folders = $h.getDragDropFolders(items);
+        _addFilesFromSystem: function(e, dt, type) {
+            var self = this, files = dt.files, items = dt.items, folders = $h.getDragDropFolders(items);
             e.preventDefault();
-            if (self.isDisabled || $h.isEmpty(files)) {
+            if (self.isDisabled || $h.isEmpty(files) || !files.length) {
+                console.log('No valid copied files found in clipboard for pasting.');
                 return;
             }
-            if (!self._raise('fileDragDrop', {'sourceEvent': e, 'files': files})) {
+            if (!self._raise(type, {'sourceEvent': e, 'files': files})) {
                 return;
             }
             if (folders > 0) {
@@ -2727,6 +2739,11 @@
             } else {
                 self._dropFiles(e, files);
             }
+        },
+        _zoneDrop: function (e) {
+            /** @namespace e.originalEvent.dataTransfer */
+            var self = this, i, $el = self.$element, dt = e.originalEvent.dataTransfer;
+            self._addFilesFromSystem(e, dt, 'fileDragDrop');
         },
         _uploadClick: function (e) {
             var self = this, $btn = self.$container.find('.fileinput-upload'), $form,
@@ -2878,7 +2895,7 @@
                 title = ' title="' + (self.previewZoomButtonTitles[type] || '') + '" ', tag = $h.isBs(5) ? 'bs-' : '',
                 params = title + (type === 'close' ? ' data-' + tag + 'dismiss="modal" aria-hidden="true"' : '');
             if (type === 'fullscreen' || type === 'borderless' || type === 'toggleheader') {
-                params += ' data-toggle="button" aria-pressed="false" autocomplete="off"';
+                params += ' data-toggle="button" aria-pressed="false"';
             }
             return '<button type="button" class="' + css + ' btn-kv-' + type + '"' + params + '>' + label + '</button>';
         },
@@ -4323,7 +4340,7 @@
         _getSize: function (bytes, skipTemplate, sizeUnits) {
             var self = this, size = parseFloat(bytes), i = 0, factor = self.bytesToKB, func = self.fileSizeGetter, out,
                 sizeHuman = size, newSize;
-            if (!$.isNumeric(bytes) || !$.isNumeric(size)) {
+            if (!$h.isNumeric(bytes) || !$h.isNumeric(size)) {
                 return '';
             }
             if (typeof func === 'function') {
@@ -5573,7 +5590,9 @@
                     var $thumb, p1 = $.extend(true, {}, self._getOutData(null, {}, {}, files),
                             {id: previewId, index: index, fileId: fileId}),
                         p2 = {id: previewId, index: index, fileId: fileId, file: file, files: files};
-                    self._previewDefault(file, true);
+                    Object.values(files).forEach(x => {
+                        self._previewDefault(x, true);
+                    });
                     $thumb = self._getFrame(previewId, true);
                     self._toggleLoading('hide');
                     if (self.isAjaxUpload) {
@@ -5714,7 +5733,27 @@
                     }
                     return;
                 }
-                if (self.maxFileSize > 0 && fileSize > self.maxFileSize) {
+
+                if (self.maxMultipleFileSize > 0 && files.length > 1) {
+                    var captionGroup = [];
+                    var fileSizeGroup = 0;
+                    Object.values(files).forEach(file => {
+                        fileSizeGroup = fileSizeGroup + (file.size / self.bytesToKB);
+                        captionGroup.push(file.name);
+                    });
+
+                    if (fileSizeGroup > self.maxMultipleFileSize) {
+                        msg = self.msgMultipleSizeTooLarge.setTokens({
+                            'name': captionGroup,
+                            'size': self._getSize(fileSizeGroup, true),
+                            'maxSize': self._getSize(self.maxMultipleFileSize * self.bytesToKB, true)
+                        });
+
+                        throwError(msg, file, previewId, i, fileId);
+                        return;
+                    }
+
+                } else if (self.maxFileSize > 0 && fileSize > self.maxFileSize) {
                     msg = self.msgSizeTooLarge.setTokens({
                         'name': caption,
                         'size': sizeHuman,
@@ -5938,10 +5977,8 @@
             return self.$element;
         },
         paste: function (e) {
-            var self = this, ev = e.originalEvent, files = ev.clipboardData && ev.clipboardData.files || null;
-            if (files) {
-                self._dropFiles(e, files);
-            }
+            var self = this, dt = (e.clipboardData || e.originalEvent.clipboardData);
+            self._addFilesFromSystem(e, dt, 'filePaste');
             return self.$element;
         },
         pause: function () {
@@ -6234,8 +6271,12 @@
         var args = Array.apply(null, arguments), retvals = [];
         args.shift();
         this.each(function () {
-            var self = $(this), data = self.data('fileinput'), options = typeof option === 'object' && option,
-                theme = options.theme || self.data('theme'), l = {}, t = {},
+            var options = {};
+            if (typeof option === 'object') {
+                options = $.extend(true, {}, $.fn.fileinput.defaults, option);
+            }
+            var self = $(this), data = self.data('fileinput'),
+                theme = options.theme || self.data('theme') || $.fn.fileinput.defaults.theme, l = {}, t = {},
                 lang = options.language || self.data('language') || $.fn.fileinput.defaults.language || 'en', opt;
             if (!data) {
                 if (theme) {
@@ -6419,6 +6460,7 @@
         resizeIfSizeMoreThan: 0, // in KB
         minFileSize: -1,
         maxFileSize: 0,
+        maxMultipleFileSize: 0,
         maxFilePreviewSize: 25600, // 25 MB
         minFileCount: 0,
         maxFileCount: 0,
@@ -6496,6 +6538,7 @@
         msgFileRequired: 'You must select a file to upload.',
         msgSizeTooSmall: 'File "{name}" (<b>{size}</b>) is too small and must be larger than <b>{minSize}</b>.',
         msgSizeTooLarge: 'File "{name}" (<b>{size}</b>) exceeds maximum allowed upload size of <b>{maxSize}</b>.',
+        msgMultipleSizeTooLarge: 'Files "{name}" (<b>{size}</b>) exceeds maximum allowed upload size of <b>{maxSize}</b>.',
         msgFilesTooLess: 'You must select at least <b>{n}</b> {files} to upload.',
         msgFilesTooMany: 'Number of files selected for upload <b>({n})</b> exceeds maximum allowed limit of <b>{m}</b>.',
         msgTotalFilesTooMany: 'You can upload a maximum of <b>{m}</b> files (<b>{n}</b> files detected).',

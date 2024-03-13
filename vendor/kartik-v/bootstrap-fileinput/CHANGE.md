@@ -1,6 +1,23 @@
 Change Log: `bootstrap-fileinput`
 =================================
 
+## version 5.5.3
+
+**Date**: 11-Mar-2024
+
+- (enh #1856): Replace and fix deprecated jQuery methods.
+- (enh #1852): Create Basque Translations.
+- (enh #1851): Update Spanish Translations.
+- (enh #1850): Add `maxMultipleFileSize` feature check.
+- (enh #1847): Fix invalid attribute `autocomplete` for button.
+- (enh #1846): Update Finnish Translations.
+- (enh #1845): Copy & Paste files functionality (pasting enabled on the filename caption input element).
+- (enh #1842): Update German Translations.
+- (enh #1840): Update Hungarian Translations.
+- (enh #1836): Create Urdu Translations.
+- (enh #1825): Update fileinput.js overriding default options.
+- (bug #1822): Fix tiff parsing exceptions and convert filetype library to ES5.
+
 ## version 5.5.2
 
 **Date**: 13-Oct-2022

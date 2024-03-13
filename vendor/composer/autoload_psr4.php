@@ -136,6 +136,7 @@ return array(
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'DASPRiD\\Enum\\' => array($vendorDir . '/dasprid/enum/src'),
     'Complex\\' => array($vendorDir . '/markbaker/complex/classes/src'),
+    'CoinbaseCommerce\\' => array($vendorDir . '/coinbase/coinbase-commerce/src'),
     'BaconQrCode\\' => array($vendorDir . '/bacon/bacon-qr-code/src'),
     'BN\\' => array($vendorDir . '/simplito/bn-php/lib'),
     'BI\\' => array($vendorDir . '/simplito/bigint-wrapper-php/lib'),
