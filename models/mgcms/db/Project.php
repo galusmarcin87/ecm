@@ -101,6 +101,7 @@ class Project extends \app\models\mgcms\db\AbstractRecord
             [['name', 'localization', 'whitepaper', 'www', 'token_blockchain'], 'string', 'max' => 245],
             [['status', 'investition_time', 'token_currency'], 'string', 'max' => 45],
             [['management', 'risks', 'token_name'], 'string'],
+            [['name'], 'safe', 'on' => 'admin'],
         ];
     }
 
@@ -111,6 +112,7 @@ class Project extends \app\models\mgcms\db\AbstractRecord
     {
         return 'project';
     }
+
 
     /**
      * @inheritdoc
@@ -176,7 +178,7 @@ class Project extends \app\models\mgcms\db\AbstractRecord
 
     public function getFaqs()
     {
-        return $this->hasMany(\app\models\mgcms\db\Bonus::className(), ['project_id' => 'id'])->andWhere(['to' => 2])->andWhere($this->language && $this->scenario != 'admin'  ? ['language' => $this->language] : []);
+        return $this->hasMany(\app\models\mgcms\db\Bonus::className(), ['project_id' => 'id'])->andWhere(['to' => 2])->andWhere($this->language && $this->scenario != 'admin' ? ['language' => $this->language] : []);
     }
 
     /**
