@@ -13,7 +13,7 @@ use yii\web\View;
     <h4><?= Yii::t('db', 'See') ?>:</h4>
     <div>
         <? foreach ($model->fileRelations as $relation): ?>
-            <? if ($relation->json != '1' || !$relation->file) continue ?>
+            <? if ($relation->json != Yii::$app->language || !$relation->file) continue ?>
             <div>
                 <a href="<?= $relation->file->linkUrl ?>" class="project-btn d-block">
                     <?= $relation->file->origin_name ?>

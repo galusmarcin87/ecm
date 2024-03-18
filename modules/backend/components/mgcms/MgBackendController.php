@@ -118,7 +118,7 @@ class MgBackendController extends MgCmsController
                     $fileRel->file_id = $file->id;
                     $fileRel->rel_id = $model->id;
                     $fileRel->model = $model::className();
-                    $fileRel->json = 1;
+                    $fileRel->json = isset($model->language) && $model->language ? $model->language : 'en';
                     MgHelpers::saveModelAndLog($fileRel);
                 } else {
                     MgHelpers::setFlashError('Błąd dodawania pliku powiązanego');
