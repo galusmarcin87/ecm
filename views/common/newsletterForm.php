@@ -1,10 +1,13 @@
 <?
 
+use app\models\NewsletterForm;
 use yii\bootstrap\ActiveForm;
 use yii\web\View;
 use app\components\mgcms\MgHelpers;
 
 /* @var $this yii\web\View */
+
+$model = new NewsletterForm();
 
 ?>
 
@@ -18,31 +21,40 @@ use app\components\mgcms\MgHelpers;
                     </h2>
                     <p class="fs-5 text-uppercase">
                         <?= MgHelpers::getSettingTypeText('Home newsletter - text 2 ' . Yii::$app->language, false, 'Bądź zawsze na bieżąco! dołącz do grupy inwestorów i miej możliwość uczestniczenia w naszych najnowszych projektach inwestycyjnych.') ?></p>
-                        <?php $form = ActiveForm::begin(['options' => ['class' => 'newsletter-form']]); ?>
+                    <?php $form = ActiveForm::begin(['options' => ['class' => 'newsletter-form']]); ?>
 
-                        <div class="input-group mb-4">
-                            <input type="email" class="form-control" name="newsletterEmail"
-                                   placeholder="<?= MgHelpers::getSettingTypeText('Home newsletter - text 3 ' . Yii::$app->language, false, 'Wpisz swój adres e-mail') ?>"
-                                   aria-label="<?= MgHelpers::getSettingTypeText('Home newsletter - text 4 ' . Yii::$app->language, false, 'Adres email odbiorcy newslettera') ?> ">
-                            <button class="btn" type="submit">
-                                <?= MgHelpers::getSettingTypeText('Home newsletter - text 5 ' . Yii::$app->language, false, 'Zapisz się') ?>
-                                <svg class="icon">
-                                    <use xlink:href="#chevron-right"></use>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="gdpr1" required>
-                            <label class="form-check-label" for="gdpr1">
-                                <?= MgHelpers::getSettingTypeText('Home newsletter - gdpr 1 ' . Yii::$app->language, false, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.') ?>
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="gdpr2" required>
-                            <label class="form-check-label" for="gdpr2">
-                                <?= MgHelpers::getSettingTypeText('Home newsletter - gdpr 2 ' . Yii::$app->language, false, 'Wyrażam zgodę na przetwarzanie swoich danych posobowych....') ?>
-                            </label>
-                        </div>
+                    <?= $form->field($model, 'reCaptcha')->widget(
+                        \himiklab\yii2\recaptcha\ReCaptcha3::className(),
+                        [
+                            'siteKey' => MgHelpers::getSetting('recaptcha site key', false, '6LfzRZ0pAAAAALuQROdxl-jSei8W5CZaVwY8kcIO'), // unnecessary is reCaptcha component was set up
+                            'action' => 'homepage',
+                        ]
+                    )->label(false) ?>
+
+                    <div class="input-group mb-4">
+                        <?= $form->field($model, 'email', ['template' => "{input}{error}", 'options' => ['tag' => false],])->textInput([
+                            'type' => 'email',
+                            'required' => true,
+                            'placeholder' => MgHelpers::getSettingTypeText('Home newsletter - text 3 ' . Yii::$app->language, false, 'Wpisz swój adres e-mail')]) ?>
+                        <button class="btn" type="submit">
+                            <?= MgHelpers::getSettingTypeText('Home newsletter - text 5 ' . Yii::$app->language, false, 'Zapisz się') ?>
+                            <svg class="icon">
+                                <use xlink:href="#chevron-right"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="gdpr1" required>
+                        <label class="form-check-label" for="gdpr1">
+                            <?= MgHelpers::getSettingTypeText('Home newsletter - gdpr 1 ' . Yii::$app->language, false, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.') ?>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="gdpr2" required>
+                        <label class="form-check-label" for="gdpr2">
+                            <?= MgHelpers::getSettingTypeText('Home newsletter - gdpr 2 ' . Yii::$app->language, false, 'Wyrażam zgodę na przetwarzanie swoich danych posobowych....') ?>
+                        </label>
+                    </div>
                     <?php ActiveForm::end(); ?>
                 </div>
                 <div class="col-6 col-lg-4 mx-auto">

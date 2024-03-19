@@ -4,6 +4,7 @@ namespace app\components\mgcms;
 
 use app\components\GetResponse\GetResponse;
 use app\models\LoginForm;
+use app\models\NewsletterForm;
 use yii\web\Controller;
 use Yii;
 
@@ -20,7 +21,8 @@ class MgCmsController extends Controller
         $this->language = Yii::$app->language;
         $this->view->title = Yii::$app->name;
         $this->_setContainerParams();
-        $this->initNewsetterGetResponse();
+        //$this->initNewsetterGetResponse();
+        $this->initNewsetter();
         $this->_initContact();
 
 
@@ -55,6 +57,8 @@ class MgCmsController extends Controller
 
     public function initNewsetterGetResponse()
     {
+
+
         if (Yii::$app->request->post('newsletterEmail')) {
 
             $email = MgHelpers::getSetting('contact_email', false, 'mzielinska@vertes.pl');
@@ -75,6 +79,15 @@ class MgCmsController extends Controller
             } else {
                 MgHelpers::setFlashSuccess(Yii::t('db', 'Email successfully subscribed'));
             }
+        }
+    }
+
+    public function initNewsetter()
+    {
+        $model = new NewsletterForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->sendEmail(Yii::$app->params['adminEmail'])) {
+            return MgHelpers::setFlashSuccess(Yii::t('db', 'Email successfully subscribed'));
         }
     }
 
