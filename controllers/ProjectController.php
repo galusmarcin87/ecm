@@ -207,7 +207,7 @@ class ProjectController extends \app\components\mgcms\MgCmsController
                     'name' => Yii::t('db', 'Buying tokens'),
                     'local_price' => [
                         'amount' => $amount,
-                        'currency' => 'USD',
+                        'currency' => 'USDT',
                     ],
                     'pricing_type' => 'fixed_price',
                     'metadata' => [
