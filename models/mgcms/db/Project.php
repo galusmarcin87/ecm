@@ -68,7 +68,7 @@ class Project extends \app\models\mgcms\db\AbstractRecord
 {
     use LanguageBehaviorTrait;
 
-    public $modelAttributes = ['management', 'risks', 'token_name'];
+    public $modelAttributes = ['management', 'risks', 'token_name', 'hotpay_sekret'];
     public $languageAttributes = ['name', 'lead', 'text', 'text2', 'buy_token_info', 'management', 'risks'];
     public $downloadFiles;
 
@@ -100,7 +100,7 @@ class Project extends \app\models\mgcms\db\AbstractRecord
             [['date_presale_start', 'date_presale_end', 'date_crowdsale_start', 'date_crowdsale_end', 'date_realization_profit', 'management'], 'safe'],
             [['name', 'localization', 'whitepaper', 'www', 'token_blockchain'], 'string', 'max' => 245],
             [['status', 'investition_time', 'token_currency'], 'string', 'max' => 45],
-            [['management', 'risks', 'token_name'], 'string'],
+            [['management', 'risks', 'token_name', 'hotpay_sekret'], 'string'],
             [['name'], 'safe', 'on' => 'admin'],
         ];
     }

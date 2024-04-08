@@ -139,10 +139,8 @@ yii\jui\JuiAsset::register($this);
 
         <?= $form->field12md($model, 'text')->tinyMce() ?>
 
-        <?= $form->field3md($model, 'fiber_collect_id')->textInput(['placeholder' => '']) ?>
-        <?= $form->field3md($model, 'iban')->textInput(['placeholder' => '']) ?>
-        <?= $form->field3md($model, 'pay_name')->textInput(['placeholder' => '']) ?>
-        <?= $form->field3md($model, 'pay_description')->textInput(['placeholder' => '']) ?>
+        <?= $form->field3md($model, 'hotpay_sekret')->textInput(['placeholder' => '']) ?>
+
 
     </div>
 

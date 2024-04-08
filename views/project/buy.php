@@ -86,8 +86,12 @@ $fieldConfig = \app\components\ProjectHelper::getFormFieldConfig(true);
                 )->checkbox(['class' => 'form-check-input', 'label' => $payment->getAttributeLabel('acceptTerms3')])->label(true); ?>
             </div>
             <div class="text-end">
-                <button type="submit" class="btn btn-primary">
-                    <?= Yii::t('db', 'Buy') ?>
+                <button type="submit" class="btn btn-primary" name="paymentEngine" value="coinbase">
+                    <?= Yii::t('db', 'Buy with coinbase') ?>
+                </button>
+
+                <button type="submit" class="btn btn-primary" name="paymentEngine" value="hotpay">
+                    <?= Yii::t('db', 'Buy with hotpay') ?>
                 </button>
             </div>
 

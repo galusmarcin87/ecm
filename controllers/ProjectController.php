@@ -7,36 +7,24 @@ use app\components\mgcms\tpay\TPayNotification;
 use app\models\mgcms\db\User;
 use app\models\SubscribeForm;
 use phpseclib\Math\BigInteger;
-use tpayLibs\src\_class_tpay\Notifications\BasicNotificationHandler;
 use Yii;
-use yii\base\BaseObject;
-use yii\console\widgets\Table;
 use yii\helpers\Json;
-use yii\log\Logger;
-use yii\web\Controller;
 use app\models\mgcms\db\Project;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use \app\components\mgcms\MgHelpers;
 use app\models\mgcms\db\Payment;
 use __;
-use yii\web\Link;
-use yii\web\Session;
-use FiberPay\FiberPayClient;
-use JWT;
-use yii\validators\EmailValidator;
 
 use app\components\mgcms\tpay\TPayTransaction;
 
-use Web3\Web3;
 use Web3\Contract;
-use Web3\Methods\Eth\Accounts;
 use Web3\Providers\HttpProvider;
 use Web3\RequestManagers\HttpRequestManager;
 use Web3p\EthereumTx\Transaction;
 use CoinbaseCommerce\ApiClient;
-use CoinbaseCommerce\Resources\Checkout;
 use CoinbaseCommerce\Resources\Charge;
+use HotpayMoney\ApiClient as HotpayApiClient;
 
 class ProjectController extends \app\components\mgcms\MgCmsController
 {
@@ -200,33 +188,16 @@ class ProjectController extends \app\components\mgcms\MgCmsController
                 MgHelpers::setFlashError(Yii::t('db', 'Problem with saving payment ' . MgHelpers::getErrorsString($payment->errors)));
                 return $this->redirect(['site/login']);
             }
-            try {
 
-                ApiClient::init(MgHelpers::getSetting('coinbase api key', false, 'c4e3e3e3-3e3e-4e3e-3e3e-3e3e3e3e3e3e'));
-                $chargeData = [
-                    'name' => Yii::t('db', 'Buying tokens'),
-                    'local_price' => [
-                        'amount' => $amount,
-                        'currency' => 'USDT',
-                    ],
-                    'pricing_type' => 'fixed_price',
-                    'metadata' => [
-                        'paymentId' => $payment->id,
-                        'userId' => $user->id,
-                    ],
-                ];
-
-                try {
-                    $charge = Charge::create($chargeData);
-                    return $this->redirect($charge['hosted_url']);
-                } catch (\Exception $e) {
-                    // Obsłuż błędy
-                    echo 'Error: ' . $e->getMessage();
-                }
-            } catch (Exception $e) {
-                MgHelpers::setFlashError(Yii::t('db', $e));
-                return $this->back();
+            switch (Yii::$app->request->post('paymentEngine')) {
+                case 'coinbase':
+                    return $this->_payCoinbase($amount, $payment, $user);
+                    break;
+                case 'hotpay':
+                    return $this->_payHotpay($amount, $payment, $user);
+                    break;
             }
+
         }
 
         //--------------------------------STEP 2 ---------------------------------
@@ -234,13 +205,98 @@ class ProjectController extends \app\components\mgcms\MgCmsController
 
     }
 
+    private function _payCoinbase($amount, $payment, $user)
+    {
+        try {
+
+            ApiClient::init(MgHelpers::getSetting('coinbase api key', false, 'c4e3e3e3-3e3e-4e3e-3e3e-3e3e3e3e3e3e'));
+            $chargeData = [
+                'name' => Yii::t('db', 'Buying tokens'),
+                'local_price' => [
+                    'amount' => $amount,
+                    'currency' => 'USDT',
+                ],
+                'pricing_type' => 'fixed_price',
+                'metadata' => [
+                    'paymentId' => $payment->id,
+                    'userId' => $user->id,
+                ],
+            ];
+
+            try {
+                $charge = Charge::create($chargeData);
+                return $this->redirect($charge['hosted_url']);
+            } catch (\Exception $e) {
+                // Obsłuż błędy
+                echo 'Error: ' . $e->getMessage();
+            }
+        } catch (Exception $e) {
+            MgHelpers::setFlashError(Yii::t('db', $e));
+            return $this->back();
+        }
+    }
+
+    private function _payHotpay($amount, $payment, $user)
+    {
+        if(!$payment->project->hotpay_sekret){
+            MgHelpers::getErrorsString(Yii::t('db', 'Hotpay secret is not set'));
+            return $this->back();
+}
+        return $this->render('buyHotpay', ['payment' => $payment]);
+    }
+
+    public function actionNotifyHotpay()
+    {
+        \Yii::info("actionNotifyHotpay", 'own');
+        \Yii::info(serialize($_POST), 'own');
+
+        /*
+$_POST["KWOTA"] - wartość płatności
+$_POST["ID_PLATNOSCI"] - unikalne id płatności
+$_POST["ID_ZAMOWIENIA"] - id zamówienia podane podczas inicjacji
+$_POST["STATUS"] - FAILURE / SUCCESS / PENDING
+$_POST["SEKRET"] - sekret danej usługi
+$_POST["SECURE"] - oznaczenie bezpiecznej transakcji
+$_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256","HASLOZUSTAWIEN;".$_POST["KWOTA"].";".$_POST["ID_PLATNOSCI"].";".$_POST["ID_ZAMOWIENIA"].";".$_POST["STATUS"].";".$_POST["SECURE"].";".$_POST["SEKRET"])
+*/
+        $hasloZUstawien = MgHelpers::getSetting('hotpay haslo',false, 'xxx');
+        if(!empty($_POST)){
+            if(!empty($_POST["KWOTA"]) &&
+                !empty($_POST["ID_PLATNOSCI"]) &&
+                !empty($_POST["ID_ZAMOWIENIA"]) &&
+                !empty($_POST["STATUS"]) &&
+                !empty($_POST["SEKRET"]) &&
+                !empty($_POST["SECURE"]) &&
+                !empty($_POST["HASH"])
+            ){
+                if(hash("sha256",$hasloZUstawien.";".$_POST["KWOTA"].";".$_POST["ID_PLATNOSCI"].";".$_POST["ID_ZAMOWIENIA"].";".$_POST["STATUS"].";".$_POST["SECURE"].";".$_POST["SEKRET"]) == $_POST["HASH"]){
+                    //komunikacja poprawna
+                    if($_POST["STATUS"]=="SUCCESS"){
+                        //płatność zaakceptowana
+                        \Yii::info("success", 'own');
+                        echo "Płatność została poprawnie opłacona";
+                    }else if($_POST["STATUS"]=="FAILURE"){
+                        //odrzucone
+                        \Yii::info("failed", 'own');
+                        echo "Płatność zakończyła się błędem";
+                    }else if($_POST["STATUS"]=="PENDING"){
+                        //odrzucone
+                        echo "Płatność oczekuje na realizacje";
+                    }
+                }
+            }else{
+                echo "BRAK WYMAGANYCH DANYCH";
+            }
+        }
+
+
+    }
     public function actionNotifyCoinbase()
     {
         \Yii::info("actionNotifyCoinbase", 'own');
 
 
         $requestBody = file_get_contents('php://input');
-
 
 
         $data = json_decode($requestBody, true);
@@ -269,7 +325,7 @@ class ProjectController extends \app\components\mgcms\MgCmsController
 
     public function beforeAction($action)
     {
-        if ($action->id == 'notify' || $action->id == 'notify-coinbase') {
+        if ($action->id == 'notify' || $action->id == 'notify-coinbase' || $action->id == 'notify-hotpay') {
             $this->enableCsrfValidation = false;
         }
         return true;
