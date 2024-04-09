@@ -271,11 +271,22 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             ){
                 if(hash("sha256",$hasloZUstawien.";".$_POST["KWOTA"].";".$_POST["ID_PLATNOSCI"].";".$_POST["ID_ZAMOWIENIA"].";".$_POST["STATUS"].";".$_POST["SECURE"].";".$_POST["SEKRET"]) == $_POST["HASH"]){
                     //komunikacja poprawna
+                    $payment = Payment::find()->where(['id' => $_POST["ID_PLATNOSCI"]])->one();
+                    if(!$payment){
+                        \Yii::info("no such payment ", 'own');
+                        return;
+                    }
                     if($_POST["STATUS"]=="SUCCESS"){
                         //płatność zaakceptowana
                         \Yii::info("success", 'own');
+                        $payment->status = Payment::STATUS_PAYMENT_CONFIRMED;
+                        $payment->project->money += $payment->amount;
+                        $payment->project->save();
+                        $payment->save();
                         echo "Płatność została poprawnie opłacona";
                     }else if($_POST["STATUS"]=="FAILURE"){
+                        $payment->status = Payment::STATUS_SUSPENDED;
+                        $payment->save();
                         //odrzucone
                         \Yii::info("failed", 'own');
                         echo "Płatność zakończyła się błędem";
