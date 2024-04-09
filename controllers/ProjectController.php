@@ -271,7 +271,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             ) {
                 if (hash("sha256", $hasloZUstawien . ";" . $_POST["KWOTA"] . ";" . $_POST["ID_PLATNOSCI"] . ";" . $_POST["ID_ZAMOWIENIA"] . ";" . $_POST["STATUS"] . ";" . $_POST["SECURE"] . ";" . $_POST["SEKRET"]) == $_POST["HASH"]) {
                     //komunikacja poprawna
-                    $payment = Payment::find()->where(['id' => $_POST["ID_PLATNOSCI"]])->one();
+                    $payment = Payment::find()->where(['id' => $_POST["ID_ZAMOWIENIA"]])->one();
                     if (!$payment) {
                         \Yii::info("no such payment ", 'own');
                         return;
