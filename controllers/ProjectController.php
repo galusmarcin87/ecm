@@ -238,10 +238,10 @@ class ProjectController extends \app\components\mgcms\MgCmsController
 
     private function _payHotpay($amount, $payment, $user)
     {
-        if(!$payment->project->hotpay_sekret){
+        if (!$payment->project->hotpay_sekret) {
             MgHelpers::getErrorsString(Yii::t('db', 'Hotpay secret is not set'));
             return $this->back();
-}
+        }
         return $this->render('buyHotpay', ['payment' => $payment]);
     }
 
@@ -259,49 +259,56 @@ $_POST["SEKRET"] - sekret danej usługi
 $_POST["SECURE"] - oznaczenie bezpiecznej transakcji
 $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256","HASLOZUSTAWIEN;".$_POST["KWOTA"].";".$_POST["ID_PLATNOSCI"].";".$_POST["ID_ZAMOWIENIA"].";".$_POST["STATUS"].";".$_POST["SECURE"].";".$_POST["SEKRET"])
 */
-        $hasloZUstawien = MgHelpers::getSetting('hotpay haslo',false, 'xxx');
-        if(!empty($_POST)){
-            if(!empty($_POST["KWOTA"]) &&
+        $hasloZUstawien = MgHelpers::getSetting('hotpay haslo', false, 'xxx');
+        if (!empty($_POST)) {
+            if (!empty($_POST["KWOTA"]) &&
                 !empty($_POST["ID_PLATNOSCI"]) &&
                 !empty($_POST["ID_ZAMOWIENIA"]) &&
                 !empty($_POST["STATUS"]) &&
                 !empty($_POST["SEKRET"]) &&
                 !empty($_POST["SECURE"]) &&
                 !empty($_POST["HASH"])
-            ){
-                if(hash("sha256",$hasloZUstawien.";".$_POST["KWOTA"].";".$_POST["ID_PLATNOSCI"].";".$_POST["ID_ZAMOWIENIA"].";".$_POST["STATUS"].";".$_POST["SECURE"].";".$_POST["SEKRET"]) == $_POST["HASH"]){
+            ) {
+                if (hash("sha256", $hasloZUstawien . ";" . $_POST["KWOTA"] . ";" . $_POST["ID_PLATNOSCI"] . ";" . $_POST["ID_ZAMOWIENIA"] . ";" . $_POST["STATUS"] . ";" . $_POST["SECURE"] . ";" . $_POST["SEKRET"]) == $_POST["HASH"]) {
                     //komunikacja poprawna
                     $payment = Payment::find()->where(['id' => $_POST["ID_PLATNOSCI"]])->one();
-                    if(!$payment){
+                    if (!$payment) {
                         \Yii::info("no such payment ", 'own');
                         return;
                     }
-                    if($_POST["STATUS"]=="SUCCESS"){
+                    if ($_POST["STATUS"] == "SUCCESS") {
                         //płatność zaakceptowana
                         \Yii::info("success", 'own');
-                        $payment->status = Payment::STATUS_PAYMENT_CONFIRMED;
-                        $payment->project->money += $payment->amount;
-                        $payment->project->save();
-                        $payment->save();
+                        try {
+                            $payment->status = Payment::STATUS_PAYMENT_CONFIRMED;
+                            $payment->project->money += $payment->amount;
+                            $payment->project->save();
+                            $payment->save();
+                        } catch (\Exception $e) {
+                            \Yii::info("error", 'own');
+                            \Yii::info($e, 'own');
+                        }
+
                         echo "Płatność została poprawnie opłacona";
-                    }else if($_POST["STATUS"]=="FAILURE"){
+                    } else if ($_POST["STATUS"] == "FAILURE") {
                         $payment->status = Payment::STATUS_SUSPENDED;
                         $payment->save();
                         //odrzucone
                         \Yii::info("failed", 'own');
                         echo "Płatność zakończyła się błędem";
-                    }else if($_POST["STATUS"]=="PENDING"){
+                    } else if ($_POST["STATUS"] == "PENDING") {
                         //odrzucone
                         echo "Płatność oczekuje na realizacje";
                     }
                 }
-            }else{
+            } else {
                 echo "BRAK WYMAGANYCH DANYCH";
             }
         }
 
 
     }
+
     public function actionNotifyCoinbase()
     {
         \Yii::info("actionNotifyCoinbase", 'own');
