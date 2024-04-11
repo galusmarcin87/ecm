@@ -17,6 +17,7 @@ use yii\helpers\Html;
  * @property integer $project_id
  * @property string $type
  * @property string $hash
+ * @property string $engine
  *
  *
  * @property \app\models\mgcms\db\User $user
@@ -66,7 +67,7 @@ class Payment extends \app\models\mgcms\db\AbstractRecord
     public function rules()
     {
         return [
-            [['created_on', 'type', 'hash'], 'safe'],
+            [['created_on', 'type', 'hash', 'engine'], 'safe'],
             [['user_id', 'amount'], 'required'],
             [['user_id', 'status',], 'integer'],
             [['amount', 'rate'], 'number'],
@@ -112,6 +113,7 @@ class Payment extends \app\models\mgcms\db\AbstractRecord
             'actions_amount' => Yii::t('db', 'Shares Amount'),
             'showUserName' => Yii::t('db', 'Show login of person who invested'),
             'showUserPhoto' => Yii::t('db', 'Show profile photo of person who invested'),
+            'engine' => Yii::t('db', 'Engine'),
             'acceptTerms' => MgHelpers::getSettingTypeText('buy accept terms 1 ' . Yii::$app->language, false, 'Akceptuje <a href="#">regulamin</a> serwisu i wyrażam zgode...'),
         ];
     }
@@ -167,6 +169,7 @@ class Payment extends \app\models\mgcms\db\AbstractRecord
             return Html::a(Yii::t('db', $model->name), \yii\helpers\Url::to(['/backend/mgcms/' . strtolower($this->type) . '/view', 'id' => $model->id]));
         }
     }
+
 
 
 }

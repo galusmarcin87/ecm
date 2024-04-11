@@ -9,11 +9,11 @@ use \yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use \app\models\mgcms\db\Category;
 use kartik\icons\Icon;
-
+$usdToPlnRate = (float)MgHelpers::getSetting('usd_to_pln', false, 1);
 $this->title = Yii::t('db', 'Invest by Hotpay');
 $FORMULARZ = [
     "SEKRET" => $payment->project->hotpay_sekret,
-    "KWOTA" => $payment->amount,
+    "KWOTA" => $payment->amount * $usdToPlnRate,
     "NAZWA_USLUGI" => $payment->project,//project name
     "ADRES_WWW" => MgHelpers::getSetting('hotmay www url',false, 'https://ecmarket.vertes-projekty.pl/'),
     "ID_ZAMOWIENIA" => $payment->id,

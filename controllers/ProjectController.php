@@ -81,76 +81,6 @@ class ProjectController extends \app\components\mgcms\MgCmsController
         return $this->render('view', ['model' => $model, 'subscribeForm' => $subscribeForm]);
     }
 
-    public function actionBuyStripe($id)
-    {
-
-        if (!MgHelpers::getUserModel()) {
-            MgHelpers::setFlashError(Yii::t('db', 'You must to be logged in'));
-            return $this->redirect(['site/login']);
-        }
-
-        $user = User::findOne(MgHelpers::getUserModel()->id);
-
-        $project = Project::find()
-            ->where(['status' => Project::STATUS_ACTIVE, 'id' => $id])
-            ->one();
-
-        $payment = new Payment();
-        $payment->project_id = $project->id;
-        $payment->user_id = $user->id;
-        $payment->status = Payment::STATUS_NEW;
-        $payment->type = $project::class;
-        $payment->scenario = 'invest';
-        $payment->rate = $project->token_value;
-
-
-        $loaded = $payment->load(Yii::$app->request->post());
-        if ($loaded) {
-            $amount = (double)$payment->amount;
-
-            if ($amount > 1000 && !$user->is_verified) {
-                MgHelpers::setFlash(MgHelpers::FLASH_TYPE_WARNING, Yii::t('db', 'You must to be verified before investing more than 1000$'));
-                return $this->redirect('/account/verify-by-veriff');
-            }
-            $saved = $payment->save();
-            if (!$saved) {
-                MgHelpers::setFlashError(Yii::t('db', 'Problem with saving payment ' . MgHelpers::getErrorsString($payment->errors)));
-                return $this->redirect(['site/login']);
-            }
-            try {
-
-
-                $apiKey = MgHelpers::getSetting('stripe api key ' . $project->type, false, 'sk_test_51OCLLOIqVuogZFUBfxewE719UzsbKwV6sU0tC9miy8NYLpQZwvvYWGp4zzkjPLZprbzWipQZ8wMGRefu4yOmQsHc00lFI2zIYF');
-                $stripeId = MgHelpers::getSetting('stripe account id ' . $project->type, false, 'acct_1OCLLOIqVuogZFUB');
-
-                $stripe = new \Stripe\StripeClient($apiKey);
-                $payment_intent = $stripe->paymentIntents->create([
-                    'amount' => (int)($amount * 100),
-                    'currency' => 'USD',
-                    'automatic_payment_methods' => ['enabled' => true],
-                ]);
-
-                return $this->render('buyStripe', [
-                    'clientSecret' => $payment_intent['client_secret'],
-                    'stripeAccount' => $stripeId,
-                    'project' => $project,
-                    'returnUrl' => Url::to(['/project/buy-after', 'type' => 'success', 'hash' => MgHelpers::encrypt(serialize([
-                        'payment_id' => $payment->id,
-                        'project_id' => $project->id,
-                        'amount' => $amount,
-                        'user_id' => $this->getUserModel()->id,
-                    ]))], true),
-                ]);
-            } catch (Exception $e) {
-                MgHelpers::setFlashError(Yii::t('db', $e));
-                return $this->back();
-            }
-        }
-
-        //--------------------------------STEP 2 ---------------------------------
-        return $this->render('buy', ['project' => $project, 'payment' => $payment]);
-
-    }
 
     public function actionBuy($id)
     {
@@ -173,6 +103,7 @@ class ProjectController extends \app\components\mgcms\MgCmsController
         $payment->type = $project::class;
         $payment->scenario = 'invest';
         $payment->rate = $project->token_value;
+        $payment->engine = Yii::$app->request->post('paymentEngine');
 
 
         $loaded = $payment->load(Yii::$app->request->post());
@@ -195,6 +126,9 @@ class ProjectController extends \app\components\mgcms\MgCmsController
                     break;
                 case 'hotpay':
                     return $this->_payHotpay($amount, $payment, $user);
+                    break;
+                case 'stripe':
+                    return $this->_payStripe($amount, $payment, $user);
                     break;
             }
 
@@ -245,6 +179,38 @@ class ProjectController extends \app\components\mgcms\MgCmsController
         return $this->render('buyHotpay', ['payment' => $payment]);
     }
 
+    private function _payStripe($amount, $payment, $user)
+    {
+        try {
+
+            $project = $payment->project;
+            $apiKey = MgHelpers::getSetting('stripe api key ' . $project->type, false, 'sk_test_51OCLLOIqVuogZFUBfxewE719UzsbKwV6sU0tC9miy8NYLpQZwvvYWGp4zzkjPLZprbzWipQZ8wMGRefu4yOmQsHc00lFI2zIYF');
+            $stripeId = MgHelpers::getSetting('stripe account id ' . $project->type, false, 'acct_1OCLLOIqVuogZFUB');
+
+            $stripe = new \Stripe\StripeClient($apiKey);
+            $payment_intent = $stripe->paymentIntents->create([
+                'amount' => (int)($amount * 100),
+                'currency' => 'USD',
+                'automatic_payment_methods' => ['enabled' => true],
+            ]);
+
+            return $this->render('buyStripe', [
+                'clientSecret' => $payment_intent['client_secret'],
+                'stripeAccount' => $stripeId,
+                'project' => $project,
+                'returnUrl' => Url::to(['/project/buy-after', 'type' => 'success', 'hash' => MgHelpers::encrypt(serialize([
+                    'payment_id' => $payment->id,
+                    'project_id' => $project->id,
+                    'amount' => $amount,
+                    'user_id' => $this->getUserModel()->id,
+                ]))], true),
+            ]);
+        } catch (Exception $e) {
+            MgHelpers::setFlashError(Yii::t('db', $e));
+            return $this->back();
+        }
+    }
+
     public function actionNotifyHotpay()
     {
         \Yii::info("actionNotifyHotpay", 'own');
@@ -280,10 +246,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
                         //płatność zaakceptowana
                         \Yii::info("success", 'own');
                         try {
-                            $payment->status = Payment::STATUS_PAYMENT_CONFIRMED;
-                            $payment->project->money += $payment->amount;
-                            $payment->project->save();
-                            $payment->save();
+                            $this->_afterSuccessPayment($payment);
                         } catch (\Exception $e) {
                             \Yii::info("error", 'own');
                             \Yii::info($e, 'own');
@@ -707,33 +670,37 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
         $transactionHash = false;
         if ($type == 'success') {
             $payment = Payment::find()->where(['id' => $data['payment_id']])->one();
-            if (!$payment || $payment->status == Payment::STATUS_PAYMENT_CONFIRMED) {
-                return $this->throw404();
-            }
-
-            $payment->status = Payment::STATUS_PAYMENT_CONFIRMED;
-            $payment->save();
-            $project = $payment->project;
-            $project->money += $payment->amount;
-            $project->save();
-
-            switch ($project->type) {
-                case Project::TYPE_ECM:
-                    $transactionHash = $this->sendSmartContract($payment->amount, $project, 'ECM');
-                    $transactionHash = $transactionHash . ',' . $this->sendSmartContract($payment->amount, $project, 'SDT1', true);
-                    break;
-                default:
-                    $transactionHash = $this->sendSmartContract($payment->amount, $project, $project->token_name);
-                    break;
-
-            }
-            $payment->hash = $transactionHash;
-            $payment->save();
-
+            $this->_afterSuccessPayment($payment);
         }
 
 
         return $this->render('buyAfter', ['type' => $type, 'payment' => $payment, 'transactionHash' => $transactionHash]);
+    }
+
+    function _afterSuccessPayment($payment){
+
+        if (!$payment || $payment->status == Payment::STATUS_PAYMENT_CONFIRMED) {
+            return $this->throw404();
+        }
+
+        $payment->status = Payment::STATUS_PAYMENT_CONFIRMED;
+        $payment->save();
+        $project = $payment->project;
+        $project->money += $payment->amount;
+        $project->save();
+
+        switch ($project->type) {
+            case Project::TYPE_ECM:
+                $transactionHash = $this->sendSmartContract($payment->amount, $project, 'ECM');
+                $transactionHash = $transactionHash . ',' . $this->sendSmartContract($payment->amount, $project, 'SDT1', true);
+                break;
+            default:
+                $transactionHash = $this->sendSmartContract($payment->amount, $project, $project->token_name);
+                break;
+
+        }
+        $payment->hash = $transactionHash;
+        $payment->save();
     }
 
 

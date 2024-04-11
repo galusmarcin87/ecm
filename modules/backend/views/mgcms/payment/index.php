@@ -52,11 +52,12 @@ $this->registerJs($search);
             ],
             'filterInputOptions' => ['placeholder' => Yii::t('app', 'User'), 'id' => 'grid-payment-search-user_id']
         ],
-        'status',
+        'statusStr',
         'amount',
         'hash',
         'rate',
         'project',
+        'engine',
         [
             'class' => app\components\mgcms\yii\ActionColumn::className(),
             'template' => '{view} {delete}',
