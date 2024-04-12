@@ -473,6 +473,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
      */
     private function sendSmartContract($amount, $project, $tokenName, $incrementNonce = false)
     {
+        \Yii::info("sendSmartContract", 'own');
         $fromAddress = MgHelpers::getSetting('eth.walletId', false, '0x21F298D212ef980fF5f9721Eb5A386644e543aDF');
         //$senderAddress = preg_replace('/^0x/','',$senderAddress);
         $privateKey = MgHelpers::getSetting('eth.walletPrivateKey', false, '');
@@ -481,6 +482,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
         $networkId = MgHelpers::getSetting('eth.chainId', false, '97');;
         $abi = MgHelpers::getSetting('eth.jsonAbi-' . $tokenName, false, '[{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"symbol","type":"string"},{"internalType":"uint256","name":"initialSupply","type":"uint256"},{"internalType":"address","name":"holder","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}]');
 
+        \Yii::info("sendSmartContract 2", 'own');
         $contractAddress = MgHelpers::getSetting('eth.tokenAddress-' . $tokenName, false, '0xEe108353Ef9493e0525eB8da0Dcd00caa098c62d');
 
         $user = MgHelpers::getUserModel();
@@ -496,6 +498,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
         $provider = new HttpProvider(new HttpRequestManager($networkUrl, 30));
         $contract = new Contract($provider, $abi);
 
+        Yii::info("sendSmartContract 3", 'own');
         $contract->eth->getTransactionCount($fromAddress, function ($err, $count) use (&$transactionCount) {
             if ($err) {
                 echo $err->getMessage() . "\n";
@@ -504,6 +507,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             $transactionCount = $count;
         });
 
+        Yii::info("sendSmartContract 4", 'own');
         if ($incrementNonce) {
             $transactionCount = $transactionCount->add(new BigInteger('1'));
         }
@@ -516,9 +520,12 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             $gasPrice = $price;
         });
 
+        Yii::info("sendSmartContract 5", 'own');
+
 
         $transactionData = '0x' . $contract->at($contractAddress)->getData('transfer', $toAddress, $amountHex);
 
+        Yii::info("sendSmartContract 6", 'own');
         $transactionParams = [
             'nonce' => '0x' . dechex($transactionCount->toString()),
             'from' => $fromAddress,
@@ -536,11 +543,13 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             $gas = $estimate;
         });
 
+        Yii::info("sendSmartContract 7", 'own');
         $transactionParams['gas'] = '0x' . dechex($gas->toString());
 
         $transaction = new Transaction($transactionParams);
         $signedTransaction = $transaction->sign($fromPrivateKey);
 
+        Yii::info("sendSmartContract 8", 'own');
         $transactionHash = false;
         $contract->eth->sendRawTransaction('0x' . $signedTransaction, function ($err, $tx) use (&$transactionHash) {
             if ($err) {
@@ -549,6 +558,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             }
             $transactionHash = $tx;
         });
+        Yii::info("sendSmartContract 9", 'own');
 
         return $transactionHash;
     }
@@ -677,17 +687,22 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
         return $this->render('buyAfter', ['type' => $type, 'payment' => $payment, 'transactionHash' => $transactionHash]);
     }
 
-    function _afterSuccessPayment($payment){
+    function _afterSuccessPayment($payment)
+    {
 
+        \Yii::info("_afterSuccessPayment", 'own');
         if (!$payment || $payment->status == Payment::STATUS_PAYMENT_CONFIRMED) {
             return $this->throw404();
         }
 
+        \Yii::info("_afterSuccessPayment 2", 'own');
         $payment->status = Payment::STATUS_PAYMENT_CONFIRMED;
         $payment->save();
+        \Yii::info("_afterSuccessPayment 3", 'own');
         $project = $payment->project;
         $project->money += $payment->amount;
         $project->save();
+        \Yii::info("_afterSuccessPayment 4", 'own');
 
         switch ($project->type) {
             case Project::TYPE_ECM:
@@ -699,6 +714,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
                 break;
 
         }
+        \Yii::info("_afterSuccessPayment 5 hash:" . $transactionHash, 'own');
         $payment->hash = $transactionHash;
         $payment->save();
     }
