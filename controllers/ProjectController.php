@@ -473,93 +473,103 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
      */
     private function sendSmartContract($amount, $project, $tokenName, $incrementNonce = false)
     {
-        \Yii::info("sendSmartContract", 'own');
-        $fromAddress = MgHelpers::getSetting('eth.walletId', false, '0x21F298D212ef980fF5f9721Eb5A386644e543aDF');
-        //$senderAddress = preg_replace('/^0x/','',$senderAddress);
-        $privateKey = MgHelpers::getSetting('eth.walletPrivateKey', false, '');
-        $fromPrivateKey = preg_replace('/^0x/', '', $privateKey);
-        $networkUrl = MgHelpers::getSetting('eth.blockChainEndpoint', false, 'https://rpc.ankr.com/bsc_testnet_chapel');
-        $networkId = MgHelpers::getSetting('eth.chainId', false, '97');;
-        $abi = MgHelpers::getSetting('eth.jsonAbi-' . $tokenName, false, '[{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"symbol","type":"string"},{"internalType":"uint256","name":"initialSupply","type":"uint256"},{"internalType":"address","name":"holder","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}]');
+        try {
+            \Yii::info("sendSmartContract", 'own');
+            $fromAddress = MgHelpers::getSetting('eth.walletId.'.$tokenName, false, '0x21F298D212ef980fF5f9721Eb5A386644e543aDF');
+            //$senderAddress = preg_replace('/^0x/','',$senderAddress);
+            $privateKey = MgHelpers::getSetting('eth.walletPrivateKey.'.$tokenName, false, '');
+            $fromPrivateKey = preg_replace('/^0x/', '', $privateKey);
+            $networkUrl = MgHelpers::getSetting('eth.blockChainEndpoint', false, 'https://rpc.ankr.com/bsc_testnet_chapel');
+            $networkId = MgHelpers::getSetting('eth.chainId', false, '97');;
+            $abi = MgHelpers::getSetting('eth.jsonAbi-' . $tokenName, false, '[{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"symbol","type":"string"},{"internalType":"uint256","name":"initialSupply","type":"uint256"},{"internalType":"address","name":"holder","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}]');
 
-        \Yii::info("sendSmartContract 2", 'own');
-        $contractAddress = MgHelpers::getSetting('eth.tokenAddress-' . $tokenName, false, '0xEe108353Ef9493e0525eB8da0Dcd00caa098c62d');
+            \Yii::info("sendSmartContract 2", 'own');
+            $contractAddress = MgHelpers::getSetting('eth.tokenAddress-' . $tokenName, false, '0xEe108353Ef9493e0525eB8da0Dcd00caa098c62d');
 
-        $user = MgHelpers::getUserModel();
-        $toAddress = $user->getModelAttribute('ethAddress');
+            $user = MgHelpers::getUserModel();
+            $toAddress = $user->getModelAttribute('ethAddress');
+            \Yii::info("sendSmartContract 2 toAddress $toAddress", 'own');
 
-        $amount = ($amount / $project->token_value);
+            $amount = ($amount / $project->token_value);
 
-        $amountHex = '0x' . dechex($amount * 10 ** 8);
+            \Yii::info("sendSmartContract 2 amount $amount", 'own');
 
-        $gasPrice = (int)MgHelpers::getSetting('eth.gasPrice', false, 5 * 10 ** 9);
-        $gasLimit = (int)MgHelpers::getSetting('eth.gasLimit', false, 100000);
+            $amountHex = '0x' . dechex($amount * 10 ** 8);
 
-        $provider = new HttpProvider(new HttpRequestManager($networkUrl, 30));
-        $contract = new Contract($provider, $abi);
+            $gasPrice = (int)MgHelpers::getSetting('eth.gasPrice', false, 5 * 10 ** 9);
+            $gasLimit = (int)MgHelpers::getSetting('eth.gasLimit', false, 100000);
 
-        Yii::info("sendSmartContract 3", 'own');
-        $contract->eth->getTransactionCount($fromAddress, function ($err, $count) use (&$transactionCount) {
-            if ($err) {
-                echo $err->getMessage() . "\n";
-                return;
+            \Yii::info("sendSmartContract 2 networkUrl $networkUrl", 'own');
+            $provider = new HttpProvider(new HttpRequestManager($networkUrl, 30));
+            \Yii::info("sendSmartContract 2 abi $abi", 'own');
+            $contract = new Contract($provider, $abi);
+
+            Yii::info("sendSmartContract 3", 'own');
+            $contract->eth->getTransactionCount($fromAddress, function ($err, $count) use (&$transactionCount) {
+                if ($err) {
+                    echo $err->getMessage() . "\n";
+                    return;
+                }
+                $transactionCount = $count;
+            });
+
+            Yii::info("sendSmartContract 4", 'own');
+            if ($incrementNonce) {
+                $transactionCount = $transactionCount->add(new BigInteger('1'));
             }
-            $transactionCount = $count;
-        });
 
-        Yii::info("sendSmartContract 4", 'own');
-        if ($incrementNonce) {
-            $transactionCount = $transactionCount->add(new BigInteger('1'));
+            $contract->eth->gasPrice(function ($err, $price) use (&$gasPrice) {
+                if ($err) {
+                    echo $err->getMessage() . "\n";
+                    return;
+                }
+                $gasPrice = $price;
+            });
+
+            Yii::info("sendSmartContract 5", 'own');
+
+
+            $transactionData = '0x' . $contract->at($contractAddress)->getData('transfer', $toAddress, $amountHex);
+
+            Yii::info("sendSmartContract 6", 'own');
+            $transactionParams = [
+                'nonce' => '0x' . dechex($transactionCount->toString()),
+                'from' => $fromAddress,
+                'to' => $contractAddress,
+                'gasPrice' => '0x' . dechex($gasPrice->toString()),
+                'value' => '0x0',
+                'data' => $transactionData,
+                'chainId' => $networkId
+            ];
+
+            $contract->at($contractAddress)->estimateGas('transfer', $toAddress, $amountHex, ['from' => $fromAddress], function ($err, $estimate) use (&$gas) {
+                if ($err) {
+                    Log::info("estimate gas error: " . $err->getMessage());
+                }
+                $gas = $estimate;
+            });
+
+            Yii::info("sendSmartContract 7", 'own');
+            $transactionParams['gas'] = '0x' . dechex($gas->toString());
+
+            $transaction = new Transaction($transactionParams);
+            $signedTransaction = $transaction->sign($fromPrivateKey);
+
+            Yii::info("sendSmartContract 8", 'own');
+            $transactionHash = false;
+            $contract->eth->sendRawTransaction('0x' . $signedTransaction, function ($err, $tx) use (&$transactionHash) {
+                if ($err) {
+                    echo $err->getMessage() . "\n";
+                    return;
+                }
+                $transactionHash = $tx;
+            });
+            Yii::info("sendSmartContract 9", 'own');
         }
-
-        $contract->eth->gasPrice(function ($err, $price) use (&$gasPrice) {
-            if ($err) {
-                echo $err->getMessage() . "\n";
-                return;
-            }
-            $gasPrice = $price;
-        });
-
-        Yii::info("sendSmartContract 5", 'own');
-
-
-        $transactionData = '0x' . $contract->at($contractAddress)->getData('transfer', $toAddress, $amountHex);
-
-        Yii::info("sendSmartContract 6", 'own');
-        $transactionParams = [
-            'nonce' => '0x' . dechex($transactionCount->toString()),
-            'from' => $fromAddress,
-            'to' => $contractAddress,
-            'gasPrice' => '0x' . dechex($gasPrice->toString()),
-            'value' => '0x0',
-            'data' => $transactionData,
-            'chainId' => $networkId
-        ];
-
-        $contract->at($contractAddress)->estimateGas('transfer', $toAddress, $amountHex, ['from' => $fromAddress], function ($err, $estimate) use (&$gas) {
-            if ($err) {
-                Log::info("estimate gas error: " . $err->getMessage());
-            }
-            $gas = $estimate;
-        });
-
-        Yii::info("sendSmartContract 7", 'own');
-        $transactionParams['gas'] = '0x' . dechex($gas->toString());
-
-        $transaction = new Transaction($transactionParams);
-        $signedTransaction = $transaction->sign($fromPrivateKey);
-
-        Yii::info("sendSmartContract 8", 'own');
-        $transactionHash = false;
-        $contract->eth->sendRawTransaction('0x' . $signedTransaction, function ($err, $tx) use (&$transactionHash) {
-            if ($err) {
-                echo $err->getMessage() . "\n";
-                return;
-            }
-            $transactionHash = $tx;
-        });
-        Yii::info("sendSmartContract 9", 'own');
-
+        catch (Exception $e) {
+            Yii::info("sendSmartContract error", 'own');
+            Yii::info($e, 'own');
+        }
         return $transactionHash;
     }
 
