@@ -171,5 +171,10 @@ class Payment extends \app\models\mgcms\db\AbstractRecord
     }
 
 
+    public function getHashStr(){
+        return str_replace(',','<br/>',$this->hash);
+    }
+
+
 
 }

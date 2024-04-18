@@ -54,7 +54,7 @@ $this->registerJs($search);
         ],
         'statusStr',
         'amount',
-        'hash',
+        'hashStr:raw',
         'rate',
         'project',
         'engine',
