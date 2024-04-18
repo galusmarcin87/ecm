@@ -25,6 +25,7 @@ use Web3p\EthereumTx\Transaction;
 use CoinbaseCommerce\ApiClient;
 use CoinbaseCommerce\Resources\Charge;
 use HotpayMoney\ApiClient as HotpayApiClient;
+use function _\get;
 
 class ProjectController extends \app\components\mgcms\MgCmsController
 {
@@ -279,6 +280,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
 
         $requestBody = file_get_contents('php://input');
 
+        //$requestBody = '{"attempt_number":1,"event":{"api_version":"2018-03-22","created_at":"2024-04-18T20:20:25Z","data":{"id":"dab74bfd-b7ad-4636-9ae0-34042f91ed3a","code":"ZJJ4KLE8","name":"Buying tokens","pricing":{"local":{"amount":"9.5","currency":"USD"},"settlement":{"amount":"9.5","currency":"USDC"}},"metadata":{"userId":"159.0","paymentId":"322.0"},"payments":[{"value":{"local":{"amount":"9.5","currency":"USD"},"crypto":{"amount":"9.5","currency":"USDC"}},"status":"confirmed","network":"base","payment_id":"0x85b6d689a9d37021cd05149bd26671775618cfc56fd2a8237ea45fedf18b1c1a","detected_at":"2024-04-18T20:06:23Z","transaction_id":"0x85b6d689a9d37021cd05149bd26671775618cfc56fd2a8237ea45fedf18b1c1a","payer_addresses":["0x8545eb636855e894a0a4e8f6fc687ae9b0209a78"]}],"timeline":[{"time":"2024-04-18T20:05:43Z","status":"NEW"},{"time":"2024-04-18T20:06:11Z","status":"SIGNED"},{"time":"2024-04-18T20:06:29Z","status":"PENDING"},{"time":"2024-04-18T20:20:24Z","status":"COMPLETED"}],"pwcb_only":false,"redirects":{"cancel_url":"","success_url":"","will_redirect_after_success":false},"web3_data":{"failure_events":[],"success_events":[{"sender":"0x8545eb636855e894a0a4e8f6fc687ae9b0209a78","tx_hsh":"0x85b6d689a9d37021cd05149bd26671775618cfc56fd2a8237ea45fedf18b1c1a","chain_id":8453,"finalized":false,"recipient":"0x77471cba762baf138e0b68acb6ec522264dc6e7e","timestamp":"2024-04-18T20:06:23Z","network_fee_paid":"17784280101640","input_token_amount":"3103297719041525","input_token_address":"0x0000000000000000000000000000000000000000","network_fee_paid_local":"0.054441771775547594"},{"sender":"0x8545eb636855e894a0a4e8f6fc687ae9b0209a78","tx_hsh":"0x85b6d689a9d37021cd05149bd26671775618cfc56fd2a8237ea45fedf18b1c1a","chain_id":8453,"finalized":true,"recipient":"0x77471cba762baf138e0b68acb6ec522264dc6e7e","timestamp":"2024-04-18T20:06:23Z","network_fee_paid":"17784280101640","input_token_amount":"3103297719041525","input_token_address":"0x0000000000000000000000000000000000000000","network_fee_paid_local":"0.054441771775547594"}],"transfer_intent":{"metadata":{"sender":"0x8545eB636855e894a0a4E8F6fc687ae9b0209a78","chain_id":8453,"contract_address":"0xeF0D482Daa16fa86776Bc582Aff3dFce8d9b8396"},"call_data":{"id":"0xb40b864257b84072afc9f29ecf7f2fa6","prefix":"0x4b3220496e666f726d6174696f6e616c204d6573736167653a20333220","deadline":"2024-04-20T20:05:43Z","operator":"0x8fccc78dae0a8f93b0fe6799de888d4c57e273db","recipient":"0x77471CBa762BaF138E0b68ACB6Ec522264Dc6E7E","signature":"0x432f626103b21395332e19cf32fb091c394459ff8f4479e6c7825bf1044542e67a04d5a2013ca86e8a7df0a79085b65616b9a5e585c8a2a83558a4dc56134af31c","fee_amount":"95000","recipient_amount":"9405000","recipient_currency":"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913","refund_destination":"0x8545eB636855e894a0a4E8F6fc687ae9b0209a78"}},"contract_addresses":{"1":"0x3263bc4976C8c180bd5EB90a57ED1A2f1CFcAC67","137":"0x551c6791c2f01c3Cd48CD35291Ac4339F206430d","8453":"0xeF0D482Daa16fa86776Bc582Aff3dFce8d9b8396"},"contract_caller_request_id":"","settlement_currency_addresses":{"1":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","137":"0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359","8453":"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"},"subsidized_payments_chain_to_tokens":{}},"created_at":"2024-04-18T20:05:43Z","expires_at":"2024-04-20T20:05:43Z","hosted_url":"https://commerce.coinbase.com/pay/dab74bfd-b7ad-4636-9ae0-34042f91ed3a","brand_color":"#5A97C4","charge_kind":"WEB3","confirmed_at":"2024-04-18T20:20:24Z","pricing_type":"fixed_price","support_email":"office@ecmarket.eu","brand_logo_url":"https://res.cloudinary.com/commerce/image/upload/v1713195076/zcr6nnfuqhpv7yuo2irk.png","collected_email":false,"organization_name":"ENERGY COIN MARKET SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ","web3_retail_payment_metadata":{"fees":[],"quote_id":"","source_amount":{"amount":null,"currency":null},"max_payment_value_usd":10000,"exchange_rate_with_spread":{"amount":null,"currency":null},"exchange_rate_without_spread":{"amount":null,"currency":null}},"web3_retail_payments_enabled":true},"id":"3aa5af51-36fe-43c3-a75b-7be4693d1358","resource":"event","type":"charge:confirmed"},"id":"135ee578-ba83-4d22-8718-ea0eb7909a33","scheduled_for":"2024-04-18T20:20:25Z"}';
 
         $data = json_decode($requestBody, true);
 
@@ -293,13 +295,23 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
 
         $calculatedSignature = hash_hmac('sha256', $requestBody, $secretKey);
 
-
-        if ($calculatedSignature === $signature) {
-            // Sygnatury są zgodne, dane są poprawne
+        if ( $calculatedSignature === $signature) {
+            \Yii::info("actionNotifyCoinbase successful", 'own');
             echo 'Webhook verification successful!';
-            // Dodatkowo, tutaj możesz przetwarzać otrzymane dane z webhooka
+            $paymentId = (int)get($data, 'event.data.metadata.paymentId');
+            $userId = (int)get($data, 'event.data.metadata.userId');
+            $payment = Payment::find()->where([
+                'id' => $paymentId,
+                'user_id' => $userId])->one();
+
+            if(!$payment){
+                \Yii::info("no such payment $paymentId for user $userId", 'own');
+                return;
+            }
+            $this->_afterSuccessPayment($payment);
+
         } else {
-            // Sygnatury nie są zgodne, dane mogą być niepoprawne
+            \Yii::info("actionNotifyCoinbase failed", 'own');
             echo 'Webhook verification failed!';
         }
     }
@@ -475,9 +487,9 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
     {
         try {
             \Yii::info("sendSmartContract", 'own');
-            $fromAddress = MgHelpers::getSetting('eth.walletId.'.$tokenName, false, '0x21F298D212ef980fF5f9721Eb5A386644e543aDF');
+            $fromAddress = MgHelpers::getSetting('eth.walletId.' . $tokenName, false, '0x21F298D212ef980fF5f9721Eb5A386644e543aDF');
             //$senderAddress = preg_replace('/^0x/','',$senderAddress);
-            $privateKey = MgHelpers::getSetting('eth.walletPrivateKey.'.$tokenName, false, '');
+            $privateKey = MgHelpers::getSetting('eth.walletPrivateKey.' . $tokenName, false, '');
             $fromPrivateKey = preg_replace('/^0x/', '', $privateKey);
             $networkUrl = MgHelpers::getSetting('eth.blockChainEndpoint', false, 'https://rpc.ankr.com/bsc_testnet_chapel');
             $networkId = MgHelpers::getSetting('eth.chainId', false, '97');;
@@ -565,8 +577,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
                 $transactionHash = $tx;
             });
             Yii::info("sendSmartContract 9", 'own');
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             Yii::info("sendSmartContract error", 'own');
             Yii::info($e, 'own');
         }
