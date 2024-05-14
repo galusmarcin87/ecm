@@ -295,7 +295,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
 
         $calculatedSignature = hash_hmac('sha256', $requestBody, $secretKey);
 
-        \Yii::info("actionNotifyCoinbase signature ".$calculatedSignature,'-'.$signature, 'own');
+        \Yii::info("actionNotifyCoinbase signature ".$calculatedSignature.'-'.$signature, 'own');
 
 //        if ( $calculatedSignature === $signature) {
             \Yii::info("actionNotifyCoinbase successful", 'own');
@@ -522,6 +522,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             Yii::info("sendSmartContract 3", 'own');
             $contract->eth->getTransactionCount($fromAddress, function ($err, $count) use (&$transactionCount) {
                 if ($err) {
+                    Yii::info("sendSmartContract 3 ". $err->getMessage(), 'own');
                     echo $err->getMessage() . "\n";
                     return;
                 }
@@ -535,6 +536,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
 
             $contract->eth->gasPrice(function ($err, $price) use (&$gasPrice) {
                 if ($err) {
+                    Yii::info("sendSmartContract 4 ". $err->getMessage(), 'own');
                     echo $err->getMessage() . "\n";
                     return;
                 }
@@ -559,6 +561,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
 
             $contract->at($contractAddress)->estimateGas('transfer', $toAddress, $amountHex, ['from' => $fromAddress], function ($err, $estimate) use (&$gas) {
                 if ($err) {
+                    Yii::info("estimate gas error ". $err->getMessage(), 'own');
                     Log::info("estimate gas error: " . $err->getMessage());
                 }
                 $gas = $estimate;
@@ -574,6 +577,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             $transactionHash = false;
             $contract->eth->sendRawTransaction('0x' . $signedTransaction, function ($err, $tx) use (&$transactionHash) {
                 if ($err) {
+                    Yii::info("sendRawTransaction ". $err->getMessage(), 'own');
                     echo $err->getMessage() . "\n";
                     return;
                 }
