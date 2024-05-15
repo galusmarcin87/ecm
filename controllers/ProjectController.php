@@ -295,9 +295,9 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
 
         $calculatedSignature = hash_hmac('sha256', $requestBody, $secretKey);
 
-        \Yii::info("actionNotifyCoinbase signature ".$calculatedSignature.'-'.$signature, 'own');
+        \Yii::info("actionNotifyCoinbase signature " . $calculatedSignature . '-' . $signature, 'own');
 
-//        if ( $calculatedSignature === $signature) {
+        if ($calculatedSignature === $signature) {
             \Yii::info("actionNotifyCoinbase successful", 'own');
             echo 'Webhook verification successful!';
             $paymentId = (int)get($data, 'event.data.metadata.paymentId');
@@ -306,16 +306,16 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
                 'id' => $paymentId,
                 'user_id' => $userId])->one();
 
-            if(!$payment){
+            if (!$payment) {
                 \Yii::info("no such payment $paymentId for user $userId", 'own');
                 return;
             }
             return $this->_afterSuccessPayment($payment);
 
-//        } else {
-//            \Yii::info("actionNotifyCoinbase failed", 'own');
-//            echo 'Webhook verification failed!';
-//        }
+        } else {
+            \Yii::info("actionNotifyCoinbase failed", 'own');
+            echo 'Webhook verification failed!';
+        }
     }
 
     public function beforeAction($action)
@@ -496,7 +496,6 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             $networkUrl = MgHelpers::getSetting('eth.blockChainEndpoint', false, 'https://rpc.ankr.com/bsc_testnet_chapel');
             $networkId = MgHelpers::getSetting('eth.chainId', false, '97');;
             $abi = MgHelpers::getSetting('eth.jsonAbi-' . $tokenName, false, '[{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"symbol","type":"string"},{"internalType":"uint256","name":"initialSupply","type":"uint256"},{"internalType":"address","name":"holder","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}]');
-
             \Yii::info("sendSmartContract 2", 'own');
             $contractAddress = MgHelpers::getSetting('eth.tokenAddress-' . $tokenName, false, '0xEe108353Ef9493e0525eB8da0Dcd00caa098c62d');
             \Yii::info("sendSmartContract contractAddress $contractAddress", 'own');
@@ -515,14 +514,15 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             $gasLimit = (int)MgHelpers::getSetting('eth.gasLimit', false, 100000);
 
             \Yii::info("sendSmartContract 2 networkUrl $networkUrl", 'own');
-            $provider = new HttpProvider(new HttpRequestManager($networkUrl, 30));
+            $provider = new HttpProvider($networkUrl, 30);
             \Yii::info("sendSmartContract 2 abi $abi", 'own');
             $contract = new Contract($provider, $abi);
+
 
             Yii::info("sendSmartContract 3", 'own');
             $contract->eth->getTransactionCount($fromAddress, function ($err, $count) use (&$transactionCount) {
                 if ($err) {
-                    Yii::info("sendSmartContract 3 ". $err->getMessage(), 'own');
+                    Yii::info("sendSmartContract 3 " . $err->getMessage(), 'own');
                     echo $err->getMessage() . "\n";
                     return;
                 }
@@ -536,15 +536,15 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
 
             $contract->eth->gasPrice(function ($err, $price) use (&$gasPrice) {
                 if ($err) {
-                    Yii::info("sendSmartContract 4 ". $err->getMessage(), 'own');
+                    Yii::info("sendSmartContract 4 " . $err->getMessage(), 'own');
                     echo $err->getMessage() . "\n";
                     return;
                 }
                 $gasPrice = $price;
             });
 
-            Yii::info("sendSmartContract 5", 'own');
 
+            Yii::info("sendSmartContract 5", 'own');
 
             $transactionData = '0x' . $contract->at($contractAddress)->getData('transfer', $toAddress, $amountHex);
 
@@ -561,7 +561,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
 
             $contract->at($contractAddress)->estimateGas('transfer', $toAddress, $amountHex, ['from' => $fromAddress], function ($err, $estimate) use (&$gas) {
                 if ($err) {
-                    Yii::info("estimate gas error ". $err->getMessage(), 'own');
+                    Yii::info("estimate gas error " . $err->getMessage(), 'own');
                     Log::info("estimate gas error: " . $err->getMessage());
                 }
                 $gas = $estimate;
@@ -577,7 +577,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             $transactionHash = false;
             $contract->eth->sendRawTransaction('0x' . $signedTransaction, function ($err, $tx) use (&$transactionHash) {
                 if ($err) {
-                    Yii::info("sendRawTransaction ". $err->getMessage(), 'own');
+                    Yii::info("sendRawTransaction " . $err->getMessage(), 'own');
                     echo $err->getMessage() . "\n";
                     return;
                 }
