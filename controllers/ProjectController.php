@@ -743,7 +743,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
         switch ($project->type) {
             case Project::TYPE_ECM:
                 $transactionHash = $this->sendSmartContract($payment, $project, 'ECM');
-                $transactionHash = $transactionHash . ',' . $this->sendSmartContract($payment->amount, $project, 'SDT1', true);
+                $transactionHash = $transactionHash . ',' . $this->sendSmartContract($payment, $project, 'SDT1', true);
                 break;
             default:
                 $transactionHash = $this->sendSmartContract($payment, $project, $project->token_name);
