@@ -492,13 +492,13 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
      * @param $project Project
      * @return void
      */
-    private function sendSmartContract($payment, $project, $tokenName, $incrementNonce = false)
+    private function sendSmartContract($payment, $project, $tokenName, $forECM = false)
     {
         try {
             \Yii::info("sendSmartContract", 'own');
-            $fromAddress = MgHelpers::getSetting('eth.walletId.' . $tokenName, false, '0x21F298D212ef980fF5f9721Eb5A386644e543aDF');
+            $fromAddress = $forECM ? MgHelpers::getSetting('eth.walletId.ECM', false, '0x21F298D212ef980fF5f9721Eb5A386644e543aDF') : MgHelpers::getSetting('eth.walletId.' . $tokenName, false, '0x21F298D212ef980fF5f9721Eb5A386644e543aDF');
             //$senderAddress = preg_replace('/^0x/','',$senderAddress);
-            $privateKey = MgHelpers::getSetting('eth.walletPrivateKey.' . $tokenName, false, '');
+            $privateKey = $forECM ? MgHelpers::getSetting('eth.walletPrivateKey.ECM', false, '') : MgHelpers::getSetting('eth.walletPrivateKey.' . $tokenName, false, '');
             $fromPrivateKey = preg_replace('/^0x/', '', $privateKey);
             $networkUrl = MgHelpers::getSetting('eth.blockChainEndpoint', false, 'https://rpc.ankr.com/bsc_testnet_chapel');
             $networkId = MgHelpers::getSetting('eth.chainId', false, '97');;
@@ -537,7 +537,7 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             });
 
             Yii::info("sendSmartContract 4", 'own');
-            if ($incrementNonce) {
+            if ($forECM) {
                 $transactionCount = $transactionCount->add(new BigInteger('1'));
             }
 
