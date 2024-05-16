@@ -302,15 +302,22 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
             echo 'Webhook verification successful!';
             $paymentId = (int)get($data, 'event.data.metadata.paymentId');
             $userId = (int)get($data, 'event.data.metadata.userId');
-            $payment = Payment::find()->where([
-                'id' => $paymentId,
-                'user_id' => $userId])->one();
+            $status = get($data, 'event.data.payments.0.status');
+            \Yii::info("actionNotifyCoinbase status " . $status, 'own');
 
-            if (!$payment) {
-                \Yii::info("no such payment $paymentId for user $userId", 'own');
-                return;
+            if ($status === 'confirmed') {
+                $payment = Payment::find()->where([
+                    'id' => $paymentId,
+                    'user_id' => $userId])->one();
+
+                if (!$payment) {
+                    \Yii::info("no such payment $paymentId for user $userId", 'own');
+                    return 404;
+                }
+                return $this->_afterSuccessPayment($payment);
+            } else {
+                return 200;
             }
-            return $this->_afterSuccessPayment($payment);
 
         } else {
             \Yii::info("actionNotifyCoinbase failed", 'own');
