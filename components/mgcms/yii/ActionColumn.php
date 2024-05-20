@@ -211,7 +211,9 @@ class ActionColumn extends Column
      */
     protected function renderDataCellContent($model, $key, $index)
     {
+
         return preg_replace_callback('/\\{([\w\-\/]+)\\}/', function ($matches) use ($model, $key, $index) {
+            $user = \app\components\mgcms\MgHelpers::getUserModel();
             $name = $matches[1];
 
             if (isset($this->visibleButtons[$name])) {
@@ -221,13 +223,11 @@ class ActionColumn extends Column
             } else {
                 $isVisible = true;
             }
-            
+
             $controller = $this->controller ? $this->controller : Yii::$app->controller->id;
-            if(!\app\components\mgcms\MgHelpers::getUserModel()->checkAccess(str_replace(['mgcms/','oeizk/'], '', $controller), $name)){
+            if($user && !$user->checkAccess(str_replace(['mgcms/','oeizk/'], '', $controller), $name)){
               $isVisible = false;
             }
-            
-
 
             if ($isVisible && isset($this->buttons[$name])) {
                 $url = $this->createUrl($name, $model, $key, $index);
