@@ -140,11 +140,16 @@ class ProjectController extends \app\components\mgcms\MgCmsController
 
     }
 
+    /**
+     * @param $amount
+     * @param $payment Payment
+     * @param $user User
+     * @return void|\yii\web\Response
+     */
     private function _payCoinbase($amount, $payment, $user)
     {
         try {
-
-            ApiClient::init(MgHelpers::getSetting('coinbase api key', false, 'c4e3e3e3-3e3e-4e3e-3e3e-3e3e3e3e3e3e'));
+            ApiClient::init(MgHelpers::getSetting('coinbase api key - ' . $payment->project->token_name, false, 'c4e3e3e3-3e3e-4e3e-3e3e-3e3e3e3e3e3e'));
             $chargeData = [
                 'name' => Yii::t('db', 'Buying tokens'),
                 'local_price' => [

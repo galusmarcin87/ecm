@@ -55,6 +55,7 @@ use function _\uniq;
  * @property string $statusStr
  * @property boolean $isFavourite
  * @property string $type
+ * @property string $token_name
  *
  * @property \app\models\mgcms\db\Bonus[] $bonuses
  * @property \app\models\mgcms\db\Bonus[] $faqs
