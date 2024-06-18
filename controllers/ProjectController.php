@@ -294,9 +294,18 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
         $signature = $_SERVER['HTTP_X_CC_WEBHOOK_SIGNATURE'];
 
         \Yii::info($signature, 'own');
+        $paymentId = (int)get($data, 'event.data.metadata.paymentId');
+        $userId = (int)get($data, 'event.data.metadata.userId');
+        $payment = Payment::find()->where([
+            'id' => $paymentId,
+            'user_id' => $userId])->one();
+        if(!$payment){
+            \Yii::info("no such payment $paymentId for user $userId", 'own');
+            return 404;
+        }
 
-        $secretKey = MgHelpers::getSetting('coinbase api private key', false, 'c4e3e3e3-3e3e-4e3e-3e3e-3e3e3e3e3e3e');
 
+        $secretKey = MgHelpers::getSetting('coinbase api private key - '.$payment->project->token_name, false, 'c4e3e3e3-3e3e-4e3e-3e3e-3e3e3e3e3e3e');
 
         $calculatedSignature = hash_hmac('sha256', $requestBody, $secretKey);
 
@@ -305,20 +314,11 @@ $_POST["HASH"] - hash funkcji skrótu sha256, składającej się z hash("sha256"
         if ($calculatedSignature === $signature) {
             \Yii::info("actionNotifyCoinbase successful", 'own');
             echo 'Webhook verification successful!';
-            $paymentId = (int)get($data, 'event.data.metadata.paymentId');
-            $userId = (int)get($data, 'event.data.metadata.userId');
+
             $status = get($data, 'event.data.payments.0.status');
             \Yii::info("actionNotifyCoinbase status " . $status, 'own');
 
             if ($status === 'confirmed') {
-                $payment = Payment::find()->where([
-                    'id' => $paymentId,
-                    'user_id' => $userId])->one();
-
-                if (!$payment) {
-                    \Yii::info("no such payment $paymentId for user $userId", 'own');
-                    return 404;
-                }
                 return $this->_afterSuccessPayment($payment);
             } else {
                 return 200;
